@@ -1,6 +1,6 @@
 import { AppBar, Toolbar } from "@mui/material";
 import HouseIcon from "@mui/icons-material/House";
-import MyBreadcrumb from "./MyBreadcrump";
+import MyBreadcrumb from "./MyBreadcrumb";
 import { Link } from "react-router-dom";
 
 const MyNavbar = () => (

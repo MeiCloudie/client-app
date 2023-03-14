@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import AboutUsPage from "../../features/AboutUsPage";
+import AboutUsPage from "../../features/common/AboutUsPage";
 import ErrorPage from "../../features/common/ErrorPage";
 import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
 import HomePage from "../../features/home/HomePage";
@@ -11,7 +11,7 @@ import HelpPage from "../../features/users/HelpPage";
 import LoginPage from "../../features/users/LoginPage";
 import ProfilePage from "../../features/users/ProfilePage";
 import SettingsPage from "../../features/users/SettingsPage";
-import SignUpPage from "../../features/users/SignUpPage";
+import RegisterPage from "../../features/users/RegisterPage";
 import App from "../layout/App";
 
 export const router = createBrowserRouter(
@@ -29,8 +29,8 @@ export const router = createBrowserRouter(
                     element: <LoginPage />,
                 },
                 {
-                    path: "signup",
-                    element: <SignUpPage />,
+                    path: "register",
+                    element: <RegisterPage />,
                 },
                 {
                     path: "home",
