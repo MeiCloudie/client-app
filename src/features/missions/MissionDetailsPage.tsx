@@ -4,13 +4,13 @@ const MissionDetailsPage = () => {
   return (
     <div>
       <Typography
-        variant="h1"
+        variant="h4"
         gutterBottom
         style={{
           wordWrap: "break-word",
           margin: "0",
           fontWeight: "bold",
-          color: "#1565c0",
+          color: "#443e3e",
         }}
       >
         Mission Details

@@ -309,7 +309,7 @@ const MissionListPage = () => {
         <Typography
           variant="h3"
           gutterBottom
-          style={{ wordWrap: "break-word", fontWeight: "700", color: "#a47b62" }}
+          style={{ wordWrap: "break-word", fontWeight: "700", color: "#443e3e" }}
         >
           Project: {project.title}
         </Typography>

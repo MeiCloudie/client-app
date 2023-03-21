@@ -24,6 +24,7 @@ import { Badge } from "./components/Badge";
 import Typography from "@mui/material/Typography";
 import { PackageBadges } from "./components/PackageBadges";
 import MissionListPage from "../../features/missions/MissionListPage";
+import MissionDetailsPage from "../../features/missions/MissionDetailsPage";
 
 type Theme = "light" | "dark";
 
@@ -266,7 +267,7 @@ export const Playground: React.FC = () => {
         >
           {/* Test Page */}
           <MissionListPage />
-
+          <MissionDetailsPage />
           {/* End - Test Page */}
 
           <div style={{ marginBottom: "16px" }}>
