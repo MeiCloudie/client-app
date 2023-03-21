@@ -3,9 +3,7 @@ import AboutUsPage from "../../features/common/AboutUsPage";
 import ErrorPage from "../../features/common/ErrorPage";
 import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
 import HomePage from "../../features/home/HomePage";
-import BoardsPage from "../../features/missions/BoardPage";
 import MissionListPage from "../../features/missions/MissionListPage";
-import MissionPage from "../../features/missions/MissionPage";
 import ProjectDetailsPage from "../../features/projects/ProjectDetailsPage";
 import HelpPage from "../../features/users/HelpPage";
 import LoginPage from "../../features/users/LoginPage";
@@ -13,6 +11,8 @@ import ProfilePage from "../../features/users/ProfilePage";
 import SettingsPage from "../../features/users/SettingsPage";
 import RegisterPage from "../../features/users/RegisterPage";
 import App from "../layout/App";
+import MissionBoardPage from "../../features/missions/MissionBoardPage";
+import MissionDetailsPage from "../../features/missions/MissionDetailsPage";
 
 export const router = createBrowserRouter(
     [
@@ -67,7 +67,7 @@ export const router = createBrowserRouter(
                                         },
                                         {
                                             path: ":missionId",
-                                            element: <MissionPage /> 
+                                            element: <MissionDetailsPage /> 
                                         },
                                     ],
                                 },
@@ -76,11 +76,11 @@ export const router = createBrowserRouter(
                                     children: [
                                         {
                                             path: "",
-                                            element: <BoardsPage />
+                                            element: <MissionBoardPage />
                                         },
                                         {
                                             path: ":missionId",
-                                            element: <MissionPage />
+                                            element: <MissionDetailsPage />
                                         }
                                     ]
                                 },
@@ -97,7 +97,7 @@ export const router = createBrowserRouter(
                         },
                         {
                             path: "boards",
-                            element: <BoardsPage />
+                            element: <MissionBoardPage />
                         }
                     ]
                 },

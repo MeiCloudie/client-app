@@ -1,6 +1,7 @@
 //import { Container } from "@mui/material";
 //import { Outlet } from "react-router-dom";
 import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
+import MissionListPage from "../../features/missions/MissionListPage";
 import "./App.css";
 import BasicBreadcrumbs from "./BasicBreadcrumbs";
 //import MyNavbar from "./MyNavbar";
@@ -12,7 +13,8 @@ function App() {
     <div>
       <BasicBreadcrumbs />
       <Playground />
-      <GroupDetailsPage />
+      {/* <GroupDetailsPage /> */}
+      {/* <MissionListPage /> */}
     </div>
     // <div>
     //   <MyNavbar />

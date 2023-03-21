@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Sidebar,
   Menu,
@@ -7,56 +7,58 @@ import {
   useProSidebar,
   menuClasses,
   MenuItemStyles,
-} from 'react-pro-sidebar';
-import { Switch } from './components/Switch';
-import { SidebarHeader } from './components/SidebarHeader';
-import { Diamond } from './icons/Diamond';
-import { BarChart } from './icons/BarChart';
-import { Global } from './icons/Global';
-import { InkBottle } from './icons/InkBottle';
-import { Book } from './icons/Book';
-import { Calendar } from './icons/Calendar';
-import { ShoppingCart } from './icons/ShoppingCart';
-import { Service } from './icons/Service';
-import { SidebarFooter } from './components/SidebarFooter';
-import { Badge } from './components/Badge';
-import { Typography } from './components/Typography';
-import { PackageBadges } from './components/PackageBadges';
+} from "react-pro-sidebar";
+import { Switch } from "./components/Switch";
+import { SidebarHeader } from "./components/SidebarHeader";
+import { Diamond } from "./icons/Diamond";
+import { BarChart } from "./icons/BarChart";
+import { Global } from "./icons/Global";
+import { InkBottle } from "./icons/InkBottle";
+import { Book } from "./icons/Book";
+import { Calendar } from "./icons/Calendar";
+import { ShoppingCart } from "./icons/ShoppingCart";
+import { Service } from "./icons/Service";
+import { SidebarFooter } from "./components/SidebarFooter";
+import { Badge } from "./components/Badge";
+// import { Typography } from "./components/Typography";
+import Typography from "@mui/material/Typography";
+import { PackageBadges } from "./components/PackageBadges";
+import MissionListPage from "../../features/missions/MissionListPage";
 
-type Theme = 'light' | 'dark';
+type Theme = "light" | "dark";
 
 const themes = {
   light: {
     sidebar: {
-      backgroundColor: '#ffffff',
-      color: '#607489',
+      backgroundColor: "#ffffff",
+      color: "#607489",
     },
     menu: {
-      menuContent: '#fbfcfd',
-      icon: '#0098e5',
+      menuContent: "#fbfcfd",
+      icon: "#0098e5",
       hover: {
-        backgroundColor: '#c5e4ff',
-        color: '#44596e',
+        backgroundColor: "#c5e4ff",
+        color: "#44596e",
       },
       disabled: {
-        color: '#9fb6cf',
+        color: "#9fb6cf",
       },
     },
   },
   dark: {
     sidebar: {
-      backgroundColor: '#0b2948',
-      color: '#8ba1b7',
+      backgroundColor: "#0b2948",
+      color: "#8ba1b7",
     },
     menu: {
-      menuContent: '#082440',
-      icon: '#59d0ff',
+      menuContent: "#082440",
+      icon: "#59d0ff",
       hover: {
-        backgroundColor: '#00458b',
-        color: '#b6c8d9',
+        backgroundColor: "#00458b",
+        color: "#b6c8d9",
       },
       disabled: {
-        color: '#3e5e7e',
+        color: "#3e5e7e",
       },
     },
   },
@@ -76,7 +78,7 @@ export const Playground: React.FC = () => {
 
   const [isRTL, setIsRTL] = React.useState<boolean>(false);
   const [hasImage, setHasImage] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState<Theme>('light');
+  const [theme, setTheme] = React.useState<Theme>("light");
 
   // handle on RTL change event
   const handleRTLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +87,7 @@ export const Playground: React.FC = () => {
 
   // handle on theme change event
   const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.checked ? 'dark' : 'light');
+    setTheme(e.target.checked ? "dark" : "light");
   };
 
   // handle on image change event
@@ -95,7 +97,7 @@ export const Playground: React.FC = () => {
 
   const menuItemStyles: MenuItemStyles = {
     root: {
-      fontSize: '13px',
+      fontSize: "13px",
       fontWeight: 400,
     },
     icon: {
@@ -105,20 +107,26 @@ export const Playground: React.FC = () => {
       },
     },
     SubMenuExpandIcon: {
-      color: '#b6b7b9',
+      color: "#b6b7b9",
     },
     subMenuContent: ({ level }) => ({
       backgroundColor:
         level === 0
-          ? hexToRgba(themes[theme].menu.menuContent, hasImage && !collapsed ? 0.4 : 1)
-          : 'transparent',
+          ? hexToRgba(
+              themes[theme].menu.menuContent,
+              hasImage && !collapsed ? 0.4 : 1
+            )
+          : "transparent",
     }),
     button: {
       [`&.${menuClasses.disabled}`]: {
         color: themes[theme].menu.disabled.color,
       },
-      '&:hover': {
-        backgroundColor: hexToRgba(themes[theme].menu.hover.backgroundColor, hasImage ? 0.8 : 1),
+      "&:hover": {
+        backgroundColor: hexToRgba(
+          themes[theme].menu.hover.backgroundColor,
+          hasImage ? 0.8 : 1
+        ),
         color: themes[theme].menu.hover.color,
       },
     },
@@ -128,24 +136,38 @@ export const Playground: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100%', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        direction: isRTL ? "rtl" : "ltr",
+        position: "absolute",
+        background: "#ede6cb",
+      }}
+    >
       <Sidebar
         image="https://user-images.githubusercontent.com/25878302/144499035-2911184c-76d3-4611-86e7-bc4e8ff84ff5.jpg"
         rtl={isRTL}
         breakPoint="lg"
-        backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, hasImage ? 0.9 : 1)}
+        backgroundColor={hexToRgba(
+          themes[theme].sidebar.backgroundColor,
+          hasImage ? 0.9 : 1
+        )}
         rootStyles={{
           color: themes[theme].sidebar.color,
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <SidebarHeader style={{ marginBottom: '24px', marginTop: '16px' }} />
-          <div style={{ flex: 1, marginBottom: '32px' }}>
-            <div style={{ padding: '0 24px', marginBottom: '8px' }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          <SidebarHeader style={{ marginBottom: "24px", marginTop: "16px" }} />
+          <div style={{ flex: 1, marginBottom: "32px" }}>
+            <div style={{ padding: "0 24px", marginBottom: "8px" }}>
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}
+                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
                 General
               </Typography>
@@ -191,18 +213,27 @@ export const Playground: React.FC = () => {
               </SubMenu>
             </Menu>
 
-            <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
+            <div
+              style={{
+                padding: "0 24px",
+                marginBottom: "8px",
+                marginTop: "32px",
+              }}
+            >
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}
+                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
                 Extra
               </Typography>
             </div>
 
             <Menu menuItemStyles={menuItemStyles}>
-              <MenuItem icon={<Calendar />} suffix={<Badge variant="success">New</Badge>}>
+              <MenuItem
+                icon={<Calendar />}
+                suffix={<Badge variant="success">New</Badge>}
+              >
                 Calendar
               </MenuItem>
               <MenuItem icon={<Book />}>Documentation</MenuItem>
@@ -215,27 +246,48 @@ export const Playground: React.FC = () => {
         </div>
       </Sidebar>
 
-      <main>
-        <div style={{ padding: '16px 24px', color: '#44596e' }}>
-          <div style={{ marginBottom: '16px' }}>
+      <main
+        style={{
+          height: "100%",
+          width: "100%",
+          margin: 0,
+          padding: 0,
+          overflow: "auto",
+        }}
+      >
+        <div
+          style={{
+            padding: "16px 24px",
+            color: "#44596e",
+            background: "#ede6cb",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {/* Test Page */}
+          <MissionListPage />
+
+          {/* End - Test Page */}
+
+          <div style={{ marginBottom: "16px" }}>
             {broken && (
               <button className="sb-button" onClick={() => toggleSidebar()}>
                 Toggle
               </button>
             )}
           </div>
-          <div style={{ marginBottom: '48px' }}>
+          <div style={{ marginBottom: "48px" }}>
             <Typography variant="h4" fontWeight={600}>
               React Pro Sidebar
             </Typography>
             <Typography variant="body2">
-              React Pro Sidebar provides a set of components for creating high level and
-              customizable side navigation
+              React Pro Sidebar provides a set of components for creating high
+              level and customizable side navigation
             </Typography>
             <PackageBadges />
           </div>
 
-          <div style={{ padding: '0 8px' }}>
+          <div style={{ padding: "0 8px" }}>
             <div style={{ marginBottom: 16 }}>
               <Switch
                 id="collapse"
@@ -246,20 +298,30 @@ export const Playground: React.FC = () => {
             </div>
 
             <div style={{ marginBottom: 16 }}>
-              <Switch id="rtl" checked={isRTL} onChange={handleRTLChange} label="RTL" />
+              <Switch
+                id="rtl"
+                checked={isRTL}
+                onChange={handleRTLChange}
+                label="RTL"
+              />
             </div>
 
             <div style={{ marginBottom: 16 }}>
               <Switch
                 id="theme"
-                checked={theme === 'dark'}
+                checked={theme === "dark"}
                 onChange={handleThemeChange}
                 label="Dark theme"
               />
             </div>
 
             <div style={{ marginBottom: 16 }}>
-              <Switch id="image" checked={hasImage} onChange={handleImageChange} label="Image" />
+              <Switch
+                id="image"
+                checked={hasImage}
+                onChange={handleImageChange}
+                label="Image"
+              />
             </div>
           </div>
         </div>

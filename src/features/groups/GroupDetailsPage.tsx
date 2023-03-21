@@ -10,6 +10,7 @@ const GroupDetailsPage = () => {
       userName: "Mei",
       displayName: "Van",
     },
+    projects: []
   };
 
   return (

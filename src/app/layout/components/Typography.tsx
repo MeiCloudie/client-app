@@ -25,6 +25,7 @@ const StyledTypography = styled.p<TypographyProps>`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  word-wrap: break-word; 
 
   ${({ variant }) => {
     switch (variant) {

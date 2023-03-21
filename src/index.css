@@ -14,25 +14,24 @@ code {
 }
 
 * {
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
+/* html,
 body {
   height: 100vh;
-}
+} */
 /* body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   color: #fff;
 } */
 
-.main {
+/* .main {
   display: flex;
   height: 100vh;
-}
+} */
 /* 
 .container {
   flex-grow: 1;
@@ -71,7 +70,7 @@ body {
   color: #fff;
 } */
 
-.sidebar {
+/* .sidebar {
   width: 280px;
   flex-shrink: 0;
   background-color: rgba(240, 201, 167, 1);
@@ -136,7 +135,7 @@ body {
 .navbar {
   background-color: #443e3e;
   padding: 15px;
-}
+} */
 
 /* .navbar-brand {
   color: #f1b590;
