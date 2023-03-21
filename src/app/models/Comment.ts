@@ -1,11 +1,9 @@
-import AppUser from "./AppUser";
-import Mission from "./Mission";
+import Entity from "./Entity";
+import Member from "./Member";
 
-export default interface Comments {
+export default interface Comment extends Entity {
     content : string,
     postDate: Date,
     updateDate: Date,
-    missionId: string,
-    mission: Mission,
-    owner: AppUser,
+    owner: Member,
 }

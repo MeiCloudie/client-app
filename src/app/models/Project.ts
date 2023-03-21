@@ -1,14 +1,8 @@
-import Group from "./Group";
-import Mission from "./Mission";
-import Process from "./Process";
-import ProjectUser from "./ProjectUser";
+import Entity from "./Entity";
 
-export default interface Project {
+export default interface Project extends Entity {
+    createDate: Date,
     name : string,
     title: string,
     description: string,
-    group: Group,
-    projectUsers: ProjectUser[],
-    processes: Process[],
-    missions: Mission[],
 }

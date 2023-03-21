@@ -1,9 +1,8 @@
 import { MissionPriorities } from "../enums/MissionPriorities";
 import { MissionStates } from "../enums/MissionStates";
-import MissionUser from "./MissionUser";
-import Project from "./Project";
+import Entity from "./Entity";
 
-export default interface Mission {
+export default interface Mission extends Entity {
     title: string,
     description: string,
     priority: MissionPriorities,
@@ -11,8 +10,5 @@ export default interface Mission {
     startDate: Date,
     endDate: Date,
     completedDate: Date,
-    projectId: string,
-    project: Project,
-    missionUsers: MissionUser[],
-    comments: Comment[],
+    createDate: Date,
 }

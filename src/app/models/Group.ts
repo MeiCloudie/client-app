@@ -1,11 +1,9 @@
-import AppUser from "./AppUser";
-import Project from "./Project";
+import Entity from "./Entity";
+import Member from "./Member";
 
-export default interface Group {
+export default interface Group extends Entity {
     name : string,
     title: string,
     description: string,
-    ownerId: string,
-    owner: AppUser,
-    projects: Project[],
+    owner: Member,
 }

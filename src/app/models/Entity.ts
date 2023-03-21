@@ -1,6 +1,3 @@
-import IEntity from "./IEntity";
-
-export default interface Entity extends IEntity {
+export default interface Entity {
     id: string,
-    createDate: Date,
 }
