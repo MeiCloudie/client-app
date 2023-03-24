@@ -172,14 +172,16 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = [
-  {
-    id: missions[0].id,
-    title: missions[0].title,
-    assignedTo: users[0].displayName,
-    state: missions[0].state,
-    comments: 2,
-    activityDate: missions[0].createDate.toLocaleString("en-US", {
+const rows = missions.map((m) => {
+  const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+  const states = ["New", "Active", "Resolved", "Closed"];
+  return {
+    id: m.id,
+    title: m.title,
+    assignedTo: users[randomIndex].displayName,
+    state: states[m.state],
+    comments: randomIndex,
+    activityDate: m.createDate.toLocaleString("en-US", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -187,129 +189,33 @@ const rows = [
       minute: "2-digit",
       second: "2-digit",
     }),
-  },
-  {
-    id: missions[1].id,
-    title: missions[1].title,
-    assignedTo: users[0].displayName,
-    state: missions[1].state,
-    comments: 5,
-    activityDate: missions[1].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[2].id,
-    title: missions[2].title,
-    assignedTo: users[1].displayName,
-    state: missions[2].state,
-    comments: 0,
-    activityDate: missions[2].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[3].id,
-    title: missions[3].title,
-    assignedTo: users[1].displayName,
-    state: missions[3].state,
-    comments: 20,
-    activityDate: missions[3].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[4].id,
-    title: missions[4].title,
-    assignedTo: users[2].displayName,
-    state: missions[4].state,
-    comments: 10,
-    activityDate: missions[4].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[5].id,
-    title: missions[5].title,
-    assignedTo: users[2].displayName,
-    state: missions[5].state,
-    comments: 0,
-    activityDate: missions[5].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[6].id,
-    title: missions[6].title,
-    assignedTo: users[3].displayName,
-    state: missions[6].state,
-    comments: 0,
-    activityDate: missions[6].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-  {
-    id: missions[7].id,
-    title: missions[7].title,
-    assignedTo: users[2].displayName,
-    state: missions[7].state,
-    comments: 10,
-    activityDate: missions[7].createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  },
-];
+  };
+});
 
 const MissionListPage = () => {
   return (
     <div>
-      <div style={{textAlign: "center"}}>
+      <div style={{ textAlign: "center" }}>
         <Typography
           variant="h1"
           gutterBottom
-          style={{ wordWrap: "break-word", margin: "0", fontWeight: "bold", color: "#1565c0" }}
+          style={{
+            wordWrap: "break-word",
+            margin: "0",
+            fontWeight: "bold",
+            color: "#1565c0",
+          }}
         >
           MISSIONS
         </Typography>
         <Typography
           variant="h3"
           gutterBottom
-          style={{ wordWrap: "break-word", fontWeight: "700", color: "#443e3e" }}
+          style={{
+            wordWrap: "break-word",
+            fontWeight: "700",
+            color: "#443e3e",
+          }}
         >
           Project: {project.title}
         </Typography>
