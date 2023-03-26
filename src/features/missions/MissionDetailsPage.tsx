@@ -261,6 +261,20 @@ const MissionDetailsPage = () => {
           }}
         />
 
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "10px",
+          }}
+        >
+          <Stack spacing={2} direction="row">
+            <Button variant="contained">Save</Button>
+            <Button variant="contained">Back to List</Button>
+          </Stack>
+        </div>
+
         <TextField
           id="discussion-outlined-textarea"
           label="Discussion"
@@ -274,29 +288,36 @@ const MissionDetailsPage = () => {
             ),
           }}
         />
-      </Box>
 
-      <Stack
-        spacing={2}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Button variant="contained">Cancel</Button>
-        <Button variant="contained">Save</Button>
-      </Stack>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Stack spacing={2} direction="row">
+            <Button variant="contained">Cancel</Button>
+            <Button variant="contained">Save</Button>
+          </Stack>
+        </div>
+      </Box>
 
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          margin: "10px"
+          margin: "10px",
         }}
       >
         <Card style={{ width: "57%", backgroundColor: "#f0c9a7" }}>
           <CardHeader
-            avatar={<Avatar aria-label="user" style={{ backgroundColor: "#1565c0"}}>U</Avatar>}
+            avatar={
+              <Avatar aria-label="user" style={{ backgroundColor: "#1565c0" }}>
+                U
+              </Avatar>
+            }
             title="John Doe"
             subheader="March 26, 2023"
           />
