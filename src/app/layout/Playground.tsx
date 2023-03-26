@@ -268,8 +268,8 @@ export const Playground: React.FC = () => {
           }}
         >
           {/* Test Page */}
-          {/* <MissionListPage />
-          <MissionDetailsPage /> */}
+          {/* <MissionListPage /> */}
+          {/* <MissionDetailsPage /> */}
           <ProjectDetailsPage />
           {/* <ProjectInformation /> */}
           {/* End - Test Page */}

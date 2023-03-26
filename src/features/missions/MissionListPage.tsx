@@ -153,7 +153,7 @@ const columns: GridColDef[] = [
   {
     field: "assignedTo",
     headerName: "Assigned To",
-    width: 300,
+    width: 200,
   },
   {
     field: "state",
