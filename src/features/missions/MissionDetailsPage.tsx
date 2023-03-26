@@ -10,6 +10,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { Card, CardHeader, CardContent, Avatar } from "@mui/material";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
@@ -21,7 +22,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import User from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
-import { textAlign } from "@mui/system";
 
 const users: User[] = [
   {
@@ -275,6 +275,7 @@ const MissionDetailsPage = () => {
           }}
         />
       </Box>
+
       <Stack
         spacing={2}
         direction="row"
@@ -285,7 +286,25 @@ const MissionDetailsPage = () => {
         <Button variant="contained">Save</Button>
       </Stack>
 
-      {/* Comments */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "10px"
+        }}
+      >
+        <Card style={{ width: "57%", backgroundColor: "#f0c9a7" }}>
+          <CardHeader
+            avatar={<Avatar aria-label="user" style={{ backgroundColor: "#1565c0"}}>U</Avatar>}
+            title="John Doe"
+            subheader="March 26, 2023"
+          />
+          <CardContent>
+            <Typography variant="body1">This is a comment.</Typography>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
