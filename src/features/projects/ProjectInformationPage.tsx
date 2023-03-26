@@ -1,22 +1,67 @@
 import * as React from "react";
 
-import { Box, InputAdornment, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import Divider from "@mui/material/Divider";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import ModeIcon from '@mui/icons-material/Mode';
+import ModeIcon from "@mui/icons-material/Mode";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import Process from "../../app/models/Process";
+import Project from "../../app/models/Project";
+
+const projects: Project[] = [
+  {
+    id: "project1",
+    createDate: new Date(2023, 7, 12),
+    name: "Healthy and Balance",
+    title: "Life",
+    description: "Happiness",
+  },
+];
+
+const processes: Process[] = [
+  {
+    title: "First process",
+    description: "Some text here...",
+    isDone: false,
+    projectId: "project1",
+    project: projects[0],
+  },
+];
+
+const columns: GridColDef[] = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "title", headerName: "Process", width: 300 },
+  { field: "text", headerName: "Description", width: 300 },
+];
+
+const rows = [
+  { id: 1, title: processes[0].title, text: processes[0].description },
+  { id: 2, title: processes[0].title, text: processes[0].description },
+];
 
 const ProjectInformation = () => {
   return (
-    <div>
+    <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
         variant="h4"
         gutterBottom
         style={{
           wordWrap: "break-word",
-          margin: "0",
+          margin: "10px",
           fontWeight: "bold",
           color: "#443e3e",
-          textAlign: "center",
         }}
       >
         Project Information
@@ -24,11 +69,10 @@ const ProjectInformation = () => {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "100ch" },
+          "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
         }}
         noValidate
         autoComplete="off"
-        style={{ textAlign: "center" }}
       >
         <TextField
           id="title-outlined-basic"
@@ -65,8 +109,68 @@ const ProjectInformation = () => {
             ),
           }}
         />
+
+        <TextField
+          id="title-outlined-basic"
+          label="Text"
+          variant="outlined"
+          placeholder="Enter text here!"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <TextSnippetIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={2}
+          style={{ padding: "10px 0" }}
+        >
+          <Button variant="contained" startIcon={<AddCircleIcon />}>
+            Add Process
+          </Button>
+          <Button variant="contained" startIcon={<DeleteIcon />}>
+            Remove Process
+          </Button>
+        </Stack>
+        
       </Box>
-    </div>
+
+      <Box sx={{ height: 400 }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          sx={{ background: "#f0c9a7" }}
+        />
+      </Box>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "right",
+        }}
+      >
+        <Stack spacing={2} direction="row">
+          <Button variant="contained">Cancel</Button>
+          <Button variant="contained">Save</Button>
+        </Stack>
+      </div>
+    </Box>
   );
 };
 export default ProjectInformation;

@@ -109,16 +109,15 @@ const MissionDetailsPage = () => {
   };
 
   return (
-    <div>
+    <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
         variant="h4"
         gutterBottom
         style={{
           wordWrap: "break-word",
-          margin: "0",
+          margin: "10px",
           fontWeight: "bold",
           color: "#443e3e",
-          textAlign: "center",
         }}
       >
         Mission Details
@@ -127,11 +126,10 @@ const MissionDetailsPage = () => {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "100ch" },
+          "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
         }}
         noValidate
         autoComplete="off"
-        style={{ textAlign: "center" }}
       >
         <TextField
           id="title-outlined-basic"
@@ -265,13 +263,12 @@ const MissionDetailsPage = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            margin: "10px",
+            justifyContent: "right",
           }}
         >
           <Stack spacing={2} direction="row">
-            <Button variant="contained">Save</Button>
             <Button variant="contained">Back to List</Button>
+            <Button variant="contained">Save</Button>
           </Stack>
         </div>
 
@@ -293,7 +290,7 @@ const MissionDetailsPage = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "right",
           }}
         >
           <Stack spacing={2} direction="row">
@@ -307,11 +304,10 @@ const MissionDetailsPage = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          margin: "10px",
+          justifyContent: "left",
         }}
       >
-        <Card style={{ width: "57%", backgroundColor: "#f0c9a7" }}>
+        <Card style={{ backgroundColor: "#f0c9a7", width: "100%" }}>
           <CardHeader
             avatar={
               <Avatar aria-label="user" style={{ backgroundColor: "#1565c0" }}>
@@ -326,7 +322,7 @@ const MissionDetailsPage = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </Box>
   );
 };
 
