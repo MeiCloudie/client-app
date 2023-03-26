@@ -268,10 +268,10 @@ export const Playground: React.FC = () => {
           }}
         >
           {/* Test Page */}
-          <MissionListPage />
-          <MissionDetailsPage />
+          {/* <MissionListPage />
+          <MissionDetailsPage /> */}
           <ProjectDetailsPage />
-          <ProjectInformation />
+          {/* <ProjectInformation /> */}
           {/* End - Test Page */}
 
           <div style={{ marginBottom: "16px" }}>

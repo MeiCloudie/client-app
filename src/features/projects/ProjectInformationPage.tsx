@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Divider from "@mui/material/Divider";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -128,7 +128,7 @@ const ProjectInformation = () => {
           direction="row"
           divider={<Divider orientation="vertical" flexItem />}
           spacing={2}
-          style={{ padding: "10px 0" }}
+          style={{ padding: "10px 0", justifyContent: "right" }}
         >
           <Button variant="contained" startIcon={<AddCircleIcon />}>
             Add Process
@@ -162,7 +162,7 @@ const ProjectInformation = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "right",
+          justifyContent: "flex-end",
         }}
       >
         <Stack spacing={2} direction="row">
