@@ -41,7 +41,7 @@ const processes: Process[] = [
 ];
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 100 },
   { field: "title", headerName: "Process", width: 300 },
   { field: "text", headerName: "Description", width: 300 },
 ];
@@ -140,7 +140,7 @@ const ProjectInformation = () => {
         
       </Box>
 
-      <Box sx={{ height: 400 }}>
+      <Box sx={{ height: 400, borderStyle: "solid", borderRadius: "5px" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -154,7 +154,7 @@ const ProjectInformation = () => {
           pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick
-          sx={{ background: "#f0c9a7" }}
+          sx={{ background: "#f5e4d6" }}
         />
       </Box>
 

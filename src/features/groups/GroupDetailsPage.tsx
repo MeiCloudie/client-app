@@ -170,8 +170,8 @@ const GroupDetailsPage = () => {
         <List
           sx={{
             width: "100%",
-            bgcolor: "#f1b590",
-            borderRadius: "10px",
+            bgcolor: "#f5e4d6",
+            borderRadius: "5px",
             position: "relative",
             overflow: "auto",
             maxHeight: 300,
@@ -222,8 +222,8 @@ const GroupDetailsPage = () => {
         <List
           sx={{
             width: "100%",
-            bgcolor: "#f1b590",
-            borderRadius: "10px",
+            bgcolor: "#f5e4d6",
+            borderRadius: "5px",
             position: "relative",
             overflow: "auto",
             maxHeight: 300,

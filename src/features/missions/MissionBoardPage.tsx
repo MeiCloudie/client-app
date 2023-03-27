@@ -258,7 +258,7 @@ const MissionBoardPage = () => {
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
-                      bgcolor: "#f1b590",
+                      bgcolor: "#ffe8e6",
                       borderStyle: "solid",
                       borderRadius: "10px",
                       borderColor: "#1565c0",
@@ -359,24 +359,24 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Typography
-            variant="h5"
-            gutterBottom
-            style={{
-              wordWrap: "break-word",
-              margin: "10px 0",
-              fontWeight: "bold",
-              color: "#443e3e",
-            }}
-          >
-            Active:{" "}
-            {
-              missions.filter(
-                (mission) => mission.state === MissionStates.Active
-              ).length
-            }
-            /{missions.length}
-          </Typography>
+        <Typography
+              variant="h5"
+              gutterBottom
+              style={{
+                wordWrap: "break-word",
+                margin: "10px 0",
+                fontWeight: "bold",
+                color: "#443e3e",
+              }}
+            >
+              Active:{" "}
+              {
+                missions.filter(
+                  (mission) => mission.state === MissionStates.Active
+                ).length
+              }
+              /{missions.length}
+            </Typography>
 
           <Box
             sx={{
@@ -390,6 +390,7 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
+
             {missions
               .filter((m) => m.state === MissionStates.Active)
               .map((m, i) => {
@@ -399,7 +400,7 @@ const MissionBoardPage = () => {
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
-                      bgcolor: "#f1b590",
+                      bgcolor: "#ffe8e6",
                       borderStyle: "solid",
                       borderRadius: "10px",
                       borderColor: "#1565c0",
@@ -500,24 +501,24 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Typography
-            variant="h5"
-            gutterBottom
-            style={{
-              wordWrap: "break-word",
-              margin: "10px 0",
-              fontWeight: "bold",
-              color: "#443e3e",
-            }}
-          >
-            Resolved:{" "}
-            {
-              missions.filter(
-                (mission) => mission.state === MissionStates.Resolved
-              ).length
-            }
-            /{missions.length}
-          </Typography>
+        <Typography
+              variant="h5"
+              gutterBottom
+              style={{
+                wordWrap: "break-word",
+                margin: "10px 0",
+                fontWeight: "bold",
+                color: "#443e3e",
+              }}
+            >
+              Resolved:{" "}
+              {
+                missions.filter(
+                  (mission) => mission.state === MissionStates.Resolved
+                ).length
+              }
+              /{missions.length}
+            </Typography>
 
           <Box
             sx={{
@@ -531,6 +532,7 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
+
             {missions
               .filter((m) => m.state === MissionStates.Resolved)
               .map((m, i) => {
@@ -540,7 +542,7 @@ const MissionBoardPage = () => {
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
-                      bgcolor: "#f1b590",
+                      bgcolor: "#ffe8e6",
                       borderStyle: "solid",
                       borderRadius: "10px",
                       borderColor: "#1565c0",
@@ -641,25 +643,25 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Typography
-            variant="h5"
-            gutterBottom
-            style={{
-              wordWrap: "break-word",
-              margin: "10px 0",
-              fontWeight: "bold",
-              color: "#443e3e",
-            }}
-          >
-            Closed:{" "}
-            {
-              missions.filter(
-                (mission) => mission.state === MissionStates.Closed
-              ).length
-            }
-            /{missions.length}
-          </Typography>
-
+        <Typography
+              variant="h5"
+              gutterBottom
+              style={{
+                wordWrap: "break-word",
+                margin: "10px 0",
+                fontWeight: "bold",
+                color: "#443e3e",
+              }}
+            >
+              Closed:{" "}
+              {
+                missions.filter(
+                  (mission) => mission.state === MissionStates.Closed
+                ).length
+              }
+              /{missions.length}
+            </Typography>
+            
           <Box
             sx={{
               padding: "20px",
@@ -672,6 +674,7 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
+
             {missions
               .filter((m) => m.state === MissionStates.Closed)
               .map((m, i) => {
@@ -681,7 +684,7 @@ const MissionBoardPage = () => {
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
-                      bgcolor: "#f1b590",
+                      bgcolor: "#ffe8e6",
                       borderStyle: "solid",
                       borderRadius: "10px",
                       borderColor: "#1565c0",

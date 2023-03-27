@@ -238,7 +238,7 @@ const MissionListPage = () => {
         </Button>
       </Stack>
 
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 400, width: "100%", borderStyle: "solid", borderRadius: "5px", borderColor: "#443e3e" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -252,7 +252,7 @@ const MissionListPage = () => {
           pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick
-          sx={{ background: "#f0c9a7" }}
+          sx={{ background: "#efcead" }}
         />
       </Box>
     </div>

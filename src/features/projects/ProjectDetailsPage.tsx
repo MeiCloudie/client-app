@@ -146,11 +146,13 @@ const ProjectDetailsPage = () => {
 
         <Box
           sx={{
-            bgcolor: "#e8ae8a",
+            bgcolor: "#f5e4d6",
             padding: "20px",
-            borderRadius: "10px",
+            borderRadius: "5px",
             borderStyle: "solid",
             borderColor: "#1565c0",
+            overflow: "auto",
+            maxHeight: 500,
           }}
         >
           <Stepper activeStep={activeStep} orientation="vertical">
