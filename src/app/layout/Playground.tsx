@@ -32,6 +32,7 @@ import MissionListTestPage from "../../features/missions/MissionListTestPage";
 import MissionBoardPage from "../../features/missions/MissionBoardPage";
 import GroupInformationPage from "../../features/groups/GroupInformationPage";
 import GroupMembersPage from "../../features/groups/GroupMembersPage";
+import SettingsPage from "../../features/users/SettingsPage";
 
 type Theme = "light" | "dark";
 
@@ -283,7 +284,9 @@ export const Playground: React.FC = () => {
 
           {/* <GroupDetailsPage /> */}
           {/* <GroupInformationPage /> */}
-          <GroupMembersPage />
+          {/* <GroupMembersPage /> */}
+
+          <SettingsPage />
 
           {/* End - Test Page */}
 
