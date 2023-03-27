@@ -22,6 +22,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import User from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
+import Mission from "../../app/models/Mission";
+import agent from "../../app/api/agent";
+import { useParams } from "react-router-dom";
 
 const users: User[] = [
   {
@@ -93,15 +96,35 @@ const stateSelection = [
 
 const MissionDetailsPage = () => {
   const [user, setUser] = React.useState("");
-  const [priority, setPriority] = React.useState("");
+  const [priority, setPriority] = React.useState<MissionPriorities>();
   const [state, setState] = React.useState("");
+  const [mission, setMission] = React.useState<Mission>({
+    id: "",
+    title: "",
+    description: "",
+    priority: MissionPriorities.Low,
+    state: MissionStates.New,
+    startDate: new Date(),
+    endDate: new Date(),
+    completedDate: new Date(),
+    createDate: new Date(),
+  });
+  
+  const { missionId } = useParams<{ missionId : string }>()
 
+  // React.useEffect(() => {
+  //   agent.Missions.details(missionId!).then(m => {
+  //     console.log(m.title)
+  //     setMission(m)
+  //   })
+  // }, [missionId])
+  
   const userHandleChange = (event: SelectChangeEvent) => {
     setUser(event.target.value);
   };
 
-  const priorityHandleChange = (event: SelectChangeEvent) => {
-    setPriority(event.target.value as string);
+  const priorityHandleChange = (event: SelectChangeEvent<MissionPriorities>) => {
+    setPriority(event.target.value as MissionPriorities);
   };
 
   const stateHandleChange = (event: SelectChangeEvent) => {
@@ -136,6 +159,7 @@ const MissionDetailsPage = () => {
           label="Title"
           variant="outlined"
           placeholder="Enter title here!"
+          value={mission!.title}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -172,7 +196,7 @@ const MissionDetailsPage = () => {
           <Select
             labelId="priority-select-label"
             id="priority-select"
-            value={priority}
+            value={mission.priority}
             label="Priority"
             onChange={priorityHandleChange}
             startAdornment={
@@ -216,14 +240,16 @@ const MissionDetailsPage = () => {
           label="Description"
           multiline
           placeholder="Write some description here..."
+          value={mission.description}
           rows={4}
         />
 
         <TextField
-          id="estimate-outlined-basic"
-          label="Estimate"
+          id="start-date-outlined-basic"
+          label="Start Date"
           variant="outlined"
           placeholder="Hours"
+          value={mission.startDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -233,10 +259,11 @@ const MissionDetailsPage = () => {
           }}
         />
         <TextField
-          id="remaining-outlined-basic"
-          label="Remaining"
+          id="end-date-outlined-basic"
+          label="End Date"
           variant="outlined"
           placeholder="Hours"
+          value={mission.endDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -250,6 +277,7 @@ const MissionDetailsPage = () => {
           label="Completed"
           variant="outlined"
           placeholder="Hours"
+          value={mission.completedDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

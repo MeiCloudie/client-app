@@ -98,7 +98,7 @@ const ProjectDetailsPage = () => {
             wordWrap: "break-word",
             margin: "10px 0",
             fontWeight: "bold",
-            color: "#9196de",
+            color: "#1565c0",
           }}
         >
           About this project:
@@ -123,7 +123,7 @@ const ProjectDetailsPage = () => {
             wordWrap: "break-word",
             margin: "10px 0",
             fontWeight: "bold",
-            color: "#9196de",
+            color: "#1565c0",
           }}
         >
           Process:
@@ -136,6 +136,7 @@ const ProjectDetailsPage = () => {
             position: "relative",
             overflow: "auto",
             maxHeight: 400,
+            borderRadius: "10px"
           }}
         >
           {processes.map((p, i) => {

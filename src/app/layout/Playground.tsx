@@ -27,6 +27,8 @@ import MissionListPage from "../../features/missions/MissionListPage";
 import MissionDetailsPage from "../../features/missions/MissionDetailsPage";
 import ProjectDetailsPage from "../../features/projects/ProjectDetailsPage";
 import ProjectInformation from "../../features/projects/ProjectInformationPage";
+import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
+import MissionListTestPage from "../../features/missions/MissionListTestPage";
 
 type Theme = "light" | "dark";
 
@@ -269,9 +271,14 @@ export const Playground: React.FC = () => {
         >
           {/* Test Page */}
           {/* <MissionListPage /> */}
-          {/* <MissionDetailsPage /> */}
-          <ProjectDetailsPage />
+          <MissionDetailsPage />
+          {/* <ProjectDetailsPage /> */}
           {/* <ProjectInformation /> */}
+
+          {/* <GroupDetailsPage /> */}
+
+          <MissionListTestPage />
+
           {/* End - Test Page */}
 
           <div style={{ marginBottom: "16px" }}>
