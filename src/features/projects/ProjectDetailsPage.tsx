@@ -1,12 +1,11 @@
 import * as React from "react";
 
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import Paper from "@mui/material/Paper";
 
 import Project from "../../app/models/Project";
 
@@ -50,19 +49,18 @@ const processes: Process[] = [
 ];
 
 const ProjectDetailsPage = () => {
-  const [checked, setChecked] = React.useState([0]);
+  const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-    setChecked(newChecked);
+  const handleReset = () => {
+    setActiveStep(0);
   };
 
   return (
@@ -88,9 +86,26 @@ const ProjectDetailsPage = () => {
           backgroundColor: "#efcead",
           borderStyle: "solid",
           borderRadius: "10px",
-          borderColor: "#9196de",
+          borderColor: "#443e3e",
         }}
       >
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={2}
+          style={{ padding: "10px 0", justifyContent: "left" }}
+        >
+          <Button variant="contained" startIcon={<AssignmentIcon />}>
+            Missions
+          </Button>
+          <Button variant="contained" startIcon={<DashboardCustomizeIcon />}>
+            Boards
+          </Button>
+          <Button variant="contained" startIcon={<EditIcon />}>
+            Edit Project
+          </Button>
+        </Stack>
+
         <Typography
           variant="h5"
           gutterBottom
@@ -129,56 +144,65 @@ const ProjectDetailsPage = () => {
           Process:
         </Typography>
 
-        <List
+        <Box
           sx={{
-            width: "100%",
-            bgcolor: "#f1b590",
-            position: "relative",
-            overflow: "auto",
-            maxHeight: 400,
-            borderRadius: "10px"
+            bgcolor: "#e8ae8a",
+            padding: "20px",
+            borderRadius: "10px",
+            borderStyle: "solid",
+            borderColor: "#1565c0",
           }}
         >
-          {processes.map((p, i) => {
-            return (
-              <ListItem disablePadding>
-                <ListItemButton
-                  role={undefined}
-                  onClick={handleToggle(i)}
-                  dense
+          <Stepper activeStep={activeStep} orientation="vertical">
+            {processes.map((process, index) => (
+              <Step key={process.title}>
+                <StepLabel
+                  optional={
+                    index === 2 ? (
+                      <Typography variant="caption">Last step</Typography>
+                    ) : null
+                  }
                 >
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(i) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={`${i + 1} - ${p.title}`} secondary={p.description} />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
+                  {process.title}
+                </StepLabel>
+                <StepContent>
+                  <Typography>{process.description}</Typography>
+                  <Box sx={{ mb: 2 }}>
+                    <div>
+                      <Button
+                        variant="contained"
+                        onClick={handleNext}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        {index === processes.length - 1 ? "Finish" : "Continue"}
+                      </Button>
+                      <Button
+                        disabled={index === 0}
+                        onClick={handleBack}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Back
+                      </Button>
+                    </div>
+                  </Box>
+                </StepContent>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === processes.length && (
+            <Paper
+              square
+              elevation={0}
+              sx={{ p: 3, bgcolor: "#efcead", borderRadius: "10px" }}
+            >
+              <Typography>All processes completed - you're finished</Typography>
+              <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                Reset
+              </Button>
+            </Paper>
+          )}
+        </Box>
       </Box>
-
-      <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
-        style={{ padding: "10px 0", justifyContent: "center" }}
-      >
-        <Button variant="contained" startIcon={<AssignmentIcon />}>
-          Missions
-        </Button>
-        <Button variant="contained" startIcon={<DashboardCustomizeIcon />}>
-          Boards
-        </Button>
-        <Button variant="contained" startIcon={<EditIcon />}>
-          Edit
-        </Button>
-      </Stack>
     </div>
   );
 };
