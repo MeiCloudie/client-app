@@ -31,7 +31,7 @@ const users: User[] = [
     displayName: "Mei",
     email: "mei@gmail.com",
     token: "meiToken",
-    roles: ["Manager", "Leader"],
+    roles: ["Leader"],
   },
   {
     displayName: "Slime",
@@ -43,13 +43,13 @@ const users: User[] = [
     displayName: "John",
     email: "john@example.com",
     token: "token123",
-    roles: ["Manager", "Developer"],
+    roles: ["Member"],
   },
   {
     displayName: "Jane",
     email: "jane@example.com",
     token: "token456",
-    roles: ["Designer"],
+    roles: ["Member"],
   },
 ];
 
