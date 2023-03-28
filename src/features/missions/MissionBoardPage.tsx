@@ -259,7 +259,7 @@ const MissionBoardPage = () => {
           >
             {missions
               .filter((m) => m.state === MissionStates.New)
-              .map((m, i) => {
+              .map((m) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
@@ -401,7 +401,7 @@ const MissionBoardPage = () => {
 
             {missions
               .filter((m) => m.state === MissionStates.Active)
-              .map((m, i) => {
+              .map((m) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
@@ -543,7 +543,7 @@ const MissionBoardPage = () => {
 
             {missions
               .filter((m) => m.state === MissionStates.Resolved)
-              .map((m, i) => {
+              .map((m) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
@@ -685,7 +685,7 @@ const MissionBoardPage = () => {
 
             {missions
               .filter((m) => m.state === MissionStates.Closed)
-              .map((m, i) => {
+              .map((m) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card

@@ -1,25 +1,29 @@
 import * as React from "react";
 
 import {
-  Alert,
   AlertTitle,
   Box,
   Button,
-  FilledInput,
   FormControl,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Snackbar,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-import LockIcon from "@mui/icons-material/Lock";
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const SettingsPage = () => {
   const [showCurrentPassword, setShowCurrentPassword] = React.useState(false);
@@ -36,6 +40,30 @@ const SettingsPage = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
+  const handleClick = () => {
+    if (isSuccess) {
+      setIsSuccess(false);
+    }
+    else {
+      setIsSuccess(true);
+    }
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -137,6 +165,9 @@ const SettingsPage = () => {
             label="Confirm Password"
           />
         </FormControl>
+      </Box>
+
+      <Stack sx={{ width: "100%" }} spacing={2}>
         <div
           style={{
             display: "flex",
@@ -145,21 +176,29 @@ const SettingsPage = () => {
           }}
         >
           <Stack spacing={2} direction="row">
-            <Button variant="contained">Change Password</Button>
+            <Button variant="contained" onClick={handleClick}>
+              Change Password
+            </Button>
           </Stack>
         </div>
-      </Box>
+          {!isSuccess && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="warning">
+              <AlertTitle>Warning</AlertTitle>
+              The current password is incorrect or the new password is not in
+              the correct format. <strong>Please re-enter!</strong>
+            </Alert>
+            </Snackbar>
+          )}
 
-      <Stack sx={{ width: "100%" }} spacing={2}>
-        <Alert severity="warning">
-          <AlertTitle>Warning</AlertTitle>
-          The current password is incorrect or the new password is not in the
-          correct format. <strong>Please re-enter!</strong>
-        </Alert>
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          Password change successfully!
-        </Alert>
+          {isSuccess && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              <AlertTitle>Success</AlertTitle>
+              Password change successfully!
+            </Alert>
+            </Snackbar>
+          )}
       </Stack>
     </Box>
   );
