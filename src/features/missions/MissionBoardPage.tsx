@@ -175,10 +175,18 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const MissionBoardPage = () => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState<Set<string>>(new Set<string>());
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleExpandClick = (id : string) => {
+    if (expanded.has(id)) {
+      setExpanded((set) => {
+        set.delete(id);
+        return new Set<string>(set);
+      });
+    }
+    else {
+      setExpanded((set) => new Set<string>(set.add(id)));
+    }
   };
 
   const states = ["New", "Active", "Resolved", "Closed"];
@@ -294,15 +302,15 @@ const MissionBoardPage = () => {
                         <ForumIcon />
                       </IconButton>
                       <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
+                        expand={expanded.has(m.id)}
+                        onClick={() => handleExpandClick(m.id)}
+                        aria-expanded={expanded.has(m.id)}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -436,15 +444,15 @@ const MissionBoardPage = () => {
                         <ForumIcon />
                       </IconButton>
                       <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
+                        expand={expanded.has(m.id)}
+                        onClick={() => handleExpandClick(m.id)}
+                        aria-expanded={expanded.has(m.id)}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -578,15 +586,15 @@ const MissionBoardPage = () => {
                         <ForumIcon />
                       </IconButton>
                       <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
+                        expand={expanded.has(m.id)}
+                        onClick={() => handleExpandClick(m.id)}
+                        aria-expanded={expanded.has(m.id)}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -720,15 +728,15 @@ const MissionBoardPage = () => {
                         <ForumIcon />
                       </IconButton>
                       <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
+                        expand={expanded.has(m.id)}
+                        onClick={() => handleExpandClick(m.id)}
+                        aria-expanded={expanded.has(m.id)}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
                       <CardContent>
                         <Typography
                           variant="h6"
