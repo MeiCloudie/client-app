@@ -36,6 +36,7 @@ import SettingsPage from "../../features/users/SettingsPage";
 import ProfilePage from "../../features/users/ProfilePage";
 import ErrorPage from "../../features/common/ErrorPage";
 import AboutUsPage from "../../features/common/AboutUsPage";
+import HelpPage from "../../features/common/HelpPage";
 
 type Theme = "light" | "dark";
 
@@ -293,7 +294,8 @@ export const Playground: React.FC = () => {
           {/* <ProfilePage /> */}
 
           {/* <ErrorPage /> */}
-          <AboutUsPage />
+          {/* <AboutUsPage /> */}
+          <HelpPage />
 
           {/* End - Test Page */}
 

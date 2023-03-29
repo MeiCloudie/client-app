@@ -5,7 +5,7 @@ import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
 import HomePage from "../../features/home/HomePage";
 import MissionListPage from "../../features/missions/MissionListPage";
 import ProjectDetailsPage from "../../features/projects/ProjectDetailsPage";
-import HelpPage from "../../features/users/HelpPage";
+import HelpPage from "../../features/common/HelpPage";
 import LoginPage from "../../features/users/LoginPage";
 import ProfilePage from "../../features/users/ProfilePage";
 import SettingsPage from "../../features/users/SettingsPage";
