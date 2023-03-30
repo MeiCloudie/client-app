@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import {
   Sidebar,
   Menu,
@@ -37,6 +38,7 @@ import ProfilePage from "../../features/users/ProfilePage";
 import ErrorPage from "../../features/common/ErrorPage";
 import AboutUsPage from "../../features/common/AboutUsPage";
 import HelpPage from "../../features/common/HelpPage";
+import HomePage from "../../features/home/HomePage";
 
 type Theme = "light" | "dark";
 
@@ -295,8 +297,10 @@ export const Playground: React.FC = () => {
 
           {/* <ErrorPage /> */}
           {/* <AboutUsPage /> */}
-          <HelpPage />
+          {/* <HelpPage /> */}
+          <HomePage />
 
+          {/* <Outlet /> */}
           {/* End - Test Page */}
 
           <div style={{ marginBottom: "16px" }}>

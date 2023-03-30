@@ -81,6 +81,7 @@ const GroupDetailsPage = () => {
     owner: {
       userName: "Mei",
       displayName: "Van",
+      role: "Leader"
     },
     projects: [
       {

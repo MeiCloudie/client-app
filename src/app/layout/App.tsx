@@ -1,5 +1,6 @@
 //import { Container } from "@mui/material";
 //import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
 import MissionListPage from "../../features/missions/MissionListPage";
 import "./App.css";
@@ -11,6 +12,7 @@ import { Playground } from "./Playground";
 function App() {
   return (
     <div>
+      {/* <Outlet /> */}
       <BasicBreadcrumbs />
       <Playground />
       {/* <GroupDetailsPage /> */}
