@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Sidebar,
   Menu,
@@ -41,6 +41,66 @@ import HelpPage from "../../features/common/HelpPage";
 import HomePage from "../../features/home/HomePage";
 import RegisterPage from "../../features/users/RegisterPage";
 import LoginPage from "../../features/users/LoginPage";
+
+import User from "../models/User";
+import Group from "../models/Group";
+
+const user: User = {
+  displayName: "Mei",
+  email: "mei@gmail.com",
+  token: "token1",
+  roles: ["User"],
+};
+
+const groups: Group[] = [
+  {
+    id: "group1",
+    name: "owl",
+    description: "Team owl",
+    title: "Group Owl",
+    owner: {
+      userName: "Mei",
+      displayName: "Van",
+      role: "Leader",
+    },
+    projects: [
+      {
+        id: "project1",
+        createDate: new Date(2023, 1, 1),
+        name: "study-plan",
+        title: "Study Plan",
+        description: "Effective study plan and healthy balance",
+      },
+      {
+        id: "project2",
+        createDate: new Date(2023, 7, 12),
+        name: "Healthy and Balance",
+        title: "Life",
+        description: "Happiness",
+      },
+    ],
+  },
+  {
+    id: "group2",
+    name: "abc",
+    description: "Team abc",
+    title: "Group Abc",
+    owner: {
+      userName: "Mei",
+      displayName: "Van",
+      role: "Member",
+    },
+    projects: [
+      {
+        id: "project1",
+        createDate: new Date(2023, 1, 1),
+        name: "study-plan",
+        title: "Study Plan",
+        description: "Effective study plan and healthy balance",
+      },
+    ],
+  },
+];
 
 type Theme = "light" | "dark";
 
@@ -186,48 +246,25 @@ export const Playground: React.FC = () => {
                 fontWeight={600}
                 style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
-                General
+                Account
               </Typography>
             </div>
             <Menu menuItemStyles={menuItemStyles}>
-              <SubMenu
-                label="Charts"
-                icon={<BarChart />}
-                suffix={
-                  <Badge variant="danger" shape="circle">
-                    6
-                  </Badge>
-                }
-              >
-                <MenuItem> Pie charts</MenuItem>
-                <MenuItem> Line charts</MenuItem>
-                <MenuItem> Bar charts</MenuItem>
+              <SubMenu label={user.displayName} icon={<Global />}>
+                <MenuItem
+                  icon={<Book />}
+                  component={<Link to="/profiles/:userName" />}
+                >
+                  Your profile
+                </MenuItem>
+                <MenuItem icon={<Book />} component={<Link to="/settings" />}>
+                  Change password
+                </MenuItem>
+                <MenuItem icon={<Book />} component={<Link to="/login" />}>
+                  Log out
+                </MenuItem>
               </SubMenu>
-              <SubMenu label="Maps" icon={<Global />}>
-                <MenuItem> Google maps</MenuItem>
-                <MenuItem> Open street maps</MenuItem>
-              </SubMenu>
-              <SubMenu label="Theme" icon={<InkBottle />}>
-                <MenuItem> Dark</MenuItem>
-                <MenuItem> Light</MenuItem>
-              </SubMenu>
-              <SubMenu label="Components" icon={<Diamond />}>
-                <MenuItem> Grid</MenuItem>
-                <MenuItem> Layout</MenuItem>
-                <SubMenu label="Forms">
-                  <MenuItem> Input</MenuItem>
-                  <MenuItem> Select</MenuItem>
-                  <SubMenu label="More">
-                    <MenuItem> CheckBox</MenuItem>
-                    <MenuItem> Radio</MenuItem>
-                  </SubMenu>
-                </SubMenu>
-              </SubMenu>
-              <SubMenu label="E-commerce" icon={<ShoppingCart />}>
-                <MenuItem> Product</MenuItem>
-                <MenuItem> Orders</MenuItem>
-                <MenuItem> Credit card</MenuItem>
-              </SubMenu>
+              <MenuItem icon={<Book />}>Settings</MenuItem>
             </Menu>
 
             <div
@@ -242,20 +279,69 @@ export const Playground: React.FC = () => {
                 fontWeight={600}
                 style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
-                Extra
+                Group
               </Typography>
             </div>
+            {groups.map((g) => (
+              <Menu menuItemStyles={menuItemStyles}>
+                <SubMenu label={g.title} icon={<Global />}>
+                  <MenuItem
+                    icon={<Book />}
+                    component={<Link to="/:groupName/" />}
+                  >
+                    Group Details
+                  </MenuItem>
+                  {g.projects.map((p) => (
+                    <SubMenu label={p.title} icon={<Global />}>
+                      <MenuItem
+                        icon={<Book />}
+                        component={<Link to="/:groupName/:projectName/" />}
+                      >
+                        Project Details
+                      </MenuItem>
+                      <MenuItem
+                        icon={<Book />}
+                        component={
+                          <Link to="/:groupName/:projectName/missions/" />
+                        }
+                      >
+                        Missions
+                      </MenuItem>
+                      <MenuItem
+                        icon={<Book />}
+                        component={
+                          <Link to="/:groupName/:projectName/boards/" />
+                        }
+                      >
+                        Boards
+                      </MenuItem>
+                    </SubMenu>
+                  ))}
+                </SubMenu>
+              </Menu>
+            ))}
 
-            <Menu menuItemStyles={menuItemStyles}>
-              <MenuItem
-                icon={<Calendar />}
-                suffix={<Badge variant="success">New</Badge>}
+            <div
+              style={{
+                padding: "0 24px",
+                marginBottom: "8px",
+                marginTop: "32px",
+              }}
+            >
+              <Typography
+                variant="body2"
+                fontWeight={600}
+                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
-                Calendar
+                Others
+              </Typography>
+            </div>
+            <Menu menuItemStyles={menuItemStyles}>
+              <MenuItem icon={<Book />} component={<Link to="/help" />}>
+                Help
               </MenuItem>
-              <MenuItem icon={<Book />}>Documentation</MenuItem>
-              <MenuItem disabled icon={<Service />}>
-                Examples
+              <MenuItem icon={<Book />} component={<Link to="/about-us" />}>
+                About us
               </MenuItem>
             </Menu>
           </div>
@@ -281,50 +367,7 @@ export const Playground: React.FC = () => {
             width: "100%",
           }}
         >
-          {/* Test Page */}
-          {/* <MissionListPage /> */}
-          {/* <MissionDetailsPage /> */}
-          {/* <MissionBoardPage /> */}
-          {/* <MissionListTestPage /> */}
-
-          {/* <ProjectDetailsPage /> */}
-          {/* <ProjectInformation /> */}
-
-          {/* <GroupDetailsPage /> */}
-          {/* <GroupInformationPage /> */}
-          {/* <GroupMembersPage /> */}
-
-          {/* <SettingsPage /> */}
-          {/* <ProfilePage /> */}
-
-          {/* <ErrorPage /> */}
-          {/* <AboutUsPage /> */}
-          {/* <HelpPage /> */}
-          {/* <HomePage /> */}
-
-          {/* <RegisterPage /> */}
-          {/* <LoginPage /> */}
-
-          {/* <Outlet /> */}
-          {/* End - Test Page */}
-
-          <div style={{ marginBottom: "16px" }}>
-            {broken && (
-              <button className="sb-button" onClick={() => toggleSidebar()}>
-                Toggle
-              </button>
-            )}
-          </div>
-          <div style={{ marginBottom: "48px" }}>
-            <Typography variant="h4" fontWeight={600}>
-              React Pro Sidebar
-            </Typography>
-            <Typography variant="body2">
-              React Pro Sidebar provides a set of components for creating high
-              level and customizable side navigation
-            </Typography>
-            <PackageBadges />
-          </div>
+          <Outlet />
 
           <div style={{ padding: "0 8px" }}>
             <div style={{ marginBottom: 16 }}>
