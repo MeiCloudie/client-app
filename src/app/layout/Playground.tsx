@@ -29,9 +29,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import DehazeIcon from '@mui/icons-material/Dehaze';
 
 import User from "../models/User";
 import Group from "../models/Group";
+import { Button } from "@mui/material";
 
 const user: User = {
   displayName: "Mei",
@@ -407,16 +409,16 @@ export const Playground: React.FC = () => {
             width: "100%",
           }}
         >
-          <Outlet />
-
           <div style={{ marginBottom: "16px" }}>
             {broken && (
-              <button className="sb-button" onClick={() => toggleSidebar()}>
-                Toggle
-              </button>
+              <Button className="sb-button" variant="contained" onClick={() => toggleSidebar()}>
+                <DehazeIcon />
+              </Button>
             )}
           </div>
-          
+
+          <Outlet />
+
           <div style={{ padding: "0 8px" }}>
             <div style={{ marginBottom: 16 }}>
               <Switch
