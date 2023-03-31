@@ -192,7 +192,7 @@ const RegisterPage = () => {
             </Button>
             <Typography variant="h6" gutterBottom>
               Already have an account? {""}
-              <Link href="/login">Login</Link>
+              <Link href="/login" underline="hover">Login</Link>
             </Typography>
           </Box>
         </Grid>
