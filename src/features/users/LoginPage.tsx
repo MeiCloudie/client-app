@@ -12,16 +12,11 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
-  Radio,
-  RadioGroup,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const LoginPage = () => {
