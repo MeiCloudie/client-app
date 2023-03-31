@@ -1,8 +1,8 @@
-import styled from '@emotion/styled';
-import React from 'react';
-import { Github } from '../icons/Github';
-import { Typography } from './Typography';
-import packageJson from '../../../../package.json';
+import { useLocation } from "react-router-dom";
+import styled from "@emotion/styled";
+import React from "react";
+import ApiIcon from '@mui/icons-material/Api';
+import { Box, Typography } from "@mui/material";
 
 interface SidebarFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -48,38 +48,40 @@ const StyledCollapsedSidebarFooter = styled.a`
 `;
 
 const codeUrl =
-  'https://github.com/azouaoui-med/react-pro-sidebar/blob/master/storybook/Playground.tsx';
+  "https://plantogetherdotnetapi.azurewebsites.net/swagger/ui/index";
 
-export const SidebarFooter: React.FC<SidebarFooterProps> = ({ children, collapsed, ...rest }) => {
+export const SidebarFooter: React.FC<SidebarFooterProps> = ({
+  children,
+  collapsed,
+  ...rest
+}) => {
+  const location = useLocation();
+  const path = location.pathname;
+
+  // Extract the page name from the path using regular expressions:
+  // Ưe use the match method of the path string to extract the first word after a forward slash (/).
+  // We use a regular expression (/\/(\w+)/) to match any word characters (\w+) after a forward slash (\/).
+  const match = path.match(/\/(\w+)/);
+  const pageName = match ? match[1] : "Unknown Page";
+
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        paddingBottom: '20px',
+        display: "flex",
+        justifyContent: "center",
+        paddingBottom: "20px",
       }}
     >
       {collapsed ? (
         <StyledCollapsedSidebarFooter href={codeUrl} target="_blank">
-          <Github size={28} />
+          <ApiIcon />
         </StyledCollapsedSidebarFooter>
       ) : (
-        <StyledSidebarFooter {...rest}>
-          <div style={{ marginBottom: '12px' }}>
-            <Github size={30} />
-          </div>
-          <Typography fontWeight={600}>Pro Sidebar</Typography>
-          <Typography variant="caption" style={{ letterSpacing: 1, opacity: 0.7 }}>
-            V {packageJson.version}
+        <Box sx={{ margin: "10px", textAlign: "center" }}>
+          <Typography variant="subtitle2" gutterBottom>
+            You are on {pageName} page
           </Typography>
-          <div style={{ marginTop: '16px' }}>
-            <StyledButton href={codeUrl} target="_blank">
-              <Typography variant="caption" color="#607489" fontWeight={600}>
-                View code
-              </Typography>
-            </StyledButton>
-          </div>
-        </StyledSidebarFooter>
+        </Box>
       )}
     </div>
   );

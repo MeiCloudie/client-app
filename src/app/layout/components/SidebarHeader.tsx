@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { useProSidebar } from 'react-pro-sidebar';
-import { Typography } from './Typography';
+import { Typography } from '@mui/material';
 
 interface SidebarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -33,7 +33,7 @@ const StyledLogo = styled.div<{ rtl?: boolean }>`
   font-size: 24px;
   font-weight: 700;
   background-color: #009fdb;
-  background: linear-gradient(45deg, rgb(21 87 205) 0%, rgb(90 225 255) 100%);
+  background: linear-gradient(45deg, rgb(21, 101, 192) 0%, rgb(124, 185, 255) 100%);
   ${({ rtl }) =>
     rtl
       ? `
@@ -52,8 +52,8 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ children, ...rest 
     <StyledSidebarHeader {...rest}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <StyledLogo rtl={rtl}>P</StyledLogo>
-        <Typography variant="subtitle1" fontWeight={700} color="#0098e5">
-          Pro Sidebar
+        <Typography variant="h6" fontWeight={700} color="#1565c0">
+          PlanTogether
         </Typography>
       </div>
     </StyledSidebarHeader>
