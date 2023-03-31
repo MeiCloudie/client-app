@@ -3,12 +3,17 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import {
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   InputAdornment,
   InputLabel,
   Link,
   OutlinedInput,
+  Radio,
+  RadioGroup,
   Stack,
   TextField,
   Typography,
@@ -132,16 +137,25 @@ const LoginPage = () => {
                   label="Password"
                 />
               </FormControl>
-              <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
-                <Link
-                  href="/error"
-                  underline="hover"
-                  color={"#888176"}
-                >
+            </Box>
+
+            <Grid container sx={{ alignItems: "center" }}>
+              <Grid item xs={6}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox defaultChecked />}
+                    label="Remember"
+                    sx={{ color: "#888176" }}
+                  />
+                </FormGroup>
+              </Grid>
+              <Grid item xs={6} sx={{ textAlign: "right" }}>
+                <Link href="/error" underline="hover" color={"#888176"}>
                   Forgot Password?
                 </Link>
-              </Stack>
-            </Box>
+              </Grid>
+            </Grid>
+
             <Button variant="contained" sx={{ margin: "20px" }}>
               LOGIN
             </Button>
