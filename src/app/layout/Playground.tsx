@@ -239,8 +239,21 @@ export const Playground: React.FC = () => {
           style={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
           <SidebarHeader style={{ marginBottom: "24px", marginTop: "16px" }} />
+
           <div style={{ flex: 1, marginBottom: "32px" }}>
-            <div style={{ padding: "0 24px", marginBottom: "8px" }}>
+            <Menu menuItemStyles={menuItemStyles}>
+              <MenuItem icon={<Book />} component={<Link to="/" />}>
+                Home
+              </MenuItem>
+            </Menu>
+
+            <div
+              style={{
+                padding: "0 24px",
+                marginBottom: "8px",
+                marginTop: "32px",
+              }}
+            >
               <Typography
                 variant="body2"
                 fontWeight={600}
@@ -264,7 +277,9 @@ export const Playground: React.FC = () => {
                   Log out
                 </MenuItem>
               </SubMenu>
-              <MenuItem icon={<Book />}>Settings</MenuItem>
+              <MenuItem icon={<Book />} component={<Link to="/settings" />}>
+                Settings
+              </MenuItem>
             </Menu>
 
             <div
@@ -333,6 +348,27 @@ export const Playground: React.FC = () => {
                 fontWeight={600}
                 style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
               >
+                Personal
+              </Typography>
+            </div>
+            <Menu menuItemStyles={menuItemStyles}>
+              <MenuItem icon={<Book />} component={<Link to="/personal" />}>
+                Mission List
+              </MenuItem>
+            </Menu>
+
+            <div
+              style={{
+                padding: "0 24px",
+                marginBottom: "8px",
+                marginTop: "32px",
+              }}
+            >
+              <Typography
+                variant="body2"
+                fontWeight={600}
+                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
+              >
                 Others
               </Typography>
             </div>
@@ -342,6 +378,22 @@ export const Playground: React.FC = () => {
               </MenuItem>
               <MenuItem icon={<Book />} component={<Link to="/about-us" />}>
                 About us
+              </MenuItem>
+              <MenuItem icon={<Book />}>
+                <Switch
+                  id="theme"
+                  checked={theme === "dark"}
+                  onChange={handleThemeChange}
+                  label="Dark theme"
+                />
+              </MenuItem>
+              <MenuItem icon={<Book />}>
+                <Switch
+                  id="image"
+                  checked={hasImage}
+                  onChange={handleImageChange}
+                  label="Image"
+                />
               </MenuItem>
             </Menu>
           </div>
@@ -369,6 +421,24 @@ export const Playground: React.FC = () => {
         >
           <Outlet />
 
+          <div style={{ marginBottom: "16px" }}>
+            {broken && (
+              <button className="sb-button" onClick={() => toggleSidebar()}>
+                Toggle
+              </button>
+            )}
+          </div>
+          <div style={{ marginBottom: "48px" }}>
+            <Typography variant="h4" fontWeight={600}>
+              React Pro Sidebar
+            </Typography>
+            <Typography variant="body2">
+              React Pro Sidebar provides a set of components for creating high
+              level and customizable side navigation
+            </Typography>
+            <PackageBadges />
+          </div>
+
           <div style={{ padding: "0 8px" }}>
             <div style={{ marginBottom: 16 }}>
               <Switch
@@ -379,7 +449,7 @@ export const Playground: React.FC = () => {
               />
             </div>
 
-            <div style={{ marginBottom: 16 }}>
+            {/* <div style={{ marginBottom: 16 }}>
               <Switch
                 id="rtl"
                 checked={isRTL}
@@ -404,7 +474,7 @@ export const Playground: React.FC = () => {
                 onChange={handleImageChange}
                 label="Image"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

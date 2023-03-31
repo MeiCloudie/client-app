@@ -13,6 +13,7 @@ import RegisterPage from "../../features/users/RegisterPage";
 import App from "../layout/App";
 import MissionBoardPage from "../../features/missions/MissionBoardPage";
 import MissionDetailsPage from "../../features/missions/MissionDetailsPage";
+import MissionListPersonalPage from "../../features/missions/MissionListPersonalPage";
 
 export const router = createBrowserRouter(
     [
@@ -90,16 +91,7 @@ export const router = createBrowserRouter(
                 },
                 {
                     path: "personal",
-                    children: [
-                        {
-                            path: "missions",
-                            element: <MissionListPage />
-                        },
-                        {
-                            path: "boards",
-                            element: <MissionBoardPage />
-                        }
-                    ]
+                    element: <MissionListPersonalPage />
                 },
                 {
                     path: "help",

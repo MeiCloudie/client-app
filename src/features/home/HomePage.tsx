@@ -11,7 +11,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 import Group from "../../app/models/Group";
 import { Badge, Button, Chip, Grid } from "@mui/material";
@@ -216,7 +216,15 @@ const HomePage = () => {
       >
         {groups.map((g, index) => (
           <Grid xs={2} sm={4} md={4} key={index}>
-            <Card sx={{ margin: "10px", bgcolor: "#ebdbce" }}>
+            <Card
+              sx={{
+                margin: "10px",
+                bgcolor: "#ebdbce",
+                borderStyle: "solid",
+                borderColor: "#443e3e",
+                borderRadius: "10px"
+              }}
+            >
               <CardHeader
                 avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="project">

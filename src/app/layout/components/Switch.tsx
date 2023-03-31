@@ -11,7 +11,6 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const CheckBoxLabel = styled.label`
-  margin-left: 10px;
   margin-right: 10px;
   font-size: 13px;
   cursor: pointer;
@@ -23,6 +22,7 @@ const CheckBox = styled.div<{ checked?: boolean }>`
   width: 32px;
   height: 20px;
   border-radius: 30px;
+  margin-left: auto;
 
   background-color: ${({ checked }) => (checked ? '#0ed693' : '#dde0e7')};
 `;
@@ -43,6 +43,7 @@ const CheckBoxCircle = styled.div<{ checked?: boolean }>`
 export const Switch = ({ id, label, checked, ...rest }: SwitchProps) => {
   return (
     <CheckBoxWrapper>
+      {label && <CheckBoxLabel htmlFor={id}>{label}</CheckBoxLabel>}
       <CheckBox checked={checked}>
         <input
           id={id}
@@ -64,7 +65,6 @@ export const Switch = ({ id, label, checked, ...rest }: SwitchProps) => {
         />
         <CheckBoxCircle checked={checked} />
       </CheckBox>
-      {label && <CheckBoxLabel htmlFor={id}>{label}</CheckBoxLabel>}
     </CheckBoxWrapper>
   );
 };
