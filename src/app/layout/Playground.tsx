@@ -29,11 +29,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import DehazeIcon from '@mui/icons-material/Dehaze';
+import DehazeIcon from "@mui/icons-material/Dehaze";
 
 import User from "../models/User";
 import { Group } from "../models/Group";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const user: User = {
   displayName: "Mei",
@@ -232,13 +232,16 @@ export const Playground: React.FC = () => {
             <div
               style={{
                 padding: "0 24px",
-                margin: "8px 0"
+                margin: "8px 0",
               }}
             >
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
+                style={{
+                  opacity: collapsed ? 0 : 0.7,
+                  letterSpacing: "0.5px",
+                }}
               >
                 Account
               </Typography>
@@ -275,13 +278,16 @@ export const Playground: React.FC = () => {
             <div
               style={{
                 padding: "0 24px",
-                margin: "8px 0"
+                margin: "8px 0",
               }}
             >
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
+                style={{
+                  opacity: collapsed ? 0 : 0.7,
+                  letterSpacing: "0.5px",
+                }}
               >
                 Group
               </Typography>
@@ -296,7 +302,11 @@ export const Playground: React.FC = () => {
                     Group Details
                   </MenuItem>
                   {g.projects.map((p, j) => (
-                    <SubMenu key={j} label={p.title} icon={<BusinessCenterIcon />}>
+                    <SubMenu
+                      key={j}
+                      label={p.title}
+                      icon={<BusinessCenterIcon />}
+                    >
                       <MenuItem
                         icon={<InfoIcon />}
                         component={<Link to="/:groupName/:projectName/" />}
@@ -328,13 +338,16 @@ export const Playground: React.FC = () => {
             <div
               style={{
                 padding: "0 24px",
-                margin: "8px 0"
+                margin: "8px 0",
               }}
             >
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
+                style={{
+                  opacity: collapsed ? 0 : 0.7,
+                  letterSpacing: "0.5px",
+                }}
               >
                 Personal
               </Typography>
@@ -351,13 +364,16 @@ export const Playground: React.FC = () => {
             <div
               style={{
                 padding: "0 24px",
-                margin: "8px 0"
+                margin: "8px 0",
               }}
             >
               <Typography
                 variant="body2"
                 fontWeight={600}
-                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: "0.5px" }}
+                style={{
+                  opacity: collapsed ? 0 : 0.7,
+                  letterSpacing: "0.5px",
+                }}
               >
                 Others
               </Typography>
@@ -400,6 +416,15 @@ export const Playground: React.FC = () => {
           overflow: "auto",
         }}
       >
+        <Box sx={{ display: "flex", justifyContent: "flex-end", padding: "5px" }}>
+          <Switch
+            id="collapse"
+            checked={collapsed}
+            onChange={() => collapseSidebar()}
+            label="Collapse"
+          />
+        </Box>
+
         <div
           style={{
             padding: "16px 24px",
@@ -411,24 +436,17 @@ export const Playground: React.FC = () => {
         >
           <div style={{ marginBottom: "16px" }}>
             {broken && (
-              <Button className="sb-button" variant="contained" onClick={() => toggleSidebar()}>
+              <Button
+                className="sb-button"
+                variant="contained"
+                onClick={() => toggleSidebar()}
+              >
                 <DehazeIcon />
               </Button>
             )}
           </div>
 
           <Outlet />
-
-          <div style={{ padding: "0 8px" }}>
-            <div style={{ marginBottom: 16 }}>
-              <Switch
-                id="collapse"
-                checked={collapsed}
-                onChange={() => collapseSidebar()}
-                label="Collapse"
-              />
-            </div>
-          </div>
         </div>
       </main>
     </div>
