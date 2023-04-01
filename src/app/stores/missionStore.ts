@@ -43,6 +43,7 @@ export default class MissionStore {
       runInAction(() => {
         this.selectedMission = mission;
       });
+      return mission
     } catch (error) {
       console.log(error);
     }

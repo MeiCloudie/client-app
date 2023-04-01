@@ -82,6 +82,10 @@ export const router = createBrowserRouter(
                                             element: <MissionListPage /> 
                                         },
                                         {
+                                            path: "create",
+                                            element: <MissionDetailsPage /> 
+                                        },
+                                        {
                                             path: ":missionId",
                                             element: <MissionDetailsPage /> 
                                         },

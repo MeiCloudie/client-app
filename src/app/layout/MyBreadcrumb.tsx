@@ -9,18 +9,24 @@ const MyBreadcrumb = () => {
   function getBreadcrumbItem(path: string, title: string, link: string = path) {
     if (location.pathname === path + "/")
       return (
-        <Typography className="breadcrumb-item" color="text.primary">
+        <Typography
+          variant="subtitle1"
+          sx={{ color: "#f0c9a7", fontWeight: 600 }}
+        >
           {title}
         </Typography>
       );
     return (
-      <Link className="breadcrumb-item" to={link}>
+      <Link
+        to={link}
+        style={{ textDecoration: "none", color: "#f0c9a7", fontWeight: 600 }}
+      >
         {title}
       </Link>
     );
   }
   return (
-    <Breadcrumbs className="mt-3" sx={{ bgcolor: "#443e3e"}}>
+    <Breadcrumbs sx={{ padding: "5px 20px", bgcolor: "#443e3e", color: "#f0c9a7" }}>
       {location.pathname === "/home" && getBreadcrumbItem("/home", "Home")}
 
       {params.userName &&

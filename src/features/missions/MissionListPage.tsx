@@ -195,12 +195,12 @@ const rows = missions.map((m) => {
 
 const MissionListPage = () => {
   const { missionStore } = useStore();
-  const { missionList, loadMissions } = missionStore
+  const { loadMissions } = missionStore
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
     loadMissions().then(() => {
       setRows(
-        missionList.map((m) => {
+        missionStore.missionList.map((m) => {
           const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
           const states = ["New", "Active", "Resolved", "Closed"];
           return {

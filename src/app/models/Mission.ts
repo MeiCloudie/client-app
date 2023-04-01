@@ -11,6 +11,7 @@ export interface Mission extends Entity {
     endDate: Date,
     completedDate: Date,
     createDate: Date,
+    projectName?: string
 }
 
 export class Mission implements Mission {
@@ -38,6 +39,7 @@ export class MissionFormValues {
     endDate: Date | null = null
     completedDate: Date | null = null
     createDate: Date = new Date()
+    projectName?: string = ''
     
     constructor(mission?: Mission) {
         if (mission) {
@@ -50,6 +52,7 @@ export class MissionFormValues {
             this.endDate = mission.endDate
             this.completedDate = mission.completedDate
             this.createDate = mission.createDate
+            this.projectName = mission.projectName
         }
     }
 }
