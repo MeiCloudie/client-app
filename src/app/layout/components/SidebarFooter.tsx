@@ -33,7 +33,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({
   const path = location.pathname;
 
   // Extract the page name from the path using regular expressions:
-  // Ưe use the match method of the path string to extract the first word after a forward slash (/).
+  // We use the match method of the path string to extract the first word after a forward slash (/).
   // We use a regular expression (/\/(\w+)/) to match any word characters (\w+) after a forward slash (\/).
   const match = path.match(/\/(\w+)/);
   const pageName = match ? match[1] : "Unknown Page";

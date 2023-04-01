@@ -10,7 +10,7 @@ function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 
 export default function BasicBreadcrumbs() {
   return (
-    <div role="presentation" onClick={handleClick} style={{ backgroundColor: '#fabf27' }}>
+    <div role="presentation" onClick={handleClick} style={{ backgroundColor: '#443e3e' }}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
           MUI
