@@ -22,9 +22,11 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import User from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
-import Mission from "../../app/models/Mission";
+import { Mission, MissionFormValues } from "../../app/models/Mission";
 import agent from "../../app/api/agent";
 import { useParams } from "react-router-dom";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 const users: User[] = [
   {
@@ -94,31 +96,49 @@ const stateSelection = [
   },
 ];
 
-const MissionDetailsPage = () => {
+const MissionDetailsPage = observer(() => {
   const [user, setUser] = React.useState("");
   const [priority, setPriority] = React.useState<MissionPriorities>();
-  const [state, setState] = React.useState("");
-  const [mission, setMission] = React.useState<Mission>({
-    id: "",
-    title: "",
-    description: "",
-    priority: MissionPriorities.Low,
-    state: MissionStates.New,
-    startDate: new Date(),
-    endDate: new Date(),
-    completedDate: new Date(),
-    createDate: new Date(),
-  });
+  const [state, setState] = React.useState<MissionStates>();
+  // const [mission, setMission] = React.useState<Mission>({
+  //   id: "",
+  //   title: "",
+  //   description: "",
+  //   priority: MissionPriorities.Low,
+  //   state: MissionStates.New,
+  //   startDate: new Date(),
+  //   endDate: new Date(),
+  //   completedDate: new Date(),
+  //   createDate: new Date(),
+  // });
+  const { missionStore } = useStore()
+  // const mission = missionStore.selectedMission ?? new Mission()
+
+  const [mission, setMission] = React.useState<MissionFormValues>(new MissionFormValues())
   
   const { missionId } = useParams<{ missionId : string }>()
 
-  // React.useEffect(() => {
-  //   agent.Missions.details(missionId!).then(m => {
-  //     console.log(m.title)
-  //     setMission(m)
-  //   })
-  // }, [missionId])
+  React.useEffect(() => {
+    missionStore.loadMission(missionId!).then(() => {
+      setMission(new MissionFormValues(missionStore.selectedMission))
+      console.log(missionStore.selectedMission)
+    })
+  }, [missionStore, missionId])
   
+  const handleClick = () => {
+    console.log(missionId, mission)
+    missionStore.updateMission(missionId!, mission)
+    .then(() => {
+
+      console.log('Update successfully')
+    })
+    .catch(e => console.log(e))
+  }
+
+  const handleTitleChange = (value : any) => {
+    console.log(value)
+  }
+
   const userHandleChange = (event: SelectChangeEvent) => {
     setUser(event.target.value);
   };
@@ -127,8 +147,8 @@ const MissionDetailsPage = () => {
     setPriority(event.target.value as MissionPriorities);
   };
 
-  const stateHandleChange = (event: SelectChangeEvent) => {
-    setState(event.target.value as string);
+  const stateHandleChange = (event: SelectChangeEvent<MissionStates>) => {
+    setState(event.target.value as MissionStates);
   };
 
   return (
@@ -155,11 +175,13 @@ const MissionDetailsPage = () => {
         autoComplete="off"
       >
         <TextField
+          key={mission!.id}
           id="title-outlined-basic"
           label="Title"
           variant="outlined"
           placeholder="Enter title here!"
-          value={mission!.title}
+          defaultValue={mission!.title}
+          onChange={handleTitleChange}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -174,7 +196,7 @@ const MissionDetailsPage = () => {
           <Select
             labelId="assigned-to-select-label"
             id="assigned-to-select"
-            value={user}
+            defaultValue={user}
             label="Assigned to"
             onChange={userHandleChange}
             startAdornment={
@@ -194,9 +216,10 @@ const MissionDetailsPage = () => {
         <FormControl fullWidth>
           <InputLabel id="priority-select-label">Priority</InputLabel>
           <Select
+            key={mission.priority}
             labelId="priority-select-label"
             id="priority-select"
-            value={mission.priority}
+            defaultValue={mission.priority}
             label="Priority"
             onChange={priorityHandleChange}
             startAdornment={
@@ -216,9 +239,10 @@ const MissionDetailsPage = () => {
         <FormControl fullWidth>
           <InputLabel id="state-select-label">State</InputLabel>
           <Select
+            key={mission.state}
             labelId="state-select-label"
             id="state-select"
-            value={state}
+            defaultValue={mission.state}
             label="Priority"
             onChange={stateHandleChange}
             startAdornment={
@@ -236,11 +260,12 @@ const MissionDetailsPage = () => {
         </FormControl>
 
         <TextField
+          key={mission.description}
           id="description-outlined-multiline-static"
           label="Description"
           multiline
           placeholder="Write some description here..."
-          value={mission.description}
+          defaultValue={mission.description}
           rows={4}
         />
 
@@ -249,7 +274,7 @@ const MissionDetailsPage = () => {
           label="Start Date"
           variant="outlined"
           placeholder="Hours"
-          value={mission.startDate}
+          defaultValue={mission.startDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -263,7 +288,7 @@ const MissionDetailsPage = () => {
           label="End Date"
           variant="outlined"
           placeholder="Hours"
-          value={mission.endDate}
+          defaultValue={mission.endDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -277,7 +302,7 @@ const MissionDetailsPage = () => {
           label="Completed"
           variant="outlined"
           placeholder="Hours"
-          value={mission.completedDate}
+          defaultValue={mission.completedDate}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -296,7 +321,7 @@ const MissionDetailsPage = () => {
         >
           <Stack spacing={2} direction="row">
             <Button variant="contained">Back to List</Button>
-            <Button variant="contained">Save</Button>
+            <Button onClick={handleClick} variant="contained">Save</Button>
           </Stack>
         </div>
 
@@ -352,6 +377,6 @@ const MissionDetailsPage = () => {
       </div>
     </Box>
   );
-};
+});
 
 export default MissionDetailsPage;

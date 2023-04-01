@@ -20,8 +20,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PersonIcon from "@mui/icons-material/Person";
 
-import Mission from "../../app/models/Mission";
-import Project from "../../app/models/Project";
+import { Mission } from "../../app/models/Mission";
+import { Project } from "../../app/models/Project";
 import User from "../../app/models/User";
 
 const users: User[] = [

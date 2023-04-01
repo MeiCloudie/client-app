@@ -18,7 +18,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import Process from "../../app/models/Process";
-import Project from "../../app/models/Project";
+import { Project } from "../../app/models/Project";
 
 const projects: Project[] = [
   {

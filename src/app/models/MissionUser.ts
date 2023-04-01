@@ -1,4 +1,4 @@
-import Mission from "./Mission";
+import { Mission } from "./Mission";
 
 export default interface MissionUser {
     missionId: string,

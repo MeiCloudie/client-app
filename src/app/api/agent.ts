@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
-import Mission from '../models/Mission'
+import { Mission, MissionFormValues } from '../models/Mission'
+import { Project } from '../models/Project'
+import { Group } from '../models/Group'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -16,11 +18,24 @@ const requests = {
 const Missions = {
     list: () => requests.get<Mission[]>('/Missions'),
     details: (id: string) => requests.get<Mission>(`/Missions/${id}`),
-    create: (mission: Mission) => requests.post('/Missions', mission)
+    create: (mission: MissionFormValues) => requests.post('/Missions', mission),
+    update: (id: string, mission: MissionFormValues) => requests.put(`/Missions/${id}`, mission)
+}
+
+const Projects = {
+    list: () => requests.get<Project[]>('/Projects'),
+    details: (id: string) => requests.get<Project>(`/Projects/${id}`),
+}
+
+const Groups = {
+    list: () => requests.get<Group[]>('/Groups'),
+    details: (id: string) => requests.get<Group>(`/Groups/${id}`),
 }
 
 const agent = {
-    Missions
+    Missions,
+    Projects,
+    Groups
 }
 
 export default agent

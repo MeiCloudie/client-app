@@ -32,7 +32,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
 import User from "../models/User";
-import Group from "../models/Group";
+import { Group } from "../models/Group";
 import { Button } from "@mui/material";
 
 const user: User = {
@@ -286,8 +286,8 @@ export const Playground: React.FC = () => {
                 Group
               </Typography>
             </div>
-            {groups.map((g) => (
-              <Menu menuItemStyles={menuItemStyles}>
+            {groups.map((g, i) => (
+              <Menu key={i} menuItemStyles={menuItemStyles}>
                 <SubMenu label={g.title} icon={<Diversity3Icon />}>
                   <MenuItem
                     icon={<InfoIcon />}
@@ -295,8 +295,8 @@ export const Playground: React.FC = () => {
                   >
                     Group Details
                   </MenuItem>
-                  {g.projects.map((p) => (
-                    <SubMenu label={p.title} icon={<BusinessCenterIcon />}>
+                  {g.projects.map((p, j) => (
+                    <SubMenu key={j} label={p.title} icon={<BusinessCenterIcon />}>
                       <MenuItem
                         icon={<InfoIcon />}
                         component={<Link to="/:groupName/:projectName/" />}

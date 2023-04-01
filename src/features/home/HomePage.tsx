@@ -13,12 +13,12 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
-import Group from "../../app/models/Group";
+import { Group } from "../../app/models/Group";
 import { Badge, Button, Chip, Grid } from "@mui/material";
 import { Stack } from "@mui/system";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
-import Mission from "../../app/models/Mission";
+import { Mission } from "../../app/models/Mission";
 
 const groups: Group[] = [
   {

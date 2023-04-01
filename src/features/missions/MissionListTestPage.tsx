@@ -11,11 +11,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
-import Mission from "../../app/models/Mission";
+import { Mission } from "../../app/models/Mission";
 import User from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
-import Project from "../../app/models/Project";
+import { Project } from "../../app/models/Project";
 import agent from "../../app/api/agent";
 
 const users: User[] = [

@@ -7,7 +7,7 @@ import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import Paper from "@mui/material/Paper";
 
-import Project from "../../app/models/Project";
+import { Project } from "../../app/models/Project";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";

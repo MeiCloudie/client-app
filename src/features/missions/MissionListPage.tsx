@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -11,11 +11,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
-import Mission from "../../app/models/Mission";
+import { Mission } from "../../app/models/Mission";
 import User from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
-import Project from "../../app/models/Project";
+import { Project } from "../../app/models/Project";
+import { useStore } from "../../app/stores/store";
 
 const users: User[] = [
   {
@@ -193,6 +194,34 @@ const rows = missions.map((m) => {
 });
 
 const MissionListPage = () => {
+  const { missionStore } = useStore();
+  const { missionList, loadMissions } = missionStore
+  const [rows, setRows] = React.useState<GridRowsProp>([]);
+  React.useEffect(() => {
+    loadMissions().then(() => {
+      setRows(
+        missionList.map((m) => {
+          const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+          const states = ["New", "Active", "Resolved", "Closed"];
+          return {
+            id: m.id,
+            title: m.title,
+            assignedTo: users[randomIndex].displayName,
+            state: states[m.state],
+            comments: randomIndex,
+            activityDate: m.createDate.toLocaleString("en-US", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            }),
+          };
+        })
+      );
+    });
+  }, []);
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -238,7 +267,15 @@ const MissionListPage = () => {
         </Button>
       </Stack>
 
-      <Box sx={{ height: 400, width: "100%", borderStyle: "solid", borderRadius: "5px", borderColor: "#443e3e" }}>
+      <Box
+        sx={{
+          height: 400,
+          width: "100%",
+          borderStyle: "solid",
+          borderRadius: "5px",
+          borderColor: "#443e3e",
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}

@@ -24,9 +24,9 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CachedIcon from "@mui/icons-material/Cached";
 
-import Group from "../../app/models/Group";
+import { Group } from "../../app/models/Group";
 import User from "../../app/models/User";
-import Project from "../../app/models/Project";
+import { Project } from "../../app/models/Project";
 
 const users: User[] = [
   {
@@ -81,7 +81,7 @@ const GroupDetailsPage = () => {
     owner: {
       userName: "Mei",
       displayName: "Van",
-      role: "Leader"
+      role: "Leader",
     },
     projects: [
       {
