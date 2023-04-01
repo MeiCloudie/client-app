@@ -14,6 +14,9 @@ import App from "../layout/App";
 import MissionBoardPage from "../../features/missions/MissionBoardPage";
 import MissionDetailsPage from "../../features/missions/MissionDetailsPage";
 import MissionListPersonalPage from "../../features/missions/MissionListPersonalPage";
+import GroupInformationPage from "../../features/groups/GroupInformationPage";
+import GroupMembersPage from "../../features/groups/GroupMembersPage";
+import ProjectInformationPage from "../../features/projects/ProjectInformationPage";
 
 export const router = createBrowserRouter(
     [
@@ -53,11 +56,23 @@ export const router = createBrowserRouter(
                             element: <GroupDetailsPage />,
                         },
                         {
+                            path: "info",
+                            element: <GroupInformationPage />,
+                        },
+                        {
+                            path: "members",
+                            element: <GroupMembersPage />,
+                        },
+                        {
                             path: ":projectName",
                             children: [
                                 {
                                     path: "",
                                     element: <ProjectDetailsPage />
+                                },
+                                {
+                                    path: "info",
+                                    element: <ProjectInformationPage />
                                 },
                                 {
                                     path: "missions",
