@@ -13,6 +13,8 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import EditIcon from "@mui/icons-material/Edit";
 import { Process } from "../../app/models/Process";
+import { Link, useParams } from "react-router-dom";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const projects: Project[] = [
   {
@@ -21,6 +23,7 @@ const projects: Project[] = [
     name: "study-plan",
     title: "Study Plan",
     description: "Effective study plan and healthy balance",
+    groupName: "hello-group",
   },
 ];
 
@@ -50,6 +53,7 @@ const processes: Process[] = [
 
 const ProjectDetailsPage = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const params = useParams();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -95,15 +99,22 @@ const ProjectDetailsPage = () => {
           spacing={2}
           style={{ padding: "10px 0", justifyContent: "left" }}
         >
-          <Button variant="contained" startIcon={<AssignmentIcon />}>
-            Missions
-          </Button>
-          <Button variant="contained" startIcon={<DashboardCustomizeIcon />}>
-            Boards
-          </Button>
-          <Button variant="contained" startIcon={<EditIcon />}>
-            Edit Project
-          </Button>
+          <LinkButton
+            label="Missions"
+            to={`/${params.groupName}/${params.projectName}/missions`}
+            icon={<AssignmentIcon />}
+          />
+          <LinkButton
+            label="Boards"
+            to={`/${params.groupName}/${params.projectName}/boards`}
+            icon={<DashboardCustomizeIcon />}
+          />
+
+          <LinkButton
+            label="Edit Project"
+            to={`/${params.groupName}/${params.projectName}/info`}
+            icon={<EditIcon />}
+          />
         </Stack>
 
         <Typography

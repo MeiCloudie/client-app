@@ -19,9 +19,9 @@ const requests = {
 }
 
 const Account = {
-    current: () => requests.get<User>('/account'),
-    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+    current: () => requests.get<User>('/Account'),
+    login: (user: UserFormValues) => requests.post<User>('/Account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/Account/register', user),
 }
 
 const Missions = {
@@ -37,7 +37,8 @@ const Projects = {
     details: (id: string) => requests.get<Project>(`/Projects/${id}`),
     create: (project: ProjectFormValues) => requests.post('/Projects', project),
     update: (id: string, project: ProjectFormValues) => requests.put(`/Projects/${id}`, project),
-    delete: (id: string) => requests.delete(`/Projects/${id}`)
+    delete: (id: string) => requests.delete(`/Projects/${id}`),
+    missionList: (name: string) => requests.get<Mission[]>(`/Projects/${name}/Missions`)
 }
 
 const Groups = {

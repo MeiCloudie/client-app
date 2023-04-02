@@ -49,6 +49,17 @@ export default class MissionStore {
     }
   };
 
+  loadMissionByProjectName = async (projectName: string) => {
+    try {
+      const missions = await agent.Projects.missionList(projectName);
+      runInAction(() => {
+        this.missions = missions;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   createMission = async (missionFormValues: MissionFormValues) => {
     try {
       await agent.Missions.create(missionFormValues);

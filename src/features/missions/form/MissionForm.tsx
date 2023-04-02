@@ -109,7 +109,10 @@ const MissionForm = observer(() => {
     new MissionFormValues()
   );
   const { missionId } = useParams<{ missionId: string }>();
+  const { missionStore } = useStore();
+  const { loadMission } = missionStore;
   const handleForSubmit = (mission: MissionFormValues) => {
+    mission.projectName = params.projectName
     missionId
       ? missionStore
           .updateMission(missionId, mission)
@@ -129,14 +132,8 @@ const MissionForm = observer(() => {
       );
   };
 
-  const { missionStore } = useStore();
-  const { loadMission } = missionStore;
-
   const validationSchema = Yup.object({
     title: Yup.string().required("The title is required"),
-    projectName: Yup.string()
-      .matches(/^[a-z0-9-]+$/, "message!")
-      .required("The project is required"),
     priority: Yup.mixed<MissionPriorities>().required(),
     state: Yup.mixed<MissionStates>().required(),
   });
@@ -145,7 +142,6 @@ const MissionForm = observer(() => {
     if (missionId)
       loadMission(missionId).then((m) => {
         setMission(new MissionFormValues(m));
-        console.log(m?.startDate);
       });
   }, []);
 
@@ -166,7 +162,7 @@ const MissionForm = observer(() => {
         errors,
         handleSubmit,
         handleChange,
-        setFieldValue,
+        // setFieldValue,
         isSubmitting,
       }) => (
         <Box
@@ -176,7 +172,7 @@ const MissionForm = observer(() => {
           }}
           onSubmit={handleSubmit}
         >
-          <TextField
+          {/* <TextField
             helperText={errors.projectName}
             key={values!.id}
             name="projectName"
@@ -193,7 +189,7 @@ const MissionForm = observer(() => {
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
           {/* {errors.projectName} */}
           <TextField
             helperText={errors.title}

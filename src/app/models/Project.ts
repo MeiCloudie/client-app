@@ -5,6 +5,7 @@ export interface Project extends Entity {
     title: string,
     description: string,
     createDate: Date,
+    groupName?: string
 }
 
 export class Project implements Project {
@@ -12,6 +13,7 @@ export class Project implements Project {
     title = ''
     description = ''
     createDate = new Date()
+    groupName?: string | undefined;
     constructor(init?: ProjectFormValues) {
         Object.assign(this, init)
     }
@@ -23,6 +25,7 @@ export class ProjectFormValues {
     title?: string = undefined
     description: string = ''
     createDate: Date = new Date()
+    groupName?: string = ''
     
     constructor(project?: Project) {
         if (project) {
@@ -31,6 +34,7 @@ export class ProjectFormValues {
             this.title = project.title
             this.description = project.description
             this.createDate = project.createDate
+            this.groupName = project.groupName
         }
     }
 }

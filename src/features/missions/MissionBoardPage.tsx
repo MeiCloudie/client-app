@@ -58,6 +58,7 @@ const projects: Project[] = [
     name: "study-plan",
     title: "Study Plan",
     description: "Effective study plan and healthy balance",
+    groupName: "hello-group"
   },
   {
     id: "project2",
@@ -65,6 +66,7 @@ const projects: Project[] = [
     name: "sport-plan",
     title: "Sport Plan",
     description: "Make a plan to exercise and exercise together",
+    groupName: "hello-group"
   },
 ];
 

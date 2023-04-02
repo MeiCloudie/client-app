@@ -1,24 +1,18 @@
 import * as React from "react";
 
-import {
-  Box,
-  Button,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Divider from "@mui/material/Divider";
 
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import ModeIcon from "@mui/icons-material/Mode";
-import TextSnippetIcon from "@mui/icons-material/TextSnippet";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
-
 import { Process } from "../../app/models/Process";
 import { Project } from "../../app/models/Project";
+
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeIcon from "@mui/icons-material/Mode";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+
+import ProjectForm from "./form/ProjectForm";
 
 const projects: Project[] = [
   {
@@ -27,6 +21,7 @@ const projects: Project[] = [
     name: "Healthy and Balance",
     title: "Life",
     description: "Happiness",
+    groupName: "hello-group"
   },
 ];
 
@@ -66,78 +61,52 @@ const ProjectInformation = () => {
       >
         Project Information
       </Typography>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
+
+      <ProjectForm />
+
+      <TextField
+        id="title-outlined-basic"
+        label="Process"
+        name="title"
+        variant="outlined"
+        placeholder="Enter title here!"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <ModeIcon />
+            </InputAdornment>
+          ),
         }}
-        noValidate
-        autoComplete="off"
+      />
+
+      <TextField
+        id="text-outlined-basic"
+        label="Text"
+        name="processDescription"
+        variant="outlined"
+        placeholder="Enter text here!"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <TextSnippetIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <Stack
+        direction="row"
+        divider={<Divider orientation="vertical" flexItem />}
+        spacing={2}
+        style={{ padding: "10px 0", justifyContent: "right" }}
       >
-        <TextField
-          id="title-outlined-basic"
-          label="Project Name"
-          variant="outlined"
-          placeholder="Enter project name here!"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AssignmentIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <TextField
-          id="description-outlined-multiline-static"
-          label="Description"
-          multiline
-          placeholder="Write some description here..."
-          rows={4}
-        />
-
-        <TextField
-          id="title-outlined-basic"
-          label="Process"
-          variant="outlined"
-          placeholder="Enter title here!"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <ModeIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <TextField
-          id="title-outlined-basic"
-          label="Text"
-          variant="outlined"
-          placeholder="Enter text here!"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <TextSnippetIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <Stack
-          direction="row"
-          divider={<Divider orientation="vertical" flexItem />}
-          spacing={2}
-          style={{ padding: "10px 0", justifyContent: "right" }}
-        >
-          <Button variant="contained" startIcon={<AddCircleIcon />}>
-            Add Process
-          </Button>
-          <Button variant="contained" startIcon={<DeleteIcon />}>
-            Remove Process
-          </Button>
-        </Stack>
-      </Box>
+        <Button variant="contained" startIcon={<AddCircleIcon />}>
+          Add Process
+        </Button>
+        <Button variant="contained" startIcon={<DeleteIcon />}>
+          Remove Process
+        </Button>
+      </Stack>
 
       <Box sx={{ height: 400, borderStyle: "solid", borderRadius: "5px" }}>
         <DataGrid
@@ -156,19 +125,6 @@ const ProjectInformation = () => {
           sx={{ background: "#f5e4d6" }}
         />
       </Box>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Stack spacing={2} direction="row">
-          <Button variant="contained">Cancel</Button>
-          <Button variant="contained">Save</Button>
-        </Stack>
-      </div>
     </Box>
   );
 };

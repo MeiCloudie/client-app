@@ -57,16 +57,14 @@ export default class GroupStore {
         if (group?.projects === undefined)
           group!.projects = [...projects]
       })
-
     } catch (error) {
       console.log(error)
     }
   }
 
   loadProjectsForGroups = async () => {
-    this.groupList.forEach(async (g) => {
-      await this.loadProjects(g.name)
-    })
+    const promises = this.groupList.map((g) => this.loadProjects(g.name));
+    await Promise.all(promises);
   }
 
   createGroup = async (groupFormValues: GroupFormValues) => {

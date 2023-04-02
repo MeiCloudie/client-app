@@ -1,7 +1,13 @@
 import * as React from "react";
 
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowId, GridRowSelectionModel, GridRowsProp } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowId,
+  GridRowSelectionModel,
+  GridRowsProp,
+} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -17,7 +23,7 @@ import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Project } from "../../app/models/Project";
 import { useStore } from "../../app/stores/store";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const users: User[] = [
   {
@@ -52,6 +58,7 @@ const project: Project = {
   name: "study-plan",
   title: "Study Plan",
   description: "Effective study plan and healthy balance",
+  groupName: "hello-group",
 };
 
 const missions: Mission[] = [
@@ -197,11 +204,12 @@ const columns: GridColDef[] = [
 const MissionListPage = () => {
   const params = useParams();
   const { missionStore } = useStore();
-  const { loadMissions } = missionStore;
+  const { loadMissionByProjectName } = missionStore;
   const [selectedMissionId, setSelectedMissionId] = React.useState<string>();
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
-    loadMissions().then(() => {
+    if (params.projectName === undefined) return;
+    loadMissionByProjectName(params.projectName).then(() => {
       setRows(
         missionStore.missionList.map((m) => {
           const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
@@ -224,7 +232,7 @@ const MissionListPage = () => {
         })
       );
     });
-  }, []);
+  }, [params.projectName]);
 
   return (
     <div>
@@ -260,26 +268,36 @@ const MissionListPage = () => {
         spacing={2}
         style={{ padding: "10px 0" }}
       >
+        <Link
+          to={`/${params.groupName}/${params.projectName}/missions/create`}
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained" startIcon={<AddCircleIcon />}>
+            New Mission
+          </Button>
+        </Link>
+        <Link
+          to={`/${params.groupName}/${params.projectName}/missions/${selectedMissionId}`}
+          style={{ textDecoration: "none" }}
+        >
+          <Button
+            variant="contained"
+            startIcon={<EditIcon />}
+            disabled={!selectedMissionId}
+          >
+            Mission Details
+          </Button>
+        </Link>
         <Button
           variant="contained"
-          startIcon={<AddCircleIcon />}
-          href={`/${params.groupName}/${params.projectName}/missions/create`}
-        >
-          New Mission
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<EditIcon />}
-          disabled={!selectedMissionId}
-          href={`/${params.groupName}/${params.projectName}/missions/${selectedMissionId}`}
-        >
-          Mission Details
-        </Button>
-        <Button variant="contained" startIcon={<DeleteIcon />} 
+          startIcon={<DeleteIcon />}
           disabled={!selectedMissionId}
           onClick={() => {
-          missionStore.deleteMission(selectedMissionId!).then(() => window.location.reload())
-        }}>
+            missionStore
+              .deleteMission(selectedMissionId!)
+              .then(() => window.location.reload());
+          }}
+        >
           Delete
         </Button>
       </Stack>
@@ -306,7 +324,9 @@ const MissionListPage = () => {
           pageSizeOptions={[5]}
           checkboxSelection
           sx={{ background: "#efcead" }}
-          onRowSelectionModelChange={(array: GridRowId[]) => setSelectedMissionId(array[array.length - 1].toString())}
+          onRowSelectionModelChange={(array: GridRowId[]) =>
+            setSelectedMissionId(array[array.length - 1].toString())
+          }
         />
       </Box>
     </div>

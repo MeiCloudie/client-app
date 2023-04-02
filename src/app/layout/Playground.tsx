@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import {
   Sidebar,
   Menu,
@@ -142,6 +142,7 @@ const hexToRgba = (hex: string, alpha: number) => {
 };
 
 export const Playground: React.FC = () => {
+  const params = useParams()
   const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
 
   const [hasImage, setHasImage] = React.useState<boolean>(false);
@@ -234,7 +235,7 @@ export const Playground: React.FC = () => {
 
           <div style={{ flex: 1, marginBottom: "32px" }}>
             <Menu menuItemStyles={menuItemStyles}>
-              <MenuItem icon={<HomeIcon />} component={<Link to="/" />}>
+              <MenuItem icon={<HomeIcon />} component={<Link to="/home" />}>
                 Home
               </MenuItem>
             </Menu>
