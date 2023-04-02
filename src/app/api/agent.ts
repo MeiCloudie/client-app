@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { Mission, MissionFormValues } from '../models/Mission'
-import { Project } from '../models/Project'
+import { Project, ProjectFormValues } from '../models/Project'
 import { Group } from '../models/Group'
 import { User, UserFormValues } from '../models/User'
 
@@ -12,7 +12,7 @@ const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-    delete: <T>(url: string, body: {}) => axios.delete<T>(url, body).then(responseBody),
+    delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
     patch: <T>(url: string, body: {}) => axios.patch<T>(url, body).then(responseBody),
 }
 
@@ -26,12 +26,16 @@ const Missions = {
     list: () => requests.get<Mission[]>('/Missions'),
     details: (id: string) => requests.get<Mission>(`/Missions/${id}`),
     create: (mission: MissionFormValues) => requests.post('/Missions', mission),
-    update: (id: string, mission: MissionFormValues) => requests.put(`/Missions/${id}`, mission)
+    update: (id: string, mission: MissionFormValues) => requests.put(`/Missions/${id}`, mission),
+    delete: (id: string) => requests.delete(`/Missions/${id}`)
 }
 
 const Projects = {
     list: () => requests.get<Project[]>('/Projects'),
     details: (id: string) => requests.get<Project>(`/Projects/${id}`),
+    create: (project: ProjectFormValues) => requests.post('/Projects', project),
+    update: (id: string, project: ProjectFormValues) => requests.put(`/Projects/${id}`, project),
+    delete: (id: string) => requests.delete(`/Projects/${id}`)
 }
 
 const Groups = {

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowId, GridRowSelectionModel, GridRowsProp } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -17,6 +17,7 @@ import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Project } from "../../app/models/Project";
 import { useStore } from "../../app/stores/store";
+import { useParams } from "react-router-dom";
 
 const users: User[] = [
   {
@@ -173,29 +174,31 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = missions.map((m) => {
-  const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
-  const states = ["New", "Active", "Resolved", "Closed"];
-  return {
-    id: m.id,
-    title: m.title,
-    assignedTo: users[randomIndex].displayName,
-    state: states[m.state],
-    comments: randomIndex,
-    activityDate: m.createDate.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
-  };
-});
+// const rows = missions.map((m) => {
+//   const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+//   const states = ["New", "Active", "Resolved", "Closed"];
+//   return {
+//     id: m.id,
+//     title: m.title,
+//     assignedTo: users[randomIndex].displayName,
+//     state: states[m.state],
+//     comments: randomIndex,
+//     activityDate: m.createDate.toLocaleString("en-US", {
+//       day: "2-digit",
+//       month: "2-digit",
+//       year: "numeric",
+//       hour: "2-digit",
+//       minute: "2-digit",
+//       second: "2-digit",
+//     }),
+//   };
+// });
 
 const MissionListPage = () => {
+  const params = useParams();
   const { missionStore } = useStore();
   const { loadMissions } = missionStore;
+  const [selectedMissionId, setSelectedMissionId] = React.useState<string>();
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
     loadMissions().then(() => {
@@ -222,6 +225,7 @@ const MissionListPage = () => {
       );
     });
   }, []);
+
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -256,13 +260,26 @@ const MissionListPage = () => {
         spacing={2}
         style={{ padding: "10px 0" }}
       >
-        <Button variant="contained" startIcon={<AddCircleIcon />}>
+        <Button
+          variant="contained"
+          startIcon={<AddCircleIcon />}
+          href={`/${params.groupName}/${params.projectName}/missions/create`}
+        >
           New Mission
         </Button>
-        <Button variant="contained" startIcon={<EditIcon />}>
+        <Button
+          variant="contained"
+          startIcon={<EditIcon />}
+          disabled={!selectedMissionId}
+          href={`/${params.groupName}/${params.projectName}/missions/${selectedMissionId}`}
+        >
           Mission Details
         </Button>
-        <Button variant="contained" startIcon={<DeleteIcon />}>
+        <Button variant="contained" startIcon={<DeleteIcon />} 
+          disabled={!selectedMissionId}
+          onClick={() => {
+          missionStore.deleteMission(selectedMissionId!).then(() => window.location.reload())
+        }}>
           Delete
         </Button>
       </Stack>
@@ -290,6 +307,7 @@ const MissionListPage = () => {
           checkboxSelection
           disableRowSelectionOnClick
           sx={{ background: "#efcead" }}
+          onRowSelectionModelChange={(array: GridRowId[]) => setSelectedMissionId(array[array.length - 1].toString())}
         />
       </Box>
     </div>

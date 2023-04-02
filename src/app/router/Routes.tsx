@@ -55,14 +55,14 @@ export const router = createBrowserRouter(
                     element: <SettingsPage />,
                 },
                 {
+                    path: "groups/create",
+                    element: <GroupInformationPage />,
+                },
+                {
                     path: ":groupName",
                     children: [
                         {
                             path: "",
-                            element: <GroupDetailsPage />,
-                        },
-                        {
-                            path: "create",
                             element: <GroupDetailsPage />,
                         },
                         {
@@ -74,14 +74,14 @@ export const router = createBrowserRouter(
                             element: <GroupMembersPage />,
                         },
                         {
+                            path: "projects/create",
+                            element: <ProjectInformationPage />,
+                        },
+                        {
                             path: ":projectName",
                             children: [
                                 {
                                     path: "",
-                                    element: <ProjectDetailsPage />
-                                },
-                                {
-                                    path: "create",
                                     element: <ProjectDetailsPage />
                                 },
                                 {
@@ -172,7 +172,7 @@ export const router = createBrowserRouter(
 //                 },
 //                 {
 //                   path: "create",
-//                   element: <GroupDetailsPage />,
+//                   element: <GroupInformationPage />,
 //                 },
 //                 {
 //                   path: "info",
@@ -191,7 +191,7 @@ export const router = createBrowserRouter(
 //                     },
 //                     {
 //                       path: "create",
-//                       element: <ProjectDetailsPage />,
+//                       element: <ProjectInformationPage />,
 //                     },
 //                     {
 //                       path: "info",

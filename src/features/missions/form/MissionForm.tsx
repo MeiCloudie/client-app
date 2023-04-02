@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -32,6 +32,7 @@ import * as Yup from "yup";
 import MySelectionForm from "../../../app/common/form/MySelectionForm";
 import MyDateForm from "../../../app/common/form/MyDateForm";
 import { User } from "../../../app/models/User";
+import { Label } from "@mui/icons-material";
 
 const users: User[] = [
   {
@@ -102,17 +103,32 @@ const stateSelection = [
 ];
 
 const MissionForm = observer(() => {
+  const params = useParams();
   const navigate = useNavigate();
   const [mission, setMission] = React.useState<MissionFormValues>(
     new MissionFormValues()
   );
   const { missionId } = useParams<{ missionId: string }>();
   const handleForSubmit = (mission: MissionFormValues) => {
-    console.log(mission)
     missionId
-      ? missionStore.updateMission(missionId, mission).then(() => navigate(`/`))
-      : missionStore.createMission(mission).then(() => navigate(`/`));
+      ? missionStore
+          .updateMission(missionId, mission)
+          .then(() => window.location.reload())
+      : missionStore
+          .createMission(mission)
+          .then(() =>
+            navigate(`/${params.groupName}/${params.projectName}/missions`)
+          );
   };
+
+  const handleForDelete = () => {
+    missionStore
+      .deleteMission(missionId!)
+      .then(() =>
+        navigate(`/${params.groupName}/${params.projectName}/missions`)
+      );
+  };
+
   const { missionStore } = useStore();
   const { loadMission } = missionStore;
 
@@ -129,7 +145,7 @@ const MissionForm = observer(() => {
     if (missionId)
       loadMission(missionId).then((m) => {
         setMission(new MissionFormValues(m));
-        console.log(m?.startDate)
+        console.log(m?.startDate);
       });
   }, []);
 
@@ -145,7 +161,14 @@ const MissionForm = observer(() => {
       onSubmit={handleForSubmit}
       validationSchema={validationSchema}
     >
-      {({ values, errors, handleSubmit, handleChange, setFieldValue }) => (
+      {({
+        values,
+        errors,
+        handleSubmit,
+        handleChange,
+        setFieldValue,
+        isSubmitting,
+      }) => (
         <Box
           component="form"
           sx={{
@@ -266,7 +289,7 @@ const MissionForm = observer(() => {
             onChange={handleChange}
             name="startDate"
             icon={<AccessTimeFilledIcon />}
-          /> */}
+          />
           <MyDateForm
             id="end-date-outlined-basic"
             label="End Date"
@@ -287,14 +310,14 @@ const MissionForm = observer(() => {
             name="completedDate"
             icon={<AccessTimeFilledIcon />}
           />
-        
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DateTimePicker", "DateTimePicker"]}>
+            <DemoContainer components={["DateTimePicker", "DateTimePicker", "DateTimePicker"]}>
               <DateTimePicker
                 label="Start Date"
                 defaultValue={dayjs(values.startDate)}
-                onChange={(value) => setFieldValue('startDate', value?.toDate()!)}
+                onChange={(value) => setFieldValue('startDate', value?.format('YYYY-MM-DDThh:mm:ssZ')!)}
               />
+              
               <DateTimePicker
                 label="End Date"
                 defaultValue={dayjs(values.endDate)}
@@ -307,7 +330,7 @@ const MissionForm = observer(() => {
                 onChange={handleChange}
               />
             </DemoContainer>
-          </LocalizationProvider>
+          </LocalizationProvider> */}
 
           {/* <TextField
             id="start-date-outlined-basic"
@@ -366,10 +389,26 @@ const MissionForm = observer(() => {
             }}
           >
             <Stack spacing={2} direction="row">
-              <Button variant="contained">Cancel</Button>
-              <Button variant="contained" type="submit">
+              <Button
+                variant="contained"
+                href={`/${params.groupName}/${params.projectName}/missions`}
+              >
+                Leave
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => window.location.reload()}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
                 Save
               </Button>
+              {missionId && (
+                <Button variant="contained" onClick={handleForDelete}>
+                  Delete
+                </Button>
+              )}
             </Stack>
           </div>
         </Box>

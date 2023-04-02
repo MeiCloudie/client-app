@@ -10,8 +10,8 @@ export default class MissionStore {
     makeAutoObservable(this);
     reaction(
       () => this.selectedMission,
-      () => {
-        console.log("Mission change");
+      (mission) => {
+        console.log("This is the mission: " + mission);
       }
     );
     reaction(
@@ -23,7 +23,7 @@ export default class MissionStore {
   }
 
   get missionList() {
-    return this.missions
+    return this.missions;
   }
 
   loadMissions = async () => {
@@ -43,7 +43,7 @@ export default class MissionStore {
       runInAction(() => {
         this.selectedMission = mission;
       });
-      return mission
+      return mission;
     } catch (error) {
       console.log(error);
     }
@@ -63,13 +63,24 @@ export default class MissionStore {
 
   updateMission = async (id: string, missionFormValues: MissionFormValues) => {
     try {
-        await agent.Missions.update(missionFormValues.id!, missionFormValues);
-        const updateMission = new Mission(missionFormValues);
-        runInAction(() => {
-          this.selectedMission = updateMission;
-        });
-      } catch (error) {
-        console.log(error);
-      }
-  }
+      await agent.Missions.update(id, missionFormValues);
+      const updateMission = new Mission(missionFormValues);
+      runInAction(() => {
+        this.selectedMission = updateMission;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteMission = async (id: string) => {
+    try {
+      await agent.Missions.delete(id);
+      runInAction(() => {
+        this.selectedMission = undefined;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }

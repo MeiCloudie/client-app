@@ -27,6 +27,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { Group } from "../../app/models/Group";
 import { User } from "../../app/models/User";
 import { Project } from "../../app/models/Project";
+import { useParams } from "react-router-dom";
 
 const users: User[] = [
   {
@@ -72,35 +73,36 @@ const projects: Project[] = [
   },
 ];
 
-const GroupDetailsPage = () => {
-  const group: Group = {
-    id: "group1",
-    name: "owl",
-    description: "Team owl",
-    title: "Group Owl",
-    owner: {
-      userName: "Mei",
-      displayName: "Van",
-      role: "Leader",
+const group: Group = {
+  id: "group1",
+  name: "owl",
+  description: "Team owl",
+  title: "Group Owl",
+  owner: {
+    userName: "Mei",
+    displayName: "Van",
+    role: "Leader",
+  },
+  projects: [
+    {
+      id: "project1",
+      createDate: new Date(2023, 1, 1),
+      name: "study-plan",
+      title: "Study Plan",
+      description: "Effective study plan and healthy balance",
     },
-    projects: [
-      {
-        id: "project1",
-        createDate: new Date(2023, 1, 1),
-        name: "study-plan",
-        title: "Study Plan",
-        description: "Effective study plan and healthy balance",
-      },
-      {
-        id: "project2",
-        createDate: new Date(2023, 7, 12),
-        name: "Healthy and Balance",
-        title: "Life",
-        description: "Happiness",
-      },
-    ],
-  };
+    {
+      id: "project2",
+      createDate: new Date(2023, 7, 12),
+      name: "Healthy and Balance",
+      title: "Life",
+      description: "Happiness",
+    },
+  ],
+};
 
+const GroupDetailsPage = () => {
+  const params = useParams();
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -144,13 +146,25 @@ const GroupDetailsPage = () => {
           spacing={2}
           style={{ padding: "10px 0", justifyContent: "left" }}
         >
-          <Button variant="contained" startIcon={<GroupAddIcon />}>
+          <Button
+            variant="contained"
+            startIcon={<GroupAddIcon />}
+            href={`/${params.groupName}/members`}
+          >
             Add Members
           </Button>
-          <Button variant="contained" startIcon={<AddBoxRoundedIcon />}>
+          <Button
+            variant="contained"
+            startIcon={<AddBoxRoundedIcon />}
+            href={`/${params.groupName}/projects/create`}
+          >
             New Project
           </Button>
-          <Button variant="contained" startIcon={<EditIcon />}>
+          <Button
+            variant="contained"
+            startIcon={<EditIcon />}
+            href={`/${params.groupName}/info`}
+          >
             Edit Group
           </Button>
         </Stack>

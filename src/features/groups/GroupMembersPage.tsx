@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Avatar,
   Box,
@@ -12,7 +13,10 @@ import {
   Stack,
   TextField,
   Typography,
+  AlertTitle,
+  Snackbar,
 } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -21,6 +25,13 @@ import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import CachedIcon from "@mui/icons-material/Cached";
 
 import { User } from "../../app/models/User";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const users: User[] = [
   {
@@ -50,6 +61,29 @@ const users: User[] = [
 ];
 
 const GroupMembersPage = () => {
+  const [open, setOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
+  const handleClick = () => {
+    if (isSuccess) {
+      setIsSuccess(false);
+    } else {
+      setIsSuccess(true);
+    }
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
@@ -151,9 +185,28 @@ const GroupMembersPage = () => {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button variant="contained">Cancel</Button>
-          <Button variant="contained">Save</Button>
+          <Button variant="contained" onClick={handleClick}>Cancel</Button>
+          <Button variant="contained" onClick={handleClick}>Save</Button>
         </Stack>
+
+        {!isSuccess && (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="warning">
+              <AlertTitle>Warning</AlertTitle>
+              The current password is incorrect or the new password is not in
+              the correct format. <strong>Please re-enter!</strong>
+            </Alert>
+          </Snackbar>
+        )}
+
+        {isSuccess && (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              <AlertTitle>Success</AlertTitle>
+              Password change successfully!
+            </Alert>
+          </Snackbar>
+        )}
       </div>
     </Box>
   );
