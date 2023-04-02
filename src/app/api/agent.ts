@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { Mission, MissionFormValues } from '../models/Mission'
 import { Project, ProjectFormValues } from '../models/Project'
-import { Group } from '../models/Group'
+import { Group, GroupFormValues } from '../models/Group'
 import { User, UserFormValues } from '../models/User'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
@@ -41,6 +41,9 @@ const Projects = {
 const Groups = {
     list: () => requests.get<Group[]>('/Groups'),
     details: (id: string) => requests.get<Group>(`/Groups/${id}`),
+    create: (group: GroupFormValues) => requests.post('/Groups', group),
+    update: (id: string, group: GroupFormValues) => requests.put(`/Groups/${id}`, group),
+    delete: (id: string) => requests.delete(`/Groups/${id}`)
 }
 
 const agent = {
