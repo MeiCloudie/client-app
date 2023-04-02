@@ -3,6 +3,8 @@ import { Mission, MissionFormValues } from '../models/Mission'
 import { Project, ProjectFormValues } from '../models/Project'
 import { Group, GroupFormValues } from '../models/Group'
 import { User, UserFormValues } from '../models/User'
+import { CommentFormValues } from '../models/Comment'
+import { ProcessFormValues } from '../models/Process'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -46,11 +48,29 @@ const Groups = {
     delete: (id: string) => requests.delete(`/Groups/${id}`)
 }
 
+// const Comment = {
+//     list: () => requests.get<Comment[]>('/Comment'),
+//     details: (id: string) => requests.get<Comment>(`/Comments/${id}`),
+//     create: (comment: CommentFormValues) => requests.post('/Comments', comment),
+//     update: (id: string, comment: CommentFormValues) => requests.put(`/Comments/${id}`, comment),
+//     delete: (id: string) => requests.delete(`/Comments/${id}`)
+// }
+
+// const Process = {
+//     list: () => requests.get<Process[]>('/Processes'),
+//     details: (id: string) => requests.get<Process>(`/Processes/${id}`),
+//     create: (process: ProcessFormValues) => requests.post('/Processes', process),
+//     update: (id: string, process: CommentFormValues) => requests.put(`/Processes/${id}`, process),
+//     delete: (id: string) => requests.delete(`/Processes/${id}`)
+// }
+
 const agent = {
     Account,
     Missions,
     Projects,
-    Groups
+    Groups,
+    Comment,
+    Process
 }
 
 export default agent
