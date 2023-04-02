@@ -5,17 +5,16 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
 
 import { Mission } from "../../app/models/Mission";
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 
-const user: User = 
-    {
-      displayName: "Mei",
-      email: "mei@gmail.com",
-      token: "meiToken",
-      roles: ["Leader"],
-    };
+const user: User = {
+  displayName: "Mei",
+  email: "mei@gmail.com",
+  token: "meiToken",
+  roles: ["Leader"],
+};
 
 const missions: Mission[] = [
   {
@@ -175,7 +174,15 @@ const MissionListPersonalPage = () => {
         </Typography>
       </div>
 
-      <Box sx={{ height: 400, width: "100%", borderStyle: "solid", borderRadius: "5px", borderColor: "#443e3e" }}>
+      <Box
+        sx={{
+          height: 400,
+          width: "100%",
+          borderStyle: "solid",
+          borderRadius: "5px",
+          borderColor: "#443e3e",
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}

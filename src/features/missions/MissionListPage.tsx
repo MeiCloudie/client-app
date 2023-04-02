@@ -12,7 +12,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { Mission } from "../../app/models/Mission";
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Project } from "../../app/models/Project";
@@ -195,7 +195,7 @@ const rows = missions.map((m) => {
 
 const MissionListPage = () => {
   const { missionStore } = useStore();
-  const { loadMissions } = missionStore
+  const { loadMissions } = missionStore;
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
     loadMissions().then(() => {

@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import { Mission, MissionFormValues } from '../models/Mission'
 import { Project } from '../models/Project'
 import { Group } from '../models/Group'
+import { User, UserFormValues } from '../models/User'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -13,6 +14,12 @@ const requests = {
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
     delete: <T>(url: string, body: {}) => axios.delete<T>(url, body).then(responseBody),
     patch: <T>(url: string, body: {}) => axios.patch<T>(url, body).then(responseBody),
+}
+
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
 }
 
 const Missions = {
@@ -33,6 +40,7 @@ const Groups = {
 }
 
 const agent = {
+    Account,
     Missions,
     Projects,
     Groups

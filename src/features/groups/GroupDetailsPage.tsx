@@ -25,7 +25,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CachedIcon from "@mui/icons-material/Cached";
 
 import { Group } from "../../app/models/Group";
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 import { Project } from "../../app/models/Project";
 
 const users: User[] = [

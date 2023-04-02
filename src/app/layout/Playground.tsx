@@ -31,7 +31,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 
-import User from "../models/User";
+import { User } from "../models/User";
 import { Group } from "../models/Group";
 import { Box, Button } from "@mui/material";
 
@@ -416,7 +416,9 @@ export const Playground: React.FC = () => {
           overflow: "auto",
         }}
       >
-        <Box sx={{ display: "flex", justifyContent: "flex-end", padding: "5px" }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "flex-end", padding: "5px" }}
+        >
           <Switch
             id="collapse"
             checked={collapsed}

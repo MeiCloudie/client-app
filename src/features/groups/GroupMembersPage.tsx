@@ -20,7 +20,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import CachedIcon from "@mui/icons-material/Cached";
 
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 
 const users: User[] = [
   {
@@ -133,7 +133,10 @@ const GroupMembersPage = () => {
                     <PersonIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`${u.displayName} [${u.roles}]`} secondary={u.email} />
+                <ListItemText
+                  primary={`${u.displayName} [${u.roles}]`}
+                  secondary={u.email}
+                />
               </ListItemButton>
             </ListItem>
           ))}

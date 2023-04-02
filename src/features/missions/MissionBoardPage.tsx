@@ -22,7 +22,7 @@ import PersonIcon from "@mui/icons-material/Person";
 
 import { Mission } from "../../app/models/Mission";
 import { Project } from "../../app/models/Project";
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 
 const users: User[] = [
   {
@@ -175,16 +175,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const MissionBoardPage = () => {
-  const [expanded, setExpanded] = React.useState<Set<string>>(new Set<string>());
+  const [expanded, setExpanded] = React.useState<Set<string>>(
+    new Set<string>()
+  );
 
-  const handleExpandClick = (id : string) => {
+  const handleExpandClick = (id: string) => {
     if (expanded.has(id)) {
       setExpanded((set) => {
         set.delete(id);
         return new Set<string>(set);
       });
-    }
-    else {
+    } else {
       setExpanded((set) => new Set<string>(set.add(id)));
     }
   };
@@ -310,7 +311,11 @@ const MissionBoardPage = () => {
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
+                    <Collapse
+                      in={expanded.has(m.id)}
+                      timeout="auto"
+                      unmountOnExit
+                    >
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -367,24 +372,24 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-        <Typography
-              variant="h5"
-              gutterBottom
-              style={{
-                wordWrap: "break-word",
-                margin: "10px 0",
-                fontWeight: "bold",
-                color: "#443e3e",
-              }}
-            >
-              Active:{" "}
-              {
-                missions.filter(
-                  (mission) => mission.state === MissionStates.Active
-                ).length
-              }
-              /{missions.length}
-            </Typography>
+          <Typography
+            variant="h5"
+            gutterBottom
+            style={{
+              wordWrap: "break-word",
+              margin: "10px 0",
+              fontWeight: "bold",
+              color: "#443e3e",
+            }}
+          >
+            Active:{" "}
+            {
+              missions.filter(
+                (mission) => mission.state === MissionStates.Active
+              ).length
+            }
+            /{missions.length}
+          </Typography>
 
           <Box
             sx={{
@@ -398,7 +403,6 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
-
             {missions
               .filter((m) => m.state === MissionStates.Active)
               .map((m) => {
@@ -452,7 +456,11 @@ const MissionBoardPage = () => {
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
+                    <Collapse
+                      in={expanded.has(m.id)}
+                      timeout="auto"
+                      unmountOnExit
+                    >
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -509,24 +517,24 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-        <Typography
-              variant="h5"
-              gutterBottom
-              style={{
-                wordWrap: "break-word",
-                margin: "10px 0",
-                fontWeight: "bold",
-                color: "#443e3e",
-              }}
-            >
-              Resolved:{" "}
-              {
-                missions.filter(
-                  (mission) => mission.state === MissionStates.Resolved
-                ).length
-              }
-              /{missions.length}
-            </Typography>
+          <Typography
+            variant="h5"
+            gutterBottom
+            style={{
+              wordWrap: "break-word",
+              margin: "10px 0",
+              fontWeight: "bold",
+              color: "#443e3e",
+            }}
+          >
+            Resolved:{" "}
+            {
+              missions.filter(
+                (mission) => mission.state === MissionStates.Resolved
+              ).length
+            }
+            /{missions.length}
+          </Typography>
 
           <Box
             sx={{
@@ -540,7 +548,6 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
-
             {missions
               .filter((m) => m.state === MissionStates.Resolved)
               .map((m) => {
@@ -594,7 +601,11 @@ const MissionBoardPage = () => {
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
+                    <Collapse
+                      in={expanded.has(m.id)}
+                      timeout="auto"
+                      unmountOnExit
+                    >
                       <CardContent>
                         <Typography
                           variant="h6"
@@ -651,25 +662,25 @@ const MissionBoardPage = () => {
         </Grid>
 
         <Grid item xs={3}>
-        <Typography
-              variant="h5"
-              gutterBottom
-              style={{
-                wordWrap: "break-word",
-                margin: "10px 0",
-                fontWeight: "bold",
-                color: "#443e3e",
-              }}
-            >
-              Closed:{" "}
-              {
-                missions.filter(
-                  (mission) => mission.state === MissionStates.Closed
-                ).length
-              }
-              /{missions.length}
-            </Typography>
-            
+          <Typography
+            variant="h5"
+            gutterBottom
+            style={{
+              wordWrap: "break-word",
+              margin: "10px 0",
+              fontWeight: "bold",
+              color: "#443e3e",
+            }}
+          >
+            Closed:{" "}
+            {
+              missions.filter(
+                (mission) => mission.state === MissionStates.Closed
+              ).length
+            }
+            /{missions.length}
+          </Typography>
+
           <Box
             sx={{
               padding: "20px",
@@ -682,7 +693,6 @@ const MissionBoardPage = () => {
               height: 600,
             }}
           >
-
             {missions
               .filter((m) => m.state === MissionStates.Closed)
               .map((m) => {
@@ -736,7 +746,11 @@ const MissionBoardPage = () => {
                         <ExpandMoreIcon />
                       </ExpandMore>
                     </CardActions>
-                    <Collapse in={expanded.has(m.id)} timeout="auto" unmountOnExit>
+                    <Collapse
+                      in={expanded.has(m.id)}
+                      timeout="auto"
+                      unmountOnExit
+                    >
                       <CardContent>
                         <Typography
                           variant="h6"

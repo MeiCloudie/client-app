@@ -12,7 +12,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { Mission } from "../../app/models/Mission";
-import User from "../../app/models/User";
+import { User } from "../../app/models/User";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Project } from "../../app/models/Project";
@@ -173,7 +173,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows : GridRowsProp = missionss.map((m) => {
+const rows: GridRowsProp = missionss.map((m) => {
   const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
   const states = ["New", "Active", "Resolved", "Closed"];
   return {
@@ -194,30 +194,34 @@ const rows : GridRowsProp = missionss.map((m) => {
 });
 
 const MissionListTestPage = () => {
-  const [rows, setRows] = useState<GridRowsProp>([])
-  
+  const [rows, setRows] = useState<GridRowsProp>([]);
+
   useEffect(() => {
-    agent.Missions.list().then(missions => setRows(missions.map((m) => {
-      const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
-      const states = ["New", "Active", "Resolved", "Closed"];
-      return {
-        id: m.id,
-        title: m.title,
-        assignedTo: users[randomIndex].displayName,
-        state: states[m.state],
-        comments: randomIndex,
-        activityDate: m.createDate.toLocaleString("en-US", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }),
-      };
-    })))
-  }, [])
-  
+    agent.Missions.list().then((missions) =>
+      setRows(
+        missions.map((m) => {
+          const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+          const states = ["New", "Active", "Resolved", "Closed"];
+          return {
+            id: m.id,
+            title: m.title,
+            assignedTo: users[randomIndex].displayName,
+            state: states[m.state],
+            comments: randomIndex,
+            activityDate: m.createDate.toLocaleString("en-US", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            }),
+          };
+        })
+      )
+    );
+  }, []);
+
   return (
     <div>
       <div style={{ textAlign: "center" }}>
