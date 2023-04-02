@@ -56,6 +56,10 @@ export const router = createBrowserRouter(
                             element: <GroupDetailsPage />,
                         },
                         {
+                            path: "create",
+                            element: <GroupDetailsPage />,
+                        },
+                        {
                             path: "info",
                             element: <GroupInformationPage />,
                         },
@@ -68,6 +72,10 @@ export const router = createBrowserRouter(
                             children: [
                                 {
                                     path: "",
+                                    element: <ProjectDetailsPage />
+                                },
+                                {
+                                    path: "create",
                                     element: <ProjectDetailsPage />
                                 },
                                 {
