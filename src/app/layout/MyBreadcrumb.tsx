@@ -27,6 +27,8 @@ const MyBreadcrumb = () => {
   }
   return (
     <Breadcrumbs sx={{ padding: "5px 20px", bgcolor: "#443e3e", color: "#f0c9a7" }}>
+      {location.pathname === "/" && getBreadcrumbItem("/home","Welcome to PlanTogether!")}
+
       {location.pathname === "/home" && getBreadcrumbItem("/home", "Home")}
 
       {params.userName &&

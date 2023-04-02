@@ -34,7 +34,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <Box>
+    <Box sx ={{margin: "70px"}}>
       <Grid
         container
         columns={16}

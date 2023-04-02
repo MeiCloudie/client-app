@@ -1,6 +1,6 @@
 //import { Container } from "@mui/material";
 //import { Outlet } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
 import MissionListPage from "../../features/missions/MissionListPage";
 import "./App.css";
@@ -9,16 +9,19 @@ import BasicBreadcrumbs from "./BasicBreadcrumbs";
 import { Playground } from "./Playground";
 import MyBreadcrumb from "./MyBreadcrumb";
 import MissionForm from "../../features/missions/form/MissionForm";
+import HomePage from "../../features/home/HomePage";
 //import Sidebar from "./Sidebar";
 
 function App() {
+  const location = useLocation()
   return (
     <div>
+      <MyBreadcrumb />
+      {location.pathname === '/' ? <HomePage /> : <Playground />}
       {/* <Outlet /> */}
       {/* <BasicBreadcrumbs /> */}
-      <MyBreadcrumb />
       {/* <Breadcrumb /> */}
-      <Playground />
+      {/* <Playground /> */}
       {/* <GroupDetailsPage /> */}
       {/* <MissionListPage /> */}
     </div>

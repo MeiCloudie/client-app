@@ -17,6 +17,7 @@ import MissionListPersonalPage from "../../features/missions/MissionListPersonal
 import GroupInformationPage from "../../features/groups/GroupInformationPage";
 import GroupMembersPage from "../../features/groups/GroupMembersPage";
 import ProjectInformationPage from "../../features/projects/ProjectInformationPage";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter(
     [
@@ -24,6 +25,11 @@ export const router = createBrowserRouter(
             path: "/",
             element: <App />,
             children: [
+                // {
+                //     element: <RequireAuth />, children: [
+
+                //     ]
+                // },
                 {
                     path: "",
                     element: <Navigate replace to="home" />,
@@ -140,3 +146,129 @@ export const router = createBrowserRouter(
         },
     ]
 )
+
+// export const router = createBrowserRouter([
+//     {
+//       path: "/",
+//       element: <App />,
+//       children: [
+//         {
+//           element: <RequireAuth />,
+//           children: [
+//             {
+//               path: "profiles/:userName",
+//               element: <ProfilePage />,
+//             },
+//             {
+//               path: "settings",
+//               element: <SettingsPage />,
+//             },
+//             {
+//               path: ":groupName",
+//               children: [
+//                 {
+//                   path: "",
+//                   element: <GroupDetailsPage />,
+//                 },
+//                 {
+//                   path: "create",
+//                   element: <GroupDetailsPage />,
+//                 },
+//                 {
+//                   path: "info",
+//                   element: <GroupInformationPage />,
+//                 },
+//                 {
+//                   path: "members",
+//                   element: <GroupMembersPage />,
+//                 },
+//                 {
+//                   path: ":projectName",
+//                   children: [
+//                     {
+//                       path: "",
+//                       element: <ProjectDetailsPage />,
+//                     },
+//                     {
+//                       path: "create",
+//                       element: <ProjectDetailsPage />,
+//                     },
+//                     {
+//                       path: "info",
+//                       element: <ProjectInformationPage />,
+//                     },
+//                     {
+//                       path: "missions",
+//                       children: [
+//                         {
+//                           path: "",
+//                           element: <MissionListPage />,
+//                         },
+//                         {
+//                           path: "create",
+//                           element: <MissionDetailsPage />,
+//                         },
+//                         {
+//                           path: ":missionId",
+//                           element: <MissionDetailsPage />,
+//                         },
+//                       ],
+//                     },
+//                     {
+//                       path: "boards",
+//                       children: [
+//                         {
+//                           path: "",
+//                           element: <MissionBoardPage />,
+//                         },
+//                         {
+//                           path: ":missionId",
+//                           element: <MissionDetailsPage />,
+//                         },
+//                       ],
+//                     },
+//                   ],
+//                 },
+//               ],
+//             },
+//             {
+//               path: "personal",
+//               element: <MissionListPersonalPage />,
+//             },
+//             {
+//               path: "help",
+//               element: <HelpPage />,
+//             },
+//             {
+//               path: "about-us",
+//               element: <AboutUsPage />,
+//             },
+//             {
+//               path: "error",
+//               element: <ErrorPage />,
+//             },
+//             {
+//               path: "*",
+//               element: <Navigate replace to="error" />,
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       path: "",
+//       element: <Navigate replace to="home" />,
+//     },
+//     {
+//       path: "home",
+//       element: <HomePage />,
+//     },
+//     {
+//       path: "login",
+//       element: <LoginPage />,
+//     },
+//     {
+//       path: "register",
+//       element: <RegisterPage />,
+//     },
+//   ]);

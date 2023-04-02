@@ -19,6 +19,7 @@ import { Stack } from "@mui/system";
 import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Mission } from "../../app/models/Mission";
+import { useStore } from "../../app/stores/store";
 
 const groups: Group[] = [
   {
@@ -176,6 +177,7 @@ const missions: Mission[] = [
 ];
 
 const HomePage = () => {
+  const { userStore } = useStore();
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px" }}>
@@ -203,74 +205,89 @@ const HomePage = () => {
         >
           Welcome! Let's start planning!
         </Typography>
-
-        <Button variant="contained" startIcon={<GroupAddIcon />}>
-          Create New Group
-        </Button>
       </div>
 
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        {groups.map((g, index) => (
-          <Grid xs={2} sm={4} md={4} key={index}>
-            <Card
-              sx={{
-                margin: "10px",
-                bgcolor: "#ebdbce",
-                borderStyle: "solid",
-                borderColor: "#443e3e",
-                borderRadius: "10px"
-              }}
-            >
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="project">
-                    <GroupsIcon />
-                  </Avatar>
-                }
-                title={g.title}
-                subheader={g.owner.role}
-              />
-              <CardContent>
-                <Stack direction="row" spacing={2}>
-                  <Badge
-                    badgeContent={g.projects.length}
-                    max={99}
-                    color="primary"
-                  >
-                    <Chip
-                      icon={<BusinessCenterIcon />}
-                      label="Project"
-                      sx={{ fontWeight: "600" }}
-                    />
-                  </Badge>
-                  <Badge
-                    badgeContent={missions.length}
-                    max={99}
-                    color="primary"
-                  >
-                    <Chip
-                      icon={<AssignmentIcon />}
-                      label="Mission"
-                      sx={{ fontWeight: "600" }}
-                    />
-                  </Badge>
-                </Stack>
-                <Button
-                  variant="contained"
-                  endIcon={<DoubleArrowIcon />}
-                  sx={{ margin: "20px 0" }}
+      {userStore.isLoggedIn ? (
+        <div>
+          <div style={{ textAlign: "center", margin: "30px" }}>
+            <Button variant="contained" startIcon={<GroupAddIcon />}>
+              Create New Group
+            </Button>
+          </div>
+
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+          >
+            {groups.map((g, index) => (
+              <Grid xs={2} sm={4} md={4} key={index}>
+                <Card
+                  sx={{
+                    margin: "10px",
+                    bgcolor: "#ebdbce",
+                    borderStyle: "solid",
+                    borderColor: "#443e3e",
+                    borderRadius: "10px",
+                  }}
                 >
-                  Group
-                </Button>
-              </CardContent>
-            </Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar sx={{ bgcolor: red[500] }} aria-label="project">
+                        <GroupsIcon />
+                      </Avatar>
+                    }
+                    title={g.title}
+                    subheader={g.owner.role}
+                  />
+                  <CardContent>
+                    <Stack direction="row" spacing={2}>
+                      <Badge
+                        badgeContent={g.projects.length}
+                        max={99}
+                        color="primary"
+                      >
+                        <Chip
+                          icon={<BusinessCenterIcon />}
+                          label="Project"
+                          sx={{ fontWeight: "600" }}
+                        />
+                      </Badge>
+                      <Badge
+                        badgeContent={missions.length}
+                        max={99}
+                        color="primary"
+                      >
+                        <Chip
+                          icon={<AssignmentIcon />}
+                          label="Mission"
+                          sx={{ fontWeight: "600" }}
+                        />
+                      </Badge>
+                    </Stack>
+                    <Button
+                      variant="contained"
+                      endIcon={<DoubleArrowIcon />}
+                      sx={{ margin: "20px 0" }}
+                    >
+                      Group
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </div>
+      ) : (
+        <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
+          <Button variant="contained" href="/login">
+            Login
+          </Button>
+          <Button variant="contained" href="/register">
+            Register
+          </Button>
+        </Stack>
+      )}
     </div>
   );
 };
