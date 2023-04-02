@@ -1,81 +1,9 @@
-
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Card, CardHeader, CardContent, Avatar } from "@mui/material";
 
-import User from "../../app/models/User";
-import { MissionPriorities } from "../../app/enums/MissionPriorities";
-import { MissionStates } from "../../app/enums/MissionStates";
 import { observer } from "mobx-react-lite";
 import MissionForm from "./form/MissionForm";
-
-const users: User[] = [
-  {
-    displayName: "Mei",
-    email: "mei@gmail.com",
-    token: "meiToken",
-    roles: ["Leader"],
-  },
-  {
-    displayName: "Slime",
-    email: "slime@gmail.com",
-    token: "slimeToken",
-    roles: ["Member"],
-  },
-  {
-    displayName: "John",
-    email: "john@example.com",
-    token: "token123",
-    roles: ["Member"],
-  },
-  {
-    displayName: "Jane",
-    email: "jane@example.com",
-    token: "token456",
-    roles: ["Member"],
-  },
-];
-
-const userSelection = users.map((u) => {
-  return {
-    value: u.email,
-    label: u.displayName,
-  };
-});
-
-const prioritySelection = [
-  {
-    value: MissionPriorities.Low,
-    label: "Low",
-  },
-  {
-    value: MissionPriorities.Medium,
-    label: "Medium",
-  },
-  {
-    value: MissionPriorities.High,
-    label: "High",
-  },
-];
-
-const stateSelection = [
-  {
-    value: MissionStates.New,
-    label: "New",
-  },
-  {
-    value: MissionStates.Active,
-    label: "Active",
-  },
-  {
-    value: MissionStates.Resolved,
-    label: "Resolved",
-  },
-  {
-    value: MissionStates.Closed,
-    label: "Closed",
-  },
-];
 
 const MissionDetailsPage = observer(() => {
 
