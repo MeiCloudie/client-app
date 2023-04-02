@@ -15,6 +15,7 @@ export class Group implements Group {
     name = ''
     title = ''
     description: string = ''
+    projects: Project[] = []
     constructor(init?: GroupFormValues) {
         Object.assign(this, init)
     }
@@ -25,6 +26,7 @@ export class GroupFormValues {
     name?: string = ''
     title?: string = ''
     description?: string =''
+    projects: Project[] = []
     constructor(group?: Group) {
         if (group) {
             this.id = group.id

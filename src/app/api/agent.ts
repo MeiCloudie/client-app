@@ -4,7 +4,7 @@ import { Project, ProjectFormValues } from '../models/Project'
 import { Group, GroupFormValues } from '../models/Group'
 import { User, UserFormValues } from '../models/User'
 import { CommentFormValues } from '../models/Comment'
-import { ProcessFormValues } from '../models/Process'
+import { Process, ProcessFormValues } from '../models/Process'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -45,32 +45,33 @@ const Groups = {
     details: (id: string) => requests.get<Group>(`/Groups/${id}`),
     create: (group: GroupFormValues) => requests.post('/Groups', group),
     update: (id: string, group: GroupFormValues) => requests.put(`/Groups/${id}`, group),
-    delete: (id: string) => requests.delete(`/Groups/${id}`)
+    delete: (id: string) => requests.delete(`/Groups/${id}`),
+    projectList: (name: string) => requests.get<Project[]>(`/Groups/${name}/Projects`)
 }
 
-// const Comment = {
-//     list: () => requests.get<Comment[]>('/Comment'),
-//     details: (id: string) => requests.get<Comment>(`/Comments/${id}`),
-//     create: (comment: CommentFormValues) => requests.post('/Comments', comment),
-//     update: (id: string, comment: CommentFormValues) => requests.put(`/Comments/${id}`, comment),
-//     delete: (id: string) => requests.delete(`/Comments/${id}`)
-// }
+const Comments = {
+    list: () => requests.get<Comment[]>('/Comment'),
+    details: (id: string) => requests.get<Comment>(`/Comments/${id}`),
+    create: (comment: CommentFormValues) => requests.post('/Comments', comment),
+    update: (id: string, comment: CommentFormValues) => requests.put(`/Comments/${id}`, comment),
+    delete: (id: string) => requests.delete(`/Comments/${id}`)
+}
 
-// const Process = {
-//     list: () => requests.get<Process[]>('/Processes'),
-//     details: (id: string) => requests.get<Process>(`/Processes/${id}`),
-//     create: (process: ProcessFormValues) => requests.post('/Processes', process),
-//     update: (id: string, process: CommentFormValues) => requests.put(`/Processes/${id}`, process),
-//     delete: (id: string) => requests.delete(`/Processes/${id}`)
-// }
+const Processes = {
+    list: () => requests.get<Process[]>('/Processes'),
+    details: (id: string) => requests.get<Process>(`/Processes/${id}`),
+    create: (process: ProcessFormValues) => requests.post('/Processes', process),
+    update: (id: string, process: CommentFormValues) => requests.put(`/Processes/${id}`, process),
+    delete: (id: string) => requests.delete(`/Processes/${id}`)
+}
 
 const agent = {
     Account,
     Missions,
     Projects,
     Groups,
-    Comment,
-    Process
+    Comments,
+    Processes
 }
 
 export default agent

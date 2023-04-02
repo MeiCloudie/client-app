@@ -49,6 +49,26 @@ export default class GroupStore {
     }
   };
 
+  loadProjects = async (name: string) => {
+    try {
+      const projects = await agent.Groups.projectList(name);
+      runInAction(() => {
+        const group = this.groups.find(x => x.name === name)
+        if (group?.projects === undefined)
+          group!.projects = [...projects]
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  loadProjectsForGroups = async () => {
+    this.groupList.forEach(async (g) => {
+      await this.loadProjects(g.name)
+    })
+  }
+
   createGroup = async (groupFormValues: GroupFormValues) => {
     try {
       await agent.Groups.create(groupFormValues);

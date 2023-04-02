@@ -34,6 +34,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import { User } from "../models/User";
 import { Group } from "../models/Group";
 import { Box, Button } from "@mui/material";
+import { useStore } from "../stores/store";
 
 const user: User = {
   displayName: "Mei",
@@ -155,6 +156,15 @@ export const Playground: React.FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHasImage(e.target.checked);
   };
+  const [groups, setGroups] = React.useState<Group[]>([])
+  const { groupStore } = useStore()
+
+  React.useEffect(() => {
+    groupStore.loadGroups().then(() => {
+      groupStore.loadProjectsForGroups().then(() => setGroups(groupStore.groupList))
+      console.log(groupStore.groupList[0].projects)
+    })
+  }, [])
 
   const menuItemStyles: MenuItemStyles = {
     root: {
@@ -297,11 +307,11 @@ export const Playground: React.FC = () => {
                 <SubMenu label={g.title} icon={<Diversity3Icon />}>
                   <MenuItem
                     icon={<InfoIcon />}
-                    component={<Link to="/:groupName/" />}
+                    component={<Link to={`/${g.name}/`} />}
                   >
                     Group Details
                   </MenuItem>
-                  {g.projects.map((p, j) => (
+                  {g.projects && g.projects.map((p, j) => (
                     <SubMenu
                       key={j}
                       label={p.title}
@@ -309,14 +319,14 @@ export const Playground: React.FC = () => {
                     >
                       <MenuItem
                         icon={<InfoIcon />}
-                        component={<Link to="/:groupName/:projectName/" />}
+                        component={<Link to={`/${g.name}/${p.name}/`} />}
                       >
                         Project Details
                       </MenuItem>
                       <MenuItem
                         icon={<AssignmentIcon />}
                         component={
-                          <Link to="/:groupName/:projectName/missions/" />
+                          <Link to={`/${g.name}/${p.name}/missions/`} />
                         }
                       >
                         Missions
@@ -324,7 +334,7 @@ export const Playground: React.FC = () => {
                       <MenuItem
                         icon={<DashboardIcon />}
                         component={
-                          <Link to="/:groupName/:projectName/boards/" />
+                          <Link to={`/${g.name}/${p.name}/boards/`} />
                         }
                       >
                         Boards

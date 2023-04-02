@@ -305,7 +305,6 @@ const MissionListPage = () => {
           }}
           pageSizeOptions={[5]}
           checkboxSelection
-          disableRowSelectionOnClick
           sx={{ background: "#efcead" }}
           onRowSelectionModelChange={(array: GridRowId[]) => setSelectedMissionId(array[array.length - 1].toString())}
         />

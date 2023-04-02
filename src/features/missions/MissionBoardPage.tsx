@@ -260,10 +260,11 @@ const MissionBoardPage = () => {
           >
             {missions
               .filter((m) => m.state === MissionStates.New)
-              .map((m) => {
+              .map((m, i) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
+                    key={i}
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
@@ -405,10 +406,11 @@ const MissionBoardPage = () => {
           >
             {missions
               .filter((m) => m.state === MissionStates.Active)
-              .map((m) => {
+              .map((m, i) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
+                    key={i}
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
@@ -550,10 +552,11 @@ const MissionBoardPage = () => {
           >
             {missions
               .filter((m) => m.state === MissionStates.Resolved)
-              .map((m) => {
+              .map((m, i) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
+                    key={i}
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",
@@ -695,10 +698,11 @@ const MissionBoardPage = () => {
           >
             {missions
               .filter((m) => m.state === MissionStates.Closed)
-              .map((m) => {
+              .map((m, i) => {
                 const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
                 return (
                   <Card
+                    key={i}
                     sx={{
                       maxWidth: 345,
                       marginBottom: "10px",

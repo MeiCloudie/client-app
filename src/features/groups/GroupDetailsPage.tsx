@@ -195,8 +195,9 @@ const GroupDetailsPage = () => {
           }}
           disablePadding
         >
-          {users.map((u) => (
+          {users.map((u, i) => (
             <ListItem
+              key={i}
               secondaryAction={
                 <div>
                   <IconButton edge="end">
@@ -247,8 +248,9 @@ const GroupDetailsPage = () => {
           }}
           disablePadding
         >
-          {projects.map((p) => (
+          {projects.map((p, i) => (
             <ListItem
+              key={i}
               secondaryAction={
                 <div>
                   <IconButton edge="end">
