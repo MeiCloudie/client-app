@@ -24,6 +24,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
+import MySelectionForm from "../../../app/common/form/MySelectionForm";
+import MyDateForm from "../../../app/common/form/MyDateForm";
 
 const prioritySelection = [
   {
@@ -78,6 +80,8 @@ const MissionForm = observer(() => {
     projectName: Yup.string()
       .matches(/^[a-z0-9-]+$/, "message!")
       .required("The project is required"),
+    priority: Yup.mixed<MissionPriorities>().required(),
+    state: Yup.mixed<MissionStates>().required()
   });
 
   React.useEffect(() => {
@@ -103,6 +107,7 @@ const MissionForm = observer(() => {
           onSubmit={handleSubmit}
         >
           <TextField
+            helperText={errors.projectName}
             key={values!.id}
             name="projectName"
             id="project-name-outlined-basic"
@@ -119,8 +124,9 @@ const MissionForm = observer(() => {
               ),
             }}
           />
-          {errors.projectName}
+          {/* {errors.projectName} */}
           <TextField
+            helperText={errors.title}
             key={values!.id}
             name="title"
             id="title-outlined-basic"
@@ -137,55 +143,27 @@ const MissionForm = observer(() => {
               ),
             }}
           />
-          {errors.title}
-          <FormControl fullWidth>
-            <InputLabel id="priority-select-label">Priority</InputLabel>
-            <Select
-              labelId="priority-select-label"
-              id="priority-select"
-              defaultValue={values.priority}
-              label="Priority"
-              name="priority"
-              onChange={handleChange}
-              startAdornment={
-                <InputAdornment position="start">
-                  <BookmarkIcon />
-                </InputAdornment>
-              }
-            >
-              {prioritySelection.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          {/* {errors.title} */}
 
-          <FormControl fullWidth>
-            <InputLabel id="state-select-label">State</InputLabel>
-            <Select
-              labelId="state-select-label"
-              id="state-select"
-              defaultValue={values.state}
-              label="State"
-              name="state"
-              onChange={handleChange}
-              startAdornment={
-                <InputAdornment position="start">
-                  <CheckBoxIcon />
-                </InputAdornment>
-              }
-            >
-              {stateSelection.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+
+          <MySelectionForm
+            id="priority-select"
+            defaultValue={values.priority}
+            label="Priority"
+            name="priority"
+            onChange={handleChange}
+            icon={<BookmarkIcon />} options={prioritySelection} />
+
+          <MySelectionForm
+            id="state-select"
+            defaultValue={values.state}
+            label="State"
+            name="state"
+            onChange={handleChange}
+            icon={<CheckBoxIcon />} options={stateSelection} />
 
           <TextField
-            //   key={values.description}
+            helperText={errors.description}
             id="description-outlined-multiline-static"
             label="Description"
             multiline
@@ -196,7 +174,38 @@ const MissionForm = observer(() => {
             rows={4}
           />
 
-          <TextField
+          <MyDateForm
+            id="start-date-outlined-basic"
+            label="Start Date"
+            variant="outlined"
+            placeholder="Hours"
+            defaultValue={values.startDate}
+            onChange={handleChange}
+            name="startDate"
+            icon={<AccessTimeFilledIcon />}
+          />
+          <MyDateForm
+            id="end-date-outlined-basic"
+            label="End Date"
+            variant="outlined"
+            placeholder="Hours"
+            defaultValue={values.endDate}
+            onChange={handleChange}
+            name="endDate"
+            icon={<AccessTimeFilledIcon />}
+          />
+          <MyDateForm
+            id="completed-outlined-basic"
+            label="Completed"
+            variant="outlined"
+            placeholder="Hours"
+            defaultValue={values.completedDate}
+            onChange={handleChange}
+            name="completedDate"
+            icon={<AccessTimeFilledIcon />}
+          />
+          
+          {/* <TextField
             id="start-date-outlined-basic"
             label="Start Date"
             variant="outlined"
@@ -243,7 +252,7 @@ const MissionForm = observer(() => {
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
 
           <div
             style={{
