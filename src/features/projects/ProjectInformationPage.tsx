@@ -17,7 +17,7 @@ import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import Process from "../../app/models/Process";
+import { Process } from "../../app/models/Process";
 import { Project } from "../../app/models/Project";
 
 const projects: Project[] = [
@@ -137,7 +137,6 @@ const ProjectInformation = () => {
             Remove Process
           </Button>
         </Stack>
-        
       </Box>
 
       <Box sx={{ height: 400, borderStyle: "solid", borderRadius: "5px" }}>

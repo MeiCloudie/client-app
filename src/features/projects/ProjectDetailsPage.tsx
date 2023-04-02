@@ -12,7 +12,7 @@ import { Project } from "../../app/models/Project";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import EditIcon from "@mui/icons-material/Edit";
-import Process from "../../app/models/Process";
+import { Process } from "../../app/models/Process";
 
 const projects: Project[] = [
   {
