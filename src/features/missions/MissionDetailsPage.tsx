@@ -1,40 +1,9 @@
-
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Card, CardHeader, CardContent, Avatar } from "@mui/material";
 
-import User from "../../app/models/User";
-import { MissionPriorities } from "../../app/enums/MissionPriorities";
-import { MissionStates } from "../../app/enums/MissionStates";
 import { observer } from "mobx-react-lite";
 import MissionForm from "./form/MissionForm";
-
-const users: User[] = [
-  {
-    displayName: "Mei",
-    email: "mei@gmail.com",
-    token: "meiToken",
-    roles: ["Leader"],
-  },
-  {
-    displayName: "Slime",
-    email: "slime@gmail.com",
-    token: "slimeToken",
-    roles: ["Member"],
-  },
-  {
-    displayName: "John",
-    email: "john@example.com",
-    token: "token123",
-    roles: ["Member"],
-  },
-  {
-    displayName: "Jane",
-    email: "jane@example.com",
-    token: "token456",
-    roles: ["Member"],
-  },
-];
 
 const MissionDetailsPage = observer(() => {
 
