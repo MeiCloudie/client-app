@@ -36,47 +36,6 @@ const users: User[] = [
   },
 ];
 
-const userSelection = users.map((u) => {
-  return {
-    value: u.email,
-    label: u.displayName,
-  };
-});
-
-const prioritySelection = [
-  {
-    value: MissionPriorities.Low,
-    label: "Low",
-  },
-  {
-    value: MissionPriorities.Medium,
-    label: "Medium",
-  },
-  {
-    value: MissionPriorities.High,
-    label: "High",
-  },
-];
-
-const stateSelection = [
-  {
-    value: MissionStates.New,
-    label: "New",
-  },
-  {
-    value: MissionStates.Active,
-    label: "Active",
-  },
-  {
-    value: MissionStates.Resolved,
-    label: "Resolved",
-  },
-  {
-    value: MissionStates.Closed,
-    label: "Closed",
-  },
-];
-
 const MissionDetailsPage = observer(() => {
 
   return (
