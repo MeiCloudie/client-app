@@ -35,9 +35,9 @@ export class MissionFormValues {
     description: string = ''
     priority: MissionPriorities = MissionPriorities.Low
     state: MissionStates = MissionStates.New
-    startDate: Date | null = null
-    endDate: Date | null = null
-    completedDate: Date | null = null
+    startDate: Date = new Date()
+    endDate: Date = new Date()
+    completedDate: Date = new Date()
     createDate: Date = new Date()
     projectName?: string = ''
     

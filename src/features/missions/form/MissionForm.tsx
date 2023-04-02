@@ -13,6 +13,11 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import dayjs from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -26,6 +31,41 @@ import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
 import MySelectionForm from "../../../app/common/form/MySelectionForm";
 import MyDateForm from "../../../app/common/form/MyDateForm";
+import { User } from "../../../app/models/User";
+
+const users: User[] = [
+  {
+    displayName: "Mei",
+    email: "mei@gmail.com",
+    token: "meiToken",
+    roles: ["Leader"],
+  },
+  {
+    displayName: "Slime",
+    email: "slime@gmail.com",
+    token: "slimeToken",
+    roles: ["Member"],
+  },
+  {
+    displayName: "John",
+    email: "john@example.com",
+    token: "token123",
+    roles: ["Member"],
+  },
+  {
+    displayName: "Jane",
+    email: "jane@example.com",
+    token: "token456",
+    roles: ["Member"],
+  },
+];
+
+const userSelection = users.map((u) => {
+  return {
+    value: u.email,
+    label: u.displayName,
+  };
+});
 
 const prioritySelection = [
   {
@@ -68,6 +108,7 @@ const MissionForm = observer(() => {
   );
   const { missionId } = useParams<{ missionId: string }>();
   const handleForSubmit = (mission: MissionFormValues) => {
+    console.log(mission)
     missionId
       ? missionStore.updateMission(missionId, mission).then(() => navigate(`/`))
       : missionStore.createMission(mission).then(() => navigate(`/`));
@@ -81,15 +122,21 @@ const MissionForm = observer(() => {
       .matches(/^[a-z0-9-]+$/, "message!")
       .required("The project is required"),
     priority: Yup.mixed<MissionPriorities>().required(),
-    state: Yup.mixed<MissionStates>().required()
+    state: Yup.mixed<MissionStates>().required(),
   });
 
   React.useEffect(() => {
     if (missionId)
       loadMission(missionId).then((m) => {
         setMission(new MissionFormValues(m));
+        console.log(m?.startDate)
       });
   }, []);
+
+  // console.log(new Date("2023-12-02T00:00:00").toString())
+  // console.log(dayjs(new Date("2023-12-02T00:00:00").toString()).format(
+  //   "YYYY-MM-DDTHH:mm"
+  // ))
 
   return (
     <Formik
@@ -98,7 +145,7 @@ const MissionForm = observer(() => {
       onSubmit={handleForSubmit}
       validationSchema={validationSchema}
     >
-      {({ values, errors, handleSubmit, handleChange }) => (
+      {({ values, errors, handleSubmit, handleChange, setFieldValue }) => (
         <Box
           component="form"
           sx={{
@@ -145,6 +192,38 @@ const MissionForm = observer(() => {
           />
           {/* {errors.title} */}
 
+          {/* <FormControl fullWidth>
+            <InputLabel id="assigned-to-select-label">Assigned To</InputLabel>
+            <Select
+              labelId="assigned-to-select-label"
+              id="assigned-to-select"
+              defaultValue={values.users}
+              label="Assigned To"
+              name="assigned-to"
+              onChange={handleChange}
+              startAdornment={
+                <InputAdornment position="start">
+                  <BookmarkIcon />
+                </InputAdornment>
+              }
+            >
+              {userSelection.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl> */}
+
+          <MySelectionForm
+            id="assigned-to-select"
+            defaultValue={userSelection[0]}
+            label="Assigned To"
+            name="assignedTo"
+            onChange={handleChange}
+            icon={<BookmarkIcon />}
+            options={userSelection}
+          />
 
           <MySelectionForm
             id="priority-select"
@@ -152,7 +231,9 @@ const MissionForm = observer(() => {
             label="Priority"
             name="priority"
             onChange={handleChange}
-            icon={<BookmarkIcon />} options={prioritySelection} />
+            icon={<BookmarkIcon />}
+            options={prioritySelection}
+          />
 
           <MySelectionForm
             id="state-select"
@@ -160,7 +241,9 @@ const MissionForm = observer(() => {
             label="State"
             name="state"
             onChange={handleChange}
-            icon={<CheckBoxIcon />} options={stateSelection} />
+            icon={<CheckBoxIcon />}
+            options={stateSelection}
+          />
 
           <TextField
             helperText={errors.description}
@@ -174,7 +257,7 @@ const MissionForm = observer(() => {
             rows={4}
           />
 
-          <MyDateForm
+          {/* <MyDateForm
             id="start-date-outlined-basic"
             label="Start Date"
             variant="outlined"
@@ -183,7 +266,7 @@ const MissionForm = observer(() => {
             onChange={handleChange}
             name="startDate"
             icon={<AccessTimeFilledIcon />}
-          />
+          /> */}
           <MyDateForm
             id="end-date-outlined-basic"
             label="End Date"
@@ -204,7 +287,28 @@ const MissionForm = observer(() => {
             name="completedDate"
             icon={<AccessTimeFilledIcon />}
           />
-          
+        
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DateTimePicker", "DateTimePicker"]}>
+              <DateTimePicker
+                label="Start Date"
+                defaultValue={dayjs(values.startDate)}
+                onChange={(value) => setFieldValue('startDate', value?.toDate()!)}
+              />
+              <DateTimePicker
+                label="End Date"
+                defaultValue={dayjs(values.endDate)}
+                onChange={handleChange}
+              />
+              <DateTimePicker
+              
+                label="Completed Date"
+                defaultValue={dayjs(values.completedDate)}
+                onChange={handleChange}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+
           {/* <TextField
             id="start-date-outlined-basic"
             label="Start Date"

@@ -1,12 +1,15 @@
 import { createContext, useContext } from "react";
 import MissionStore from "./missionStore";
+import UserStore from "./userStore";
 
 interface Store {
-    missionStore: MissionStore
+    missionStore: MissionStore,
+    userStore: UserStore
 }
 
 export const store: Store = {
-    missionStore: new MissionStore()
+    missionStore: new MissionStore(),
+    userStore: new UserStore()
 }
 
 export const StoreContext = createContext(store)

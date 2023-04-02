@@ -10,7 +10,7 @@ const MySelectionForm = (props: MySelectionFormProps) => {
     const showError = meta.touched && !!meta.error
     return (
         <FormControl fullWidth>
-            <InputLabel id={`${props.name}-select-label`}>{props.name}</InputLabel>
+            <InputLabel id={`${props.name}-select-label`}>{props.label}</InputLabel>
             <Select
                 {...selectProps}
                 {...field}
