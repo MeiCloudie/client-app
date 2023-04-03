@@ -33,7 +33,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 
 import { User } from "../models/User";
 import { Group } from "../models/Group";
-import { Box, Button, Skeleton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useStore } from "../stores/store";
 
 const user: User = {
@@ -259,10 +259,6 @@ export const Playground: React.FC = () => {
                 Group
               </Typography>
             </div>
-            {groupStore.isLoading && <>
-              <Skeleton variant="rectangular" height={40} sx={{ margin: "15px"}}/>
-              <Skeleton variant="rectangular" height={40} sx={{ margin: "15px"}}/>
-            </>}
             {groups.map((g, i) => (
               <Menu key={i} menuItemStyles={menuItemStyles}>
                 <SubMenu label={g.title} icon={<Diversity3Icon />}>

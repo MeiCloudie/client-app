@@ -1,22 +1,12 @@
-import * as React from "react";
 
-import { Box, Button, InputAdornment, Stack, TextField, Typography } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Divider from "@mui/material/Divider";
-
-import { Process } from "../../app/models/Process";
-import { Project } from "../../app/models/Project";
-
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ModeIcon from "@mui/icons-material/Mode";
-import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import { Box, Typography } from "@mui/material";
 
 import ProjectForm from "./form/ProjectForm";
 import ProcessForm from "./form/ProcessForm";
-
+import { useParams } from "react-router-dom";
 
 const ProjectInformation = () => {
+  const params = useParams()
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
@@ -34,7 +24,7 @@ const ProjectInformation = () => {
 
       <ProjectForm />
 
-      <ProcessForm />
+      {params.projectName && <ProcessForm />}
       
     </Box>
   );

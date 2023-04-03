@@ -24,7 +24,7 @@ const columns: GridColDef[] = [
 
 const ProcessForm = () => {
     const params = useParams()
-    const [processValues, setProcessValues] = React.useState<ProcessFormValues>(new ProcessFormValues())
+    const [processValues] = React.useState<ProcessFormValues>(new ProcessFormValues())
     const [rows, setRows] = React.useState<GridRowsProp>([])
     const [selectedProcesses, setSelectedProcesses] = React.useState<string[]>([])
     const { projectStore, processStore } = useStore()
