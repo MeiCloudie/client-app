@@ -6,7 +6,6 @@ export interface Group extends Entity {
     name : string,
     title: string,
     description: string,
-    ownerId?: string
     owner?: Member,
     projects: Project[],
 }
@@ -26,13 +25,14 @@ export class GroupFormValues {
     name?: string = ''
     title?: string = ''
     description?: string =''
-    projects: Project[] = []
+    userName?: string = ''
     constructor(group?: Group) {
-        if (group) {
+        if (group && group.owner) {
             this.id = group.id
             this.name = group.name
             this.title = group.title
             this.description = group.description
+            this.userName = group.owner.userName
         }
     }
 }

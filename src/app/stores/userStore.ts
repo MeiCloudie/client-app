@@ -15,6 +15,10 @@ export default class UserStore {
     return !!this.user;
   }
 
+  get currentUser() {
+    return this.user
+  }
+
   getUser = async () => {
     try {
       const user = await agent.Account.current()

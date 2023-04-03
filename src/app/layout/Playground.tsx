@@ -257,10 +257,10 @@ export const Playground: React.FC = () => {
               </Typography>
             </div>
             <Menu menuItemStyles={menuItemStyles}>
-              <SubMenu label={user.displayName} icon={<AccountCircleIcon />}>
+              <SubMenu label={userStore.currentUser!.displayName} icon={<AccountCircleIcon />}>
                 <MenuItem
                   icon={<ManageAccountsIcon />}
-                  component={<Link to="/profiles/:userName" />}
+                  component={<Link to={`/profiles/${userStore.currentUser?.userName}`} />}
                 >
                   Your profile
                 </MenuItem>
@@ -273,9 +273,7 @@ export const Playground: React.FC = () => {
                 <MenuItem
                   icon={<LogoutIcon />}
                   component={<Link to="/login" />}
-                  onClick={() => {
-                    userStore.logout()
-                  }}
+                  onClick={userStore.logout}
                 >
                   Log out
                 </MenuItem>
