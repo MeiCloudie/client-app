@@ -17,6 +17,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
+import RegisterForm from "./form/RegisterForm";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -78,123 +79,7 @@ const RegisterPage = () => {
           </Box>
         </Grid>
         <Grid item xs={8}>
-          <Box sx={{ margin: "100px", textAlign: "center" }}>
-            <Typography
-              variant="h4"
-              fontWeight={800}
-              sx={{ color: "#9098e1", margin: "0" }}
-              gutterBottom
-            >
-              REGISTER
-            </Typography>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { margin: "10px 0", width: "100%" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="email-outlined-basic"
-                label="Email"
-                variant="outlined"
-                placeholder="Enter your email here!"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <TextField
-                id="username-outlined-basic"
-                label="Username"
-                variant="outlined"
-                placeholder="Create your username here!"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircleRoundedIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <TextField
-                id="displayname-outlined-basic"
-                label="Display Name"
-                variant="outlined"
-                placeholder="Create your display name here!"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <DriveFileRenameOutlineIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
-
-              <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Confirm Password
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-confirm-password"
-                  type={showConfirmPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowConfirmPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showConfirmPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Confirm Password"
-                />
-              </FormControl>
-            </Box>
-            <Button variant="contained" sx={{ margin: "20px" }}>
-              Create Account
-            </Button>
-            <Typography variant="h6" gutterBottom>
-              Already have an account? {""}
-              <Link to="/login" style={{ textDecoration: "hover" }}>Login</Link>
-            </Typography>
-          </Box>
+          <RegisterForm />
 
         </Grid>
       </Grid>

@@ -10,7 +10,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LinkButton from "../../../app/common/button/LinkButton";
 import agent from "../../../app/api/agent";
 
-const LoginForm = observer(() => {
+const LoginForm = () => {
     const { userStore } = useStore()
     const [user, setUser] = React.useState<UserFormValues>({ userName: '', password: '' })
     const [showPassword, setShowPassword] = React.useState(false)
@@ -33,7 +33,7 @@ const LoginForm = observer(() => {
             initialValues={user}
             onSubmit={handleForSubmit}
         >
-            {({ handleSubmit, handleChange }) => (
+            {({ handleSubmit, handleChange, isSubmitting }) => (
                 <Box sx={{ margin: "217px 100px", textAlign: "center" }}>
                     <Typography
                         variant="h4"
@@ -109,7 +109,7 @@ const LoginForm = observer(() => {
                             </Grid>
                         </Grid>
 
-                        <Button type="submit" variant="contained" sx={{ margin: "20px" }}>
+                        <Button type="submit" variant="contained" sx={{ margin: "20px" }} disabled={isSubmitting}>
                             LOGIN
                         </Button>
                         <Typography variant="h6" gutterBottom>
@@ -123,6 +123,6 @@ const LoginForm = observer(() => {
             )}
         </Formik>
     )
-})
+}
 
-export default LoginForm
+export default observer(LoginForm)
