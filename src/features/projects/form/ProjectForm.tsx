@@ -52,6 +52,7 @@ const ProjectForm = observer(() => {
     name: Yup.string()
       .matches(/^[a-z0-9-]+$/, "The name is invalid!")
       .required("The project name is required"),
+    description: Yup.string().length(1000, "The description must not longer then 1000 characters")
   });
 
   React.useEffect(() => {

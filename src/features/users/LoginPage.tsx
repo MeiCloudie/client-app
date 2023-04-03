@@ -5,8 +5,17 @@ import {
   Typography,
 } from "@mui/material";
 import LoginForm from "./form/LoginForm";
+import { useStore } from "../../app/stores/store";
+import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../../app/layout/LoadingComponent";
+import { observer } from "mobx-react-lite";
 
-const LoginPage = () => {
+const LoginPage = observer(() => {
+  const store = useStore()
+  const navigate = useNavigate()
+  React.useEffect(() => {
+    if (store.userStore.isLoggedIn) navigate('/')
+  })
   return (
     <Box sx={{ margin: "70px" }}>
       <Grid
@@ -56,11 +65,11 @@ const LoginPage = () => {
           </Box>
         </Grid>
         <Grid item xs={8}>
-              <LoginForm />
+          <LoginForm />
         </Grid>
       </Grid>
     </Box>
   );
-};
+});
 
 export default LoginPage;

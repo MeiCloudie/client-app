@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import {
     Button,
     FormControl,
+    FormHelperText,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -21,15 +22,16 @@ import EmailIcon from "@mui/icons-material/Email";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
+import * as Yup from 'yup'
 
 const RegisterForm = observer(() => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
     const { userStore } = useStore()
-    const [user, setUser] = React.useState<UserFormValues>({ password: '' })
+    const [user, setUser] = React.useState<{password: string, userName?: string, displayName?: string, email: string, confirmPassword: string}>({ password: '', confirmPassword: '', email: '' })
 
     const handleForSubmit = (user: UserFormValues) => {
-        console.log(user)
+        userStore.register(user).then()
     }
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -41,12 +43,20 @@ const RegisterForm = observer(() => {
     ) => {
         event.preventDefault();
     };
+    const validationSchema = Yup.object({
+        email: Yup.string().email().required(),
+        userName: Yup.string().optional(),
+        displayName: Yup.string().required(),
+        password: Yup.string().required(),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Password must be match').required()
+    })
     return (
         <Formik
             initialValues={user}
             onSubmit={handleForSubmit}
+            validationSchema={validationSchema}
         >
-            {({ handleSubmit, handleChange, isSubmitting }) => (
+            {({ errors, handleSubmit, handleChange, isSubmitting }) => (
                 <Box sx={{ margin: "100px", textAlign: "center" }}>
                     <Typography
                         variant="h4"
@@ -66,6 +76,7 @@ const RegisterForm = observer(() => {
                         onSubmit={handleSubmit}
                     >
                         <TextField
+                            helperText={errors.email}
                             id="email-outlined-basic"
                             label="Email"
                             variant="outlined"
@@ -82,6 +93,7 @@ const RegisterForm = observer(() => {
                         />
 
                         <TextField
+                            helperText={errors.userName}
                             id="username-outlined-basic"
                             label="Username"
                             variant="outlined"
@@ -98,6 +110,7 @@ const RegisterForm = observer(() => {
                         />
 
                         <TextField
+                            helperText={errors.displayName}
                             id="displayname-outlined-basic"
                             label="Display Name"
                             variant="outlined"
@@ -113,7 +126,7 @@ const RegisterForm = observer(() => {
                             }}
                         />
 
-                        <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined">
+                        <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined" >
                             <InputLabel htmlFor="outlined-adornment-password">
                                 Password
                             </InputLabel>
@@ -136,6 +149,7 @@ const RegisterForm = observer(() => {
                                 }
                                 label="Password"
                             />
+                            {errors.password && <FormHelperText>{errors.password}</FormHelperText>}
                         </FormControl>
 
                         <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined">
@@ -145,6 +159,7 @@ const RegisterForm = observer(() => {
                             <OutlinedInput
                                 id="outlined-adornment-confirm-password"
                                 type={showConfirmPassword ? "text" : "password"}
+                                name="confirmPassword"
                                 onChange={handleChange}
                                 endAdornment={
                                     <InputAdornment position="end">
@@ -164,6 +179,7 @@ const RegisterForm = observer(() => {
                                 }
                                 label="Confirm Password"
                             />
+                            {errors.confirmPassword && <FormHelperText>{errors.confirmPassword}</FormHelperText>}
                         </FormControl>
                         <Button type="submit" variant="contained" sx={{ margin: "20px" }} disabled={isSubmitting}>
                             Create Account

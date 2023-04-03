@@ -142,7 +142,6 @@ const hexToRgba = (hex: string, alpha: number) => {
 };
 
 export const Playground: React.FC = () => {
-  const params = useParams()
   const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
 
   const [hasImage, setHasImage] = React.useState<boolean>(false);
@@ -158,7 +157,7 @@ export const Playground: React.FC = () => {
     setHasImage(e.target.checked);
   };
   const [groups, setGroups] = React.useState<Group[]>([])
-  const { groupStore } = useStore()
+  const { groupStore, userStore } = useStore()
 
   React.useEffect(() => {
     groupStore.loadGroups().then(() => {
@@ -274,6 +273,9 @@ export const Playground: React.FC = () => {
                 <MenuItem
                   icon={<LogoutIcon />}
                   component={<Link to="/login" />}
+                  onClick={() => {
+                    userStore.logout()
+                  }}
                 >
                   Log out
                 </MenuItem>

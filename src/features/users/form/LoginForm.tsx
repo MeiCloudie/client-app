@@ -24,9 +24,7 @@ const LoginForm = () => {
     };
 
     const handleForSubmit = (user: UserFormValues) => {
-        userStore.login(user).then(() => {
-            agent.Account.current().then((u) => console.log(u))
-        })
+        userStore.login(user).then()
     }
     return (
         <Formik
@@ -94,13 +92,13 @@ const LoginForm = () => {
                         </FormControl>
                         <Grid container sx={{ alignItems: "center" }}>
                             <Grid item xs={6}>
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <FormControlLabel
                                         control={<Checkbox defaultChecked />}
                                         label="Remember"
                                         sx={{ color: "#888176" }}
                                     />
-                                </FormGroup>
+                                </FormGroup> */}
                             </Grid>
                             <Grid item xs={6} sx={{ textAlign: "right" }}>
                                 <Link to="/error" style={{ textDecoration: "hover" }} color={"#888176"}>

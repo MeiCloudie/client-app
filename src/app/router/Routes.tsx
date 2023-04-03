@@ -18,136 +18,143 @@ import GroupInformationPage from "../../features/groups/GroupInformationPage";
 import GroupMembersPage from "../../features/groups/GroupMembersPage";
 import ProjectInformationPage from "../../features/projects/ProjectInformationPage";
 import RequireAuth from "./RequireAuth";
+import AppLoader from "./AppLoader";
 
 export const router = createBrowserRouter(
     [
         {
             path: "/",
-            element: <App />,
+            element: <AppLoader />,
             children: [
                 {
-                    element: <RequireAuth />, children: [
+                    path: "",
+                    element: <App />,
+                    children: [
                         {
-                            path: "",
-                            element: <HomePage />
-                        },
-
-                        {
-                            path: "home",
-                            element: <HomePage />,
-                        },
-                        {
-                            path: "profiles/:userName",
-                            element: <ProfilePage />,
-                        },
-                        {
-                            path: "settings",
-                            element: <SettingsPage />,
-                        },
-                        {
-                            path: "groups/create",
-                            element: <GroupInformationPage />,
-                        },
-                        {
-                            path: ":groupName",
-                            children: [
+                            element: <RequireAuth />, children: [
                                 {
                                     path: "",
-                                    element: <GroupDetailsPage />,
+                                    element: <HomePage />
                                 },
                                 {
-                                    path: "info",
+                                    path: "home",
+                                    element: <HomePage />,
+                                },
+                                {
+                                    path: "profiles/:userName",
+                                    element: <ProfilePage />,
+                                },
+                                {
+                                    path: "settings",
+                                    element: <SettingsPage />,
+                                },
+                                {
+                                    path: "groups/create",
                                     element: <GroupInformationPage />,
                                 },
                                 {
-                                    path: "members",
-                                    element: <GroupMembersPage />,
-                                },
-                                {
-                                    path: "projects/create",
-                                    element: <ProjectInformationPage />,
-                                },
-                                {
-                                    path: ":projectName",
+                                    path: ":groupName",
                                     children: [
                                         {
                                             path: "",
-                                            element: <ProjectDetailsPage />
+                                            element: <GroupDetailsPage />,
                                         },
                                         {
                                             path: "info",
-                                            element: <ProjectInformationPage />
+                                            element: <GroupInformationPage />,
                                         },
                                         {
-                                            path: "missions",
+                                            path: "members",
+                                            element: <GroupMembersPage />,
+                                        },
+                                        {
+                                            path: "projects/create",
+                                            element: <ProjectInformationPage />,
+                                        },
+                                        {
+                                            path: ":projectName",
                                             children: [
                                                 {
                                                     path: "",
-                                                    element: <MissionListPage />
+                                                    element: <ProjectDetailsPage />
                                                 },
                                                 {
-                                                    path: "create",
-                                                    element: <MissionDetailsPage />
+                                                    path: "info",
+                                                    element: <ProjectInformationPage />
                                                 },
                                                 {
-                                                    path: ":missionId",
-                                                    element: <MissionDetailsPage />
+                                                    path: "missions",
+                                                    children: [
+                                                        {
+                                                            path: "",
+                                                            element: <MissionListPage />
+                                                        },
+                                                        {
+                                                            path: "create",
+                                                            element: <MissionDetailsPage />
+                                                        },
+                                                        {
+                                                            path: ":missionId",
+                                                            element: <MissionDetailsPage />
+                                                        },
+                                                    ],
+                                                },
+                                                {
+                                                    path: "boards",
+                                                    children: [
+                                                        {
+                                                            path: "",
+                                                            element: <MissionBoardPage />
+                                                        },
+                                                        {
+                                                            path: ":missionId",
+                                                            element: <MissionDetailsPage />
+                                                        }
+                                                    ]
                                                 },
                                             ],
                                         },
-                                        {
-                                            path: "boards",
-                                            children: [
-                                                {
-                                                    path: "",
-                                                    element: <MissionBoardPage />
-                                                },
-                                                {
-                                                    path: ":missionId",
-                                                    element: <MissionDetailsPage />
-                                                }
-                                            ]
-                                        },
                                     ],
                                 },
-                            ],
+                                {
+                                    path: "personal",
+                                    element: <MissionListPersonalPage />
+                                },
+                                {
+                                    path: "help",
+                                    element: <HelpPage />,
+                                },
+                                {
+                                    path: "about-us",
+                                    element: <AboutUsPage />,
+                                },
+                                {
+                                    path: "error",
+                                    element: <ErrorPage />,
+                                },
+                                {
+                                    path: "*",
+                                    element: <Navigate replace to="error" />,
+                                },
+                            ]
                         },
-                        {
-                            path: "personal",
-                            element: <MissionListPersonalPage />
-                        },
-                        {
-                            path: "help",
-                            element: <HelpPage />,
-                        },
-                        {
-                            path: "about-us",
-                            element: <AboutUsPage />,
-                        },
-                        {
-                            path: "error",
-                            element: <ErrorPage />,
-                        },
-                        {
-                            path: "*",
-                            element: <Navigate replace to="error" />,
-                        },
-                    ]
-                },
 
-            ],
-        },
-        {
-            path: "",
-            element: <Navigate replace to="home" />,
-        },
-        {
-            path: "login",
-            element: <LoginPage />,
-        },
-        {
-            path: "register",
-            element: <RegisterPage />,
+                    ],
+                },
+                {
+                    path: "",
+                    element: <Navigate replace to="home" />,
+                },
+                {
+                    path: "login",
+                    element: <LoginPage />,
+                },
+                {
+                    path: "register",
+                    element: <RegisterPage />,
+                }
+            ]
         }
+
     ]
 )

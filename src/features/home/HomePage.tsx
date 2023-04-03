@@ -178,7 +178,6 @@ const missions: Mission[] = [
 
 const HomePage = () => {
   const { userStore } = useStore();
-  console.log(userStore)
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px" }}>

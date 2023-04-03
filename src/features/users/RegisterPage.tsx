@@ -16,23 +16,16 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterForm from "./form/RegisterForm";
+import { useStore } from "../../app/stores/store";
 
 const RegisterPage = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+  const store = useStore()
+  const navigate = useNavigate()
+  React.useEffect(() => {
+    if (store.userStore.isLoggedIn) navigate('/')
+  })
 
   return (
     <Box sx ={{margin: "70px"}}>
