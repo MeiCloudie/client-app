@@ -17,6 +17,7 @@ import Profile from "../../app/models/Profile";
 import { useStore } from "../../app/stores/store";
 import { Formik } from "formik";
 import { UserFormValues } from "../../app/models/User";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -100,8 +101,8 @@ const ProfilePage = () => {
                 label="Username"
                 variant="outlined"
                 name="userName"
-                onChange={handleChange}
-                defaultValue={values.userName}
+                
+                value={values.userName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -116,8 +117,8 @@ const ProfilePage = () => {
                 label="Display Name"
                 variant="outlined"
                 name="displayName"
-                onChange={handleChange}
-                defaultValue={values.displayName}
+                
+                value={values.displayName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -132,8 +133,8 @@ const ProfilePage = () => {
                 label="Email"
                 variant="outlined"
                 name="email"
-                onChange={handleChange}
-                defaultValue={values.email}
+                
+                value={values.email}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -151,12 +152,13 @@ const ProfilePage = () => {
                 }}
               >
                 <Stack spacing={2} direction="row">
-                  <Button variant="contained" onClick={handleClick}>
+                  {/* <Button variant="contained" onClick={handleClick}>
                     Cancel
                   </Button>
                   <Button type="submit" disabled={isSubmitting} variant="contained">
                     Save
-                  </Button>
+                  </Button> */}
+                  <LinkButton to="/" label="Home" />
                 </Stack>
 
                 {!isSuccess && (

@@ -32,91 +32,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 
-const users: User[] = [
-  {
-    displayName: "Mei",
-    email: "mei@gmail.com",
-    token: "meiToken",
-    roles: ["Leader"],
-  },
-  {
-    displayName: "Slime",
-    email: "slime@gmail.com",
-    token: "slimeToken",
-    roles: ["Member"],
-  },
-  {
-    displayName: "John",
-    email: "john@example.com",
-    token: "token123",
-    roles: ["Member"],
-  },
-  {
-    displayName: "Jane",
-    email: "jane@example.com",
-    token: "token456",
-    roles: ["Member"],
-  },
-];
-
-const projects: Project[] = [
-  {
-    id: "project1",
-    createDate: new Date(2023, 1, 1),
-    name: "study-plan",
-    title: "Study Plan",
-    description: "Effective study plan and healthy balance",
-  },
-  {
-    id: "project2",
-    createDate: new Date(2023, 1, 1),
-    name: "sport-plan",
-    title: "Sport Plan",
-    description: "Make a plan to exercise and exercise together",
-  },
-];
-
-const group: Group = {
-  id: "group1",
-  name: "owl",
-  description: "Team owl",
-  title: "Group Owl",
-  owner: {
-    userName: "Mei",
-    displayName: "Van",
-    role: "Leader",
-  },
-  projects: [
-    {
-      id: "project1",
-      createDate: new Date(2023, 1, 1),
-      name: "study-plan",
-      title: "Study Plan",
-      description: "Effective study plan and healthy balance",
-    },
-    {
-      id: "project2",
-      createDate: new Date(2023, 7, 12),
-      name: "Healthy and Balance",
-      title: "Life",
-      description: "Happiness",
-    },
-  ],
-};
-
 const GroupDetailsPage = () => {
   const params = useParams();
   const navigate = useNavigate()
-  const [group, setGroup] = React.useState<Group>({ id: '', name: '', title: '', description: '', projects: [] })
+  const [group, setGroup] = React.useState<Group>(new Group())
   const { groupStore } = useStore()
   React.useEffect(() => {
     if (params.groupName)
       groupStore.loadGroup(params.groupName).then(() => {
         if (groupStore.selectedGroup === undefined) navigate('/error')
-        else
-          groupStore.loadProjects(groupStore.selectedGroup.name, true).then(() => {
+        else {
+          Promise.all([groupStore.loadProjects(groupStore.selectedGroup.name, true), groupStore.loadMembers(groupStore.selectedGroup.name, true)])
+          .then(() => {
             if (groupStore.selectedGroup) setGroup(groupStore.selectedGroup)
           })
+        }
       })
   }, [params.groupName])
   if (groupStore.isLoading) return <LoadingComponent />
@@ -212,7 +142,7 @@ const GroupDetailsPage = () => {
           }}
           disablePadding
         >
-          {users.map((u, i) => (
+          {group.members.map((u, i) => (
             <ListItem
               key={i}
               secondaryAction={
@@ -233,7 +163,7 @@ const GroupDetailsPage = () => {
                     <PersonIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={u.displayName} secondary={u.roles} />
+                <ListItemText primary={u.displayName} secondary={u.role} />
               </ListItemButton>
             </ListItem>
           ))}

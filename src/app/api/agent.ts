@@ -7,6 +7,7 @@ import { CommentFormValues } from '../models/Comment'
 import { Process, ProcessFormValues } from '../models/Process'
 import { store } from '../stores/store'
 import Profile from '../models/Profile'
+import Member from '../models/Member'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -56,7 +57,8 @@ const Groups = {
     create: (group: GroupFormValues) => requests.post('/Groups', group),
     update: (id: string, group: GroupFormValues) => requests.put(`/Groups/${id}`, group),
     delete: (id: string) => requests.delete(`/Groups/${id}`),
-    projectList: (name: string) => requests.get<Project[]>(`/Groups/${name}/Projects`)
+    projectList: (name: string) => requests.get<Project[]>(`/Groups/${name}/Projects`),
+    memberList: (name: string) => requests.get<Member[]>(`/Groups/${name}/Members`)
 }
 
 const Comments = {

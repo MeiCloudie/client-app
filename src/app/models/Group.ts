@@ -8,6 +8,7 @@ export interface Group extends Entity {
     description: string,
     owner?: Member,
     projects: Project[],
+    members: Member[]
 }
 
 export class Group implements Group {
@@ -15,6 +16,7 @@ export class Group implements Group {
     title = ''
     description: string = ''
     projects: Project[] = []
+    members: Member[] = []
     constructor(init?: GroupFormValues) {
         Object.assign(this, init)
     }

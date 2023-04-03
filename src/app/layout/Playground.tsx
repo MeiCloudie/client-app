@@ -33,7 +33,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 
 import { User } from "../models/User";
 import { Group } from "../models/Group";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Skeleton } from "@mui/material";
 import { useStore } from "../stores/store";
 
 const user: User = {
@@ -43,55 +43,7 @@ const user: User = {
   roles: ["User"],
 };
 
-const groups: Group[] = [
-  {
-    id: "group1",
-    name: "owl",
-    description: "Team owl",
-    title: "Group Owl",
-    owner: {
-      userName: "Mei",
-      displayName: "Van",
-      role: "Leader",
-    },
-    projects: [
-      {
-        id: "project1",
-        createDate: new Date(2023, 1, 1),
-        name: "study-plan",
-        title: "Study Plan",
-        description: "Effective study plan and healthy balance",
-      },
-      {
-        id: "project2",
-        createDate: new Date(2023, 7, 12),
-        name: "Healthy and Balance",
-        title: "Life",
-        description: "Happiness",
-      },
-    ],
-  },
-  {
-    id: "group2",
-    name: "abc",
-    description: "Team abc",
-    title: "Group Abc",
-    owner: {
-      userName: "Mei",
-      displayName: "Van",
-      role: "Member",
-    },
-    projects: [
-      {
-        id: "project1",
-        createDate: new Date(2023, 1, 1),
-        name: "study-plan",
-        title: "Study Plan",
-        description: "Effective study plan and healthy balance",
-      },
-    ],
-  },
-];
+
 
 type Theme = "light" | "dark";
 
@@ -307,6 +259,10 @@ export const Playground: React.FC = () => {
                 Group
               </Typography>
             </div>
+            {groupStore.isLoading && <>
+              <Skeleton variant="rectangular" height={40} sx={{ margin: "15px"}}/>
+              <Skeleton variant="rectangular" height={40} sx={{ margin: "15px"}}/>
+            </>}
             {groups.map((g, i) => (
               <Menu key={i} menuItemStyles={menuItemStyles}>
                 <SubMenu label={g.title} icon={<Diversity3Icon />}>

@@ -100,6 +100,44 @@ export default class GroupStore {
     }
   }
 
+  loadMembers = async (name: string, forSelectedGroup: boolean = false) => {
+    this.isLoading = true
+    try {
+      const members = await agent.Groups.memberList(name);
+      runInAction(() => {
+        if (!forSelectedGroup) {
+
+          const group = this.groups.find(x => x.name === name)
+          if (group?.members === undefined)
+            group!.members = [...members]
+        }
+        else {
+          this.selectedGroup!.members = [...members]
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      this.isLoading = false
+    }
+  }
+
+  loadMembersForGroups = async () => {
+    this.isLoading = true
+    try {
+      const promises = this.groupList.map((g) => this.loadMembers(g.name));
+      await Promise.all(promises);
+
+    }
+    catch (error) {
+      console.log(error)
+    }
+    finally {
+      this.isLoading = false
+    }
+  }
+
   createGroup = async (groupFormValues: GroupFormValues) => {
     try {
       await agent.Groups.create(groupFormValues);
