@@ -7,7 +7,6 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
-  Link,
   OutlinedInput,
   TextField,
   Typography,
@@ -17,6 +16,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import EmailIcon from "@mui/icons-material/Email";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -192,9 +192,10 @@ const RegisterPage = () => {
             </Button>
             <Typography variant="h6" gutterBottom>
               Already have an account? {""}
-              <Link href="/login" underline="hover">Login</Link>
+              <Link to="/login" style={{ textDecoration: "hover" }}>Login</Link>
             </Typography>
           </Box>
+
         </Grid>
       </Grid>
     </Box>

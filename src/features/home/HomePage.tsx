@@ -178,6 +178,7 @@ const missions: Mission[] = [
 
 const HomePage = () => {
   const { userStore } = useStore();
+  console.log(userStore)
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px" }}>
@@ -221,7 +222,7 @@ const HomePage = () => {
             columns={{ xs: 4, sm: 8, md: 12 }}
           >
             {groups.map((g, index) => (
-              <Grid xs={2} sm={4} md={4} key={index}>
+              <Grid item={true} xs={2} sm={4} md={4} key={index}>
                 <Card
                   sx={{
                     margin: "10px",
@@ -238,7 +239,7 @@ const HomePage = () => {
                       </Avatar>
                     }
                     title={g.title}
-                    subheader={g.owner.role}
+                    subheader={g.owner!.role}
                   />
                   <CardContent>
                     <Stack direction="row" spacing={2}>

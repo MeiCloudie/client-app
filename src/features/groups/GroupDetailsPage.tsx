@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   IconButton,
   ListItem,
@@ -27,7 +28,9 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { Group } from "../../app/models/Group";
 import { User } from "../../app/models/User";
 import { Project } from "../../app/models/Project";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useStore } from "../../app/stores/store";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
 const users: User[] = [
   {
@@ -103,6 +106,18 @@ const group: Group = {
 
 const GroupDetailsPage = () => {
   const params = useParams();
+  const navigate = useNavigate()
+  const [group, setGroup] = React.useState<Group>({id:'',name:'',title:'',description:'', owner: undefined, projects:[]})
+  const { groupStore } = useStore()
+  React.useEffect(() => {
+    if (params.groupName)
+      groupStore.loadGroup(params.groupName).then(() => {
+        if (groupStore.selectedGroup === undefined) navigate('/error')
+        else
+          setGroup(groupStore.selectedGroup)
+      })
+  })
+  if (groupStore.isLoading) return <LoadingComponent />
   return (
     <div>
       <div style={{ textAlign: "center" }}>

@@ -5,6 +5,7 @@ import agent from "../api/agent";
 export default class GroupStore {
   groups: Group[] = new Array<Group>();
   selectedGroup: Group | undefined = undefined;
+  isLoading = false
 
   constructor() {
     makeAutoObservable(this);
@@ -27,6 +28,7 @@ export default class GroupStore {
   }
 
   loadGroups = async () => {
+    this.isLoading = true
     try {
       const groups = await agent.Groups.list();
       runInAction(() => {
@@ -35,9 +37,13 @@ export default class GroupStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
 
   loadGroup = async (id: string) => {
+    this.isLoading = true
     try {
       const group = await agent.Groups.details(id);
       runInAction(() => {
@@ -47,9 +53,13 @@ export default class GroupStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
 
   loadProjects = async (name: string) => {
+    this.isLoading = true
     try {
       const projects = await agent.Groups.projectList(name);
       runInAction(() => {
@@ -60,11 +70,24 @@ export default class GroupStore {
     } catch (error) {
       console.log(error)
     }
+    finally {
+      this.isLoading = false
+    }
   }
 
   loadProjectsForGroups = async () => {
-    const promises = this.groupList.map((g) => this.loadProjects(g.name));
-    await Promise.all(promises);
+    this.isLoading = true
+    try {
+      const promises = this.groupList.map((g) => this.loadProjects(g.name));
+      await Promise.all(promises);
+
+    }
+    catch (error) {
+      console.log(error)
+    }
+    finally {
+      this.isLoading = false
+    }
   }
 
   createGroup = async (groupFormValues: GroupFormValues) => {

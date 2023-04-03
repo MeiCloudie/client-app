@@ -7,7 +7,7 @@ export interface Group extends Entity {
     title: string,
     description: string,
     ownerId?: string
-    owner: Member,
+    owner?: Member,
     projects: Project[],
 }
 

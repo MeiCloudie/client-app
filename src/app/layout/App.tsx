@@ -1,47 +1,33 @@
-//import { Container } from "@mui/material";
-//import { Outlet } from "react-router-dom";
-import { Outlet, useLocation } from "react-router-dom";
-import GroupDetailsPage from "../../features/groups/GroupDetailsPage";
-import MissionListPage from "../../features/missions/MissionListPage";
+import { useLocation } from "react-router-dom";
 import "./App.css";
-import BasicBreadcrumbs from "./BasicBreadcrumbs";
-//import MyNavbar from "./MyNavbar";
 import { Playground } from "./Playground";
 import MyBreadcrumb from "./MyBreadcrumb";
-import MissionForm from "../../features/missions/form/MissionForm";
 import HomePage from "../../features/home/HomePage";
-//import Sidebar from "./Sidebar";
+import { useStore } from "../stores/store";
+import React from "react";
+import { observer } from "mobx-react-lite";
+import LoadingComponent from "./LoadingComponent";
+
 
 function App() {
   const location = useLocation()
+  const { commonStore, userStore } = useStore()
+
+  React.useEffect(() => {
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded())
+    } else {
+      commonStore.setAppLoaded()
+    }
+  }, [commonStore, userStore])
+  if (!commonStore.appLoaded) return <LoadingComponent />
   return (
     <div>
       <MyBreadcrumb />
       {location.pathname === '/' ? <HomePage /> : <Playground />}
-      {/* <Outlet /> */}
-      {/* <BasicBreadcrumbs /> */}
-      {/* <Breadcrumb /> */}
-      {/* <Playground /> */}
-      {/* <GroupDetailsPage /> */}
-      {/* <MissionListPage /> */}
+
     </div>
-    // <div>
-    //   <MyNavbar />
-    //   <div className="main">
-    //     <Sidebar />
-    //     <Container>
-    //       <Outlet />
-    //     </Container>
-    //     {/* <div className="container">
-    //     <h1 className="title">My React App</h1>
-    //     <p className="info">
-    //       Hello world
-    //     </p>
-    //     <button className="btn">Explore now</button>
-    //   </div> */}
-    //   </div>
-    // </div>
   );
 }
 
-export default App;
+export default observer(App);

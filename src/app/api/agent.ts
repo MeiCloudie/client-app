@@ -5,10 +5,17 @@ import { Group, GroupFormValues } from '../models/Group'
 import { User, UserFormValues } from '../models/User'
 import { CommentFormValues } from '../models/Comment'
 import { Process, ProcessFormValues } from '../models/Process'
+import { store } from '../stores/store'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
 const responseBody = <T>(response : AxiosResponse<T>) => response.data
+
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token
+    if (token && config.headers) config.headers.Authorization = `Bearer ${token}`
+    return config
+})
 
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
