@@ -30,9 +30,7 @@ const RegisterForm = observer(() => {
     const { userStore } = useStore()
     const [user, setUser] = React.useState<{password: string, userName?: string, displayName?: string, email: string, confirmPassword: string}>({ password: '', confirmPassword: '', email: '' })
 
-    const handleForSubmit = (user: UserFormValues) => {
-        userStore.register(user).then()
-    }
+    const handleForSubmit = (user: UserFormValues) => userStore.register(user)
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleClickShowConfirmPassword = () =>

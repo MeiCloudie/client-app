@@ -23,9 +23,7 @@ const LoginForm = () => {
         event.preventDefault();
     };
 
-    const handleForSubmit = (user: UserFormValues) => {
-        userStore.login(user).then()
-    }
+    const handleForSubmit = (user: UserFormValues) => userStore.login(user)
     return (
         <Formik
             initialValues={user}
