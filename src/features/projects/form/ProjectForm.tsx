@@ -19,7 +19,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 const ProjectForm = observer(() => {
   const params = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = React.useState<ProjectFormValues>(
+  const [projectValues, setProjectValues] = React.useState<ProjectFormValues>(
     new ProjectFormValues()
   );
   const { projectName } = useParams();
@@ -43,7 +43,7 @@ const ProjectForm = observer(() => {
 
   const handleForDelete = () => {
     projectStore
-      .deleteProject(project.id!)
+      .deleteProject(projectValues.id!)
       .then(() => navigate(`/${params.groupName}}`));
   };
 
@@ -58,15 +58,15 @@ const ProjectForm = observer(() => {
   React.useEffect(() => {
     if (projectName) {
       loadProject(projectName).then((p) => {
-        setProject(new ProjectFormValues(p));
+        setProjectValues(new ProjectFormValues(p));
       });
     }
   }, [projectName]);
 
   return (
     <Formik
-      key={project.name}
-      initialValues={project}
+      key={projectValues.name}
+      initialValues={projectValues}
       onSubmit={handleForSubmit}
       validationSchema={validationSchema}
     >
