@@ -5,6 +5,7 @@ import agent from "../api/agent";
 export default class ProjectStore {
   projects: Project[] = new Array<Project>();
   selectedProject: Project | undefined = undefined;
+  isLoading: boolean = false
 
   constructor() {
     makeAutoObservable(this);
@@ -27,6 +28,7 @@ export default class ProjectStore {
   }
 
   loadProjects = async () => {
+    this.isLoading = true
     try {
       const projects = await agent.Projects.list();
       runInAction(() => {
@@ -35,9 +37,13 @@ export default class ProjectStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
 
   loadProject = async (id: string) => {
+    this.isLoading = true
     try {
       const project = await agent.Projects.details(id);
       runInAction(() => {
@@ -47,7 +53,25 @@ export default class ProjectStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
+
+  loadProcesses = async () => {
+    this.isLoading = true
+    try {
+      const processes = await agent.Projects.processList(this.selectedProject!.name);
+      runInAction(() => {
+          this.selectedProject!.processes = [...processes]
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      this.isLoading = false
+    }
+  }
 
   createProject = async (projectFormValues: ProjectFormValues) => {
     try {

@@ -16,41 +16,7 @@ import { Process } from "../../app/models/Process";
 import { Link, useParams } from "react-router-dom";
 import LinkButton from "../../app/common/button/LinkButton";
 import { useStore } from "../../app/stores/store";
-
-const projects: Project[] = [
-  {
-    id: "project2",
-    createDate: new Date(2023, 1, 1),
-    name: "study-plan",
-    title: "Study Plan",
-    description: "Effective study plan and healthy balance",
-    groupName: "hello-group",
-  },
-];
-
-const processes: Process[] = [
-  {
-    title: "First process",
-    description: "Some text here... Some text here...",
-    isDone: false,
-    projectId: "project1",
-    project: projects[0],
-  },
-  {
-    title: "Second process",
-    description: "Some text here...",
-    isDone: true,
-    projectId: "project1",
-    project: projects[0],
-  },
-  {
-    title: "Third process",
-    description: "Some text here...",
-    isDone: true,
-    projectId: "project1",
-    project: projects[0],
-  },
-];
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
 const ProjectDetailsPage = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -61,9 +27,12 @@ const ProjectDetailsPage = () => {
   React.useEffect(() => {
     if (params.projectName)
       projectStore.loadProject(params.projectName).then((p) => {
-        if (p) setProject(p)
+        if (p) projectStore.loadProcesses().then(() => {
+          if (projectStore.selectedProject) setProject(projectStore.selectedProject)
+        })
+        
       })
-  }, [params.groupName])
+  }, [params.projectName])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -76,7 +45,7 @@ const ProjectDetailsPage = () => {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  if (projectStore.isLoading) return <LoadingComponent />
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -177,7 +146,7 @@ const ProjectDetailsPage = () => {
           }}
         >
           <Stepper activeStep={activeStep} orientation="vertical">
-            {processes.map((process, index) => (
+            {project.processes && project.processes.map((process, index) => (
               <Step key={process.title}>
                 <StepLabel
                   optional={
@@ -197,7 +166,7 @@ const ProjectDetailsPage = () => {
                         onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        {index === processes.length - 1 ? "Finish" : "Continue"}
+                        {project.processes && index === project.processes.length - 1 ? "Finish" : "Continue"}
                       </Button>
                       <Button
                         disabled={index === 0}
@@ -212,7 +181,7 @@ const ProjectDetailsPage = () => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === processes.length && (
+          {project.processes && activeStep === project.processes.length && (
             <Paper
               square
               elevation={0}

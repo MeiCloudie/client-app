@@ -25,133 +25,6 @@ import { Project } from "../../app/models/Project";
 import { useStore } from "../../app/stores/store";
 import { Link, useParams } from "react-router-dom";
 
-const users: User[] = [
-  {
-    displayName: "Mei",
-    email: "mei@gmail.com",
-    token: "meiToken",
-    roles: ["Leader"],
-  },
-  {
-    displayName: "Slime",
-    email: "slime@gmail.com",
-    token: "slimeToken",
-    roles: ["Member"],
-  },
-  {
-    displayName: "John",
-    email: "john@example.com",
-    token: "token123",
-    roles: ["Member"],
-  },
-  {
-    displayName: "Jane",
-    email: "jane@example.com",
-    token: "token456",
-    roles: ["Member"],
-  },
-];
-
-const project: Project = {
-  id: "project1",
-  createDate: new Date(2023, 1, 1),
-  name: "study-plan",
-  title: "Study Plan",
-  description: "Effective study plan and healthy balance",
-  groupName: "hello-group",
-};
-
-const missions: Mission[] = [
-  {
-    id: "mission1",
-    title: "Study English",
-    description: "Improve English",
-    priority: MissionPriorities.Low,
-    state: MissionStates.Resolved,
-    startDate: new Date(2023, 7, 14),
-    endDate: new Date(2023, 10, 14),
-    completedDate: new Date(2023, 10, 14),
-    createDate: new Date(2023, 5, 12),
-  },
-  {
-    id: "mission2",
-    title: "Learn Guitar",
-    description: "Practice playing guitar for 1 hour every day",
-    priority: MissionPriorities.High,
-    state: MissionStates.Active,
-    startDate: new Date(2023, 8, 1),
-    endDate: new Date(2023, 11, 1),
-    completedDate: new Date(2023, 11, 1),
-    createDate: new Date(2023, 7, 20),
-  },
-  {
-    id: "mission3",
-    title: "Complete Coding Project",
-    description: "Finish building a React web application",
-    priority: MissionPriorities.Medium,
-    state: MissionStates.New,
-    startDate: new Date(2023, 6, 1),
-    endDate: new Date(2023, 9, 1),
-    completedDate: new Date(2023, 9, 1),
-    createDate: new Date(2023, 5, 1),
-  },
-  {
-    id: "mission4",
-    title: "Read 10 Books",
-    description: "Read a mix of fiction and non-fiction books",
-    priority: MissionPriorities.Low,
-    state: MissionStates.Closed,
-    startDate: new Date(2023, 7, 1),
-    endDate: new Date(2023, 11, 1),
-    completedDate: new Date(2023, 11, 1),
-    createDate: new Date(2023, 6, 1),
-  },
-  {
-    id: "mission5",
-    title: "Exercise for 30 minutes daily",
-    description: "Run or walk for 30 minutes each day",
-    priority: MissionPriorities.Medium,
-    state: MissionStates.New,
-    startDate: new Date(2023, 3, 1),
-    endDate: new Date(2023, 6, 30),
-    completedDate: new Date(2023, 6, 30),
-    createDate: new Date(2023, 2, 15),
-  },
-  {
-    id: "mission6",
-    title: "Learn React Native",
-    description: "Build a mobile app with React Native",
-    priority: MissionPriorities.High,
-    state: MissionStates.Active,
-    startDate: new Date(2023, 4, 1),
-    endDate: new Date(2023, 6, 30),
-    completedDate: new Date(2023, 6, 30),
-    createDate: new Date(2023, 3, 1),
-  },
-  {
-    id: "mission7",
-    title: "Learn Spanish",
-    description: "Take a Spanish course and practice daily",
-    priority: MissionPriorities.Low,
-    state: MissionStates.Resolved,
-    startDate: new Date(2023, 1, 1),
-    endDate: new Date(2023, 12, 31),
-    completedDate: new Date(2023, 11, 31),
-    createDate: new Date(2023, 0, 1),
-  },
-  {
-    id: "mission8",
-    title: "Write a novel",
-    description: "Write a novel of at least 50,000 words",
-    priority: MissionPriorities.High,
-    state: MissionStates.Closed,
-    startDate: new Date(2023, 2, 1),
-    endDate: new Date(2024, 1, 28),
-    completedDate: new Date(2024, 1, 28),
-    createDate: new Date(2023, 1, 1),
-  },
-];
-
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
   {
@@ -181,35 +54,16 @@ const columns: GridColDef[] = [
   },
 ];
 
-// const rows = missions.map((m) => {
-//   const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
-//   const states = ["New", "Active", "Resolved", "Closed"];
-//   return {
-//     id: m.id,
-//     title: m.title,
-//     assignedTo: users[randomIndex].displayName,
-//     state: states[m.state],
-//     comments: randomIndex,
-//     activityDate: m.createDate.toLocaleString("en-US", {
-//       day: "2-digit",
-//       month: "2-digit",
-//       year: "numeric",
-//       hour: "2-digit",
-//       minute: "2-digit",
-//       second: "2-digit",
-//     }),
-//   };
-// });
-
 const MissionListPage = () => {
   const params = useParams();
-  const { missionStore } = useStore();
+  const { missionStore, projectStore } = useStore();
   const { loadMissionByProjectName } = missionStore;
   const [selectedMissionId, setSelectedMissionId] = React.useState<string>();
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
     if (params.projectName === undefined) return;
     loadMissionByProjectName(params.projectName).then(() => {
+      if (!projectStore.selectedProject) projectStore.loadProject(params.projectName!).then()
       setRows(
         missionStore.missionList.map((m) => {
           const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
@@ -217,7 +71,7 @@ const MissionListPage = () => {
           return {
             id: m.id,
             title: m.title,
-            assignedTo: users[randomIndex].displayName,
+            assignedTo: m.id,
             state: states[m.state],
             comments: randomIndex,
             activityDate: m.createDate.toLocaleString("en-US", {
@@ -258,7 +112,7 @@ const MissionListPage = () => {
             color: "#443e3e",
           }}
         >
-          Project: {project.title}
+          Project: {projectStore.selectedProject!.title}
         </Typography>
       </div>
 

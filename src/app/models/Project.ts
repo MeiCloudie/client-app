@@ -1,11 +1,13 @@
 import Entity from "./Entity";
+import { Process } from "./Process";
 
 export interface Project extends Entity {
-    name : string,
+    name: string,
     title: string,
     description: string,
     createDate: Date,
-    groupName?: string
+    groupName?: string,
+    processes: Process[]
 }
 
 export class Project implements Project {
@@ -14,6 +16,7 @@ export class Project implements Project {
     description = ''
     createDate = new Date()
     groupName?: string | undefined;
+    processes: Process[] = []
     constructor(init?: ProjectFormValues) {
         Object.assign(this, init)
     }
@@ -26,7 +29,7 @@ export class ProjectFormValues {
     description: string = ''
     createDate: Date = new Date()
     groupName?: string = ''
-    
+
     constructor(project?: Project) {
         if (project) {
             this.id = project.id

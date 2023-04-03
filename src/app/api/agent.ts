@@ -48,7 +48,8 @@ const Projects = {
     create: (project: ProjectFormValues) => requests.post('/Projects', project),
     update: (id: string, project: ProjectFormValues) => requests.put(`/Projects/${id}`, project),
     delete: (id: string) => requests.delete(`/Projects/${id}`),
-    missionList: (name: string) => requests.get<Mission[]>(`/Projects/${name}/Missions`)
+    missionList: (name: string) => requests.get<Mission[]>(`/Projects/${name}/Missions`),
+    processList: (name: string) => requests.get<Process[]>(`/Projects/${name}/Processes`)
 }
 
 const Groups = {
@@ -73,7 +74,7 @@ const Processes = {
     list: () => requests.get<Process[]>('/Processes'),
     details: (id: string) => requests.get<Process>(`/Processes/${id}`),
     create: (process: ProcessFormValues) => requests.post('/Processes', process),
-    update: (id: string, process: CommentFormValues) => requests.put(`/Processes/${id}`, process),
+    update: (id: string, process: ProcessFormValues) => requests.put(`/Processes/${id}`, process),
     delete: (id: string) => requests.delete(`/Processes/${id}`)
 }
 
