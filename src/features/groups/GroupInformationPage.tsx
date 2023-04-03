@@ -8,8 +8,44 @@ import {
 } from "@mui/material";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { useNavigate, useParams } from "react-router-dom";
+import { GroupFormValues } from "../../app/models/Group";
+import React from "react";
+import { useStore } from "../../app/stores/store";
+import { Formik } from "formik";
+import LoadingComponent from "../../app/layout/LoadingComponent";
+import * as Yup from 'yup';
 
 const GroupInformationPage = () => {
+  const params = useParams()
+  const navigate = useNavigate()
+  const { groupStore, userStore } = useStore()
+  const [group, setGroup] = React.useState<GroupFormValues>(new GroupFormValues())
+  const handleForSubmit = (g: GroupFormValues) => {
+    g.userName = userStore.currentUser?.userName
+    g.id
+      ? groupStore.updateGroup(g.id, g)
+        .then(() => {
+          g.name === params.groupName
+            ? window.location.reload()
+            : navigate(`/${g.name}/info`)
+        })
+      : groupStore.createGroup(g).then(() => navigate(`/${g.name}/info`))
+  }
+  const validationSchema = Yup.object({
+    title: Yup.string().required("The title is required"),
+    name: Yup.string()
+      .matches(/^[a-z0-9-]+$/, "The name is invalid!")
+      .required("The name is required"),
+    description: Yup.string().required()
+  })
+  React.useEffect(() => {
+    if (params.groupName)
+      groupStore.loadGroup(params.groupName).then((g) => {
+        setGroup(new GroupFormValues(g))
+      })
+  }, [])
+  if (groupStore.isLoading) return <LoadingComponent />
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
@@ -24,49 +60,84 @@ const GroupInformationPage = () => {
       >
         Group Information
       </Typography>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
-        }}
-        noValidate
-        autoComplete="off"
+      <Formik
+        key={group.name}
+        initialValues={group}
+        onSubmit={handleForSubmit}
+        validationSchema={validationSchema}
       >
-        <TextField
-          id="title-outlined-basic"
-          label="Group Name"
-          variant="outlined"
-          placeholder="Enter group name here!"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AssignmentIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        {({ values, errors, handleSubmit, handleChange, isSubmitting }) => (
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              helperText={errors.name}
+              id="name-outlined-basic"
+              label="Group Name"
+              variant="outlined"
+              placeholder="Enter group name here!"
+              name="name"
+              defaultValue={values.name}
+              onChange={handleChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AssignmentIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              helperText={errors.title}
+              id="title-outlined-basic"
+              label="Group Title"
+              variant="outlined"
+              placeholder="Enter group title here!"
+              name="title"
+              defaultValue={values.title}
+              onChange={handleChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AssignmentIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-        <TextField
-          id="description-outlined-multiline-static"
-          label="Description"
-          multiline
-          placeholder="Write some description here..."
-          rows={4}
-        />
-      </Box>
+            <TextField
+              helperText={errors.description}
+              id="description-outlined-multiline-static"
+              label="Description"
+              multiline
+              placeholder="Write some description here..."
+              rows={4}
+              name="description"
+              defaultValue={values.description}
+              onChange={handleChange}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Stack spacing={2} direction="row">
+                <Button variant="contained">Cancel</Button>
+                <Button type="submit" disabled={isSubmitting} variant="contained">Save</Button>
+              </Stack>
+            </div>
+          </Box>
+        )}
+      </Formik>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Stack spacing={2} direction="row">
-          <Button variant="contained">Cancel</Button>
-          <Button variant="contained">Save</Button>
-        </Stack>
-      </div>
     </Box>
   );
 };

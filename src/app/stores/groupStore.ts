@@ -27,6 +27,10 @@ export default class GroupStore {
     return this.groups;
   }
 
+  get currentGroup() {
+    return this.selectedGroup
+  }
+
   loadGroups = async () => {
     this.isLoading = true
     try {

@@ -6,6 +6,7 @@ import { User, UserFormValues } from '../models/User'
 import { CommentFormValues } from '../models/Comment'
 import { Process, ProcessFormValues } from '../models/Process'
 import { store } from '../stores/store'
+import Profile from '../models/Profile'
 
 axios.defaults.baseURL = 'https://plantogetherdotnetapi.azurewebsites.net/api'
 
@@ -29,6 +30,7 @@ const Account = {
     current: () => requests.get<User>('/Account'),
     login: (user: UserFormValues) => requests.post<User>('/Account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/Account/register', user),
+    profile: (name: string) => requests.get<Profile>(`/Account/profile/${name}`)
 }
 
 const Missions = {

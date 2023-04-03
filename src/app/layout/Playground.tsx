@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import {
   Sidebar,
   Menu,
@@ -143,9 +143,10 @@ const hexToRgba = (hex: string, alpha: number) => {
 
 export const Playground: React.FC = () => {
   const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
-
+  const navigate = useNavigate()
   const [hasImage, setHasImage] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<Theme>("light");
+  const [user, setUser] = React.useState<User>(new User())
 
   // handle on theme change event
   const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,9 +161,12 @@ export const Playground: React.FC = () => {
   const { groupStore, userStore } = useStore()
 
   React.useEffect(() => {
+    userStore.currentUser
+      ? setUser(userStore.currentUser)
+      : navigate('/')
+
     groupStore.loadGroups().then(() => {
       groupStore.loadProjectsForGroups().then(() => setGroups(groupStore.groupList))
-      console.log(groupStore.groupList[0].projects)
     })
   }, [])
 
@@ -257,10 +261,10 @@ export const Playground: React.FC = () => {
               </Typography>
             </div>
             <Menu menuItemStyles={menuItemStyles}>
-              <SubMenu label={userStore.currentUser!.displayName} icon={<AccountCircleIcon />}>
+              <SubMenu label={user.displayName} icon={<AccountCircleIcon />}>
                 <MenuItem
                   icon={<ManageAccountsIcon />}
-                  component={<Link to={`/profiles/${userStore.currentUser?.userName}`} />}
+                  component={<Link to={`/profile`} />}
                 >
                   Your profile
                 </MenuItem>

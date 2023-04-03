@@ -107,7 +107,7 @@ const group: Group = {
 const GroupDetailsPage = () => {
   const params = useParams();
   const navigate = useNavigate()
-  const [group, setGroup] = React.useState<Group>({id:'',name:'',title:'',description:'', owner: undefined, projects:[]})
+  const [group, setGroup] = React.useState<Group>({id:'',name:'',title:'',description:'', projects:[]})
   const { groupStore } = useStore()
   React.useEffect(() => {
     if (params.groupName)

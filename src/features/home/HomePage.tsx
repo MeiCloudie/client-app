@@ -20,6 +20,8 @@ import { MissionPriorities } from "../../app/enums/MissionPriorities";
 import { MissionStates } from "../../app/enums/MissionStates";
 import { Mission } from "../../app/models/Mission";
 import { useStore } from "../../app/stores/store";
+import LinkButton from "../../app/common/button/LinkButton";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const groups: Group[] = [
   {
@@ -209,11 +211,10 @@ const HomePage = () => {
 
       {userStore.isLoggedIn ? (
         <div>
-          <div style={{ textAlign: "center", margin: "30px" }}>
-            <Button variant="contained" startIcon={<GroupAddIcon />}>
-              Create New Group
-            </Button>
-          </div>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: "center", margin: "30px" }}>
+            <LinkButton to="/profile" label="Profile" icon={<AccountCircleIcon />} />
+            <LinkButton to="/groups/create" label="Create New Group" icon={<GroupAddIcon />} />
+          </Stack>
 
           <Grid
             container

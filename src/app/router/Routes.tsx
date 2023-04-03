@@ -41,9 +41,13 @@ export const router = createBrowserRouter(
                                     element: <HomePage />,
                                 },
                                 {
-                                    path: "profiles/:userName",
-                                    element: <ProfilePage />,
+                                    path: "profile",
+                                    element: <ProfilePage />
                                 },
+                                // {
+                                //     path: "profiles/:userName",
+                                //     element: <ProfilePage />,
+                                // },
                                 {
                                     path: "settings",
                                     element: <SettingsPage />,
