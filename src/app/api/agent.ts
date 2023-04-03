@@ -26,7 +26,7 @@ const requests = {
     patch: <T>(url: string, body: {}) => axios.patch<T>(url, body).then(responseBody),
 }
 
-const Account = {
+const Account : any = {
     current: () => requests.get<User>('/Account'),
     login: (user: UserFormValues) => requests.post<User>('/Account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/Account/register', user),

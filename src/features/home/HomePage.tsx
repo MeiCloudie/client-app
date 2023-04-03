@@ -180,6 +180,13 @@ const missions: Mission[] = [
 
 const HomePage = () => {
   const { userStore } = useStore();
+  const [groups, setGroups] = React.useState<Group[]>([])
+  const { groupStore } = useStore()
+  React.useEffect(() => {
+    groupStore.loadGroups().then(() => groupStore.loadProjectsForGroups().then(() => {
+      setGroups(groupStore.groupList)
+    }))
+  }, [])
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px" }}>
@@ -254,7 +261,7 @@ const HomePage = () => {
                           sx={{ fontWeight: "600" }}
                         />
                       </Badge>
-                      <Badge
+                      {/* <Badge
                         badgeContent={missions.length}
                         max={99}
                         color="primary"
@@ -264,15 +271,9 @@ const HomePage = () => {
                           label="Mission"
                           sx={{ fontWeight: "600" }}
                         />
-                      </Badge>
+                      </Badge> */}
                     </Stack>
-                    <Button
-                      variant="contained"
-                      endIcon={<DoubleArrowIcon />}
-                      sx={{ margin: "20px 0" }}
-                    >
-                      Group
-                    </Button>
+                    <LinkButton to={`/${g.name}`} icon={<DoubleArrowIcon />} label="Group" sx={{ margin: "20px 0" }}/>
                   </CardContent>
                 </Card>
               </Grid>

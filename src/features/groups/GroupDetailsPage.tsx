@@ -107,16 +107,18 @@ const group: Group = {
 const GroupDetailsPage = () => {
   const params = useParams();
   const navigate = useNavigate()
-  const [group, setGroup] = React.useState<Group>({id:'',name:'',title:'',description:'', projects:[]})
+  const [group, setGroup] = React.useState<Group>({ id: '', name: '', title: '', description: '', projects: [] })
   const { groupStore } = useStore()
   React.useEffect(() => {
     if (params.groupName)
       groupStore.loadGroup(params.groupName).then(() => {
         if (groupStore.selectedGroup === undefined) navigate('/error')
         else
-          setGroup(groupStore.selectedGroup)
+          groupStore.loadProjects(groupStore.selectedGroup.name, true).then(() => {
+            if (groupStore.selectedGroup) setGroup(groupStore.selectedGroup)
+          })
       })
-  })
+  }, [params.groupName])
   if (groupStore.isLoading) return <LoadingComponent />
   return (
     <div>
@@ -263,7 +265,7 @@ const GroupDetailsPage = () => {
           }}
           disablePadding
         >
-          {projects.map((p, i) => (
+          {group.projects && group.projects.map((p, i) => (
             <ListItem
               key={i}
               secondaryAction={

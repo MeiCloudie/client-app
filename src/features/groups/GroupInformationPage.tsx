@@ -20,17 +20,17 @@ const GroupInformationPage = () => {
   const params = useParams()
   const navigate = useNavigate()
   const { groupStore, userStore } = useStore()
-  const [group, setGroup] = React.useState<GroupFormValues>(new GroupFormValues())
-  const handleForSubmit = (g: GroupFormValues) => {
-    g.userName = userStore.currentUser?.userName
-    g.id
-      ? groupStore.updateGroup(g.id, g)
+  const [groupValues, setGroupValues] = React.useState<GroupFormValues>(new GroupFormValues())
+  const handleForSubmit = (group: GroupFormValues) => {
+    group.userName = userStore.currentUser?.userName
+    group.id
+      ? groupStore.updateGroup(group.id, group)
         .then(() => {
-          g.name === params.groupName
+          group.name === params.groupName
             ? window.location.reload()
-            : navigate(`/${g.name}/info`)
+            : navigate(`/${group.name}/info`)
         })
-      : groupStore.createGroup(g).then(() => navigate(`/${g.name}/info`))
+      : groupStore.createGroup(group).then(() => navigate(`/${group.name}/info`))
   }
   const validationSchema = Yup.object({
     title: Yup.string().required("The title is required"),
@@ -41,8 +41,8 @@ const GroupInformationPage = () => {
   })
   React.useEffect(() => {
     if (params.groupName)
-      groupStore.loadGroup(params.groupName).then((g) => {
-        setGroup(new GroupFormValues(g))
+      groupStore.loadGroup(params.groupName).then((group) => {
+        setGroupValues(new GroupFormValues(group))
       })
   }, [])
   if (groupStore.isLoading) return <LoadingComponent />
@@ -61,8 +61,8 @@ const GroupInformationPage = () => {
         Group Information
       </Typography>
       <Formik
-        key={group.name}
-        initialValues={group}
+        key={groupValues.name}
+        initialValues={groupValues}
         onSubmit={handleForSubmit}
         validationSchema={validationSchema}
       >

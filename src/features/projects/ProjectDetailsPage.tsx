@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Process } from "../../app/models/Process";
 import { Link, useParams } from "react-router-dom";
 import LinkButton from "../../app/common/button/LinkButton";
+import { useStore } from "../../app/stores/store";
 
 const projects: Project[] = [
   {
@@ -54,6 +55,15 @@ const processes: Process[] = [
 const ProjectDetailsPage = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const params = useParams();
+  const [project, setProject] = React.useState<Project>(new Project())
+  const { projectStore } = useStore()
+
+  React.useEffect(() => {
+    if (params.projectName)
+      projectStore.loadProject(params.projectName).then((p) => {
+        if (p) setProject(p)
+      })
+  }, [params.groupName])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -80,7 +90,7 @@ const ProjectDetailsPage = () => {
             color: "#1565c0",
           }}
         >
-          {projects[0].title}
+          {project.title}
         </Typography>
       </div>
 
@@ -139,7 +149,7 @@ const ProjectDetailsPage = () => {
             color: "#443e3e",
           }}
         >
-          {projects[0].description}
+          {project.description}
         </Typography>
 
         <Typography
@@ -152,7 +162,7 @@ const ProjectDetailsPage = () => {
             color: "#1565c0",
           }}
         >
-          Process:
+          Processes:
         </Typography>
 
         <Box

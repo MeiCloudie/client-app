@@ -62,14 +62,20 @@ export default class GroupStore {
     }
   };
 
-  loadProjects = async (name: string) => {
+  loadProjects = async (name: string, forSelectedGroup: boolean = false) => {
     this.isLoading = true
     try {
       const projects = await agent.Groups.projectList(name);
       runInAction(() => {
-        const group = this.groups.find(x => x.name === name)
-        if (group?.projects === undefined)
-          group!.projects = [...projects]
+        if (!forSelectedGroup) {
+
+          const group = this.groups.find(x => x.name === name)
+          if (group?.projects === undefined)
+            group!.projects = [...projects]
+        }
+        else {
+          this.selectedGroup!.projects = [...projects]
+        }
       })
     } catch (error) {
       console.log(error)

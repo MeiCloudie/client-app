@@ -14,7 +14,6 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import Profile from "../../app/models/Profile";
-import { useParams } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { Formik } from "formik";
 import { UserFormValues } from "../../app/models/User";
@@ -41,10 +40,13 @@ const profiles: Profile[] = [
 
 const ProfilePage = () => {
   const { userStore } = useStore()
-  const [user, setUser] = React.useState<UserFormValues>(new UserFormValues(userStore.currentUser!))
+  const [user, setUser] = React.useState<UserFormValues>(new UserFormValues())
   const [open, setOpen] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
 
+  React.useEffect(() => {
+    if (userStore.currentUser) setUser(new UserFormValues(userStore.currentUser))
+  }, [])
   const handleClick = () => {
     window.location.reload()
   };
@@ -76,6 +78,7 @@ const ProfilePage = () => {
       </Typography>
 
       <Formik
+        key={user.userName}
         initialValues={user}
         onSubmit={(u: UserFormValues) => {
 

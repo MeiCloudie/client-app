@@ -11,9 +11,6 @@ export class User implements User {
     email: string = ''
     token: string = ''
     roles: string[] = []
-    constructor() {
-
-    }
 }
 export class UserFormValues {
     email?: string
