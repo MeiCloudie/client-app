@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LinkButton from "../../../app/common/button/LinkButton";
 import agent from "../../../app/api/agent";
+import MyPasswordForm from "../../../app/common/form/MyPasswordForm";
 
 const LoginForm = () => {
     const { userStore } = useStore()
@@ -64,30 +65,7 @@ const LoginForm = () => {
                             }}
                         />
 
-                        <FormControl sx={{ m: 0, width: "25ch" }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">
-                                Password
-                            </InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                type={showPassword ? "text" : "password"}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                name="password"
-                                onChange={handleChange}
-                            />
-                        </FormControl>
+                        <MyPasswordForm label="Password" name="password" />
                         <Grid container sx={{ alignItems: "center" }}>
                             <Grid item xs={6}>
                                 {/* <FormGroup>

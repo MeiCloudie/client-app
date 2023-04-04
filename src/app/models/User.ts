@@ -25,3 +25,8 @@ export class UserFormValues {
         }
     }
 }
+
+export class ChangePasswordFormValues {
+    password: string = ''
+    newPassword: string = ''
+}

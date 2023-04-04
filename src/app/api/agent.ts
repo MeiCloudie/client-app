@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import { Mission, MissionFormValues } from '../models/Mission'
 import { Project, ProjectFormValues } from '../models/Project'
 import { Group, GroupFormValues } from '../models/Group'
-import { User, UserFormValues } from '../models/User'
+import { ChangePasswordFormValues, User, UserFormValues } from '../models/User'
 import { CommentFormValues } from '../models/Comment'
 import { Process, ProcessFormValues } from '../models/Process'
 import { store } from '../stores/store'
@@ -31,6 +31,7 @@ const Account : any = {
     current: () => requests.get<User>('/Account'),
     login: (user: UserFormValues) => requests.post<User>('/Account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/Account/register', user),
+    changePassword: (changePasswordValues: ChangePasswordFormValues) => requests.post('/Account/change-password', changePasswordValues),
     profile: (name: string) => requests.get<Profile>(`/Account/profile/${name}`)
 }
 
