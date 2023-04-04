@@ -60,6 +60,34 @@ export default class MissionStore {
     }
   }
 
+  loadMembers = async (id?: string) => {
+    try {
+      const missionId = id ?? (this.selectedMission ? this.selectedMission.id : undefined)
+      if (!missionId) throw new Error("Mission id is undefined")
+      const members = await agent.Missions.memberList(missionId)
+      runInAction(() => {
+        if (!id && this.selectedMission) return this.selectedMission.members = members
+        const mission = this.missions.find(x => x.id === id)
+        if (mission) return mission.members = members
+        throw new Error("Mission not found")
+      })
+      return members
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  loadMembersForMissions = async () => {
+    try {
+      const membersList = await Promise.all(this.missionList.map((m) => agent.Missions.memberList(m.id)));
+      this.missionList.forEach((m, i) => {
+        m.members = membersList[i]
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   createMission = async (missionFormValues: MissionFormValues) => {
     try {
       await agent.Missions.create(missionFormValues);

@@ -24,6 +24,7 @@ import { MissionStates } from "../../app/enums/MissionStates";
 import { Project } from "../../app/models/Project";
 import { useStore } from "../../app/stores/store";
 import { Link, useParams } from "react-router-dom";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -62,7 +63,7 @@ const MissionListPage = () => {
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   React.useEffect(() => {
     if (params.projectName === undefined) return;
-    loadMissionByProjectName(params.projectName).then(() => {
+    loadMissionByProjectName(params.projectName).then(() => missionStore.loadMembersForMissions().then(() => {
       if (!projectStore.selectedProject) projectStore.loadProject(params.projectName!).then()
       setRows(
         missionStore.missionList.map((m) => {
@@ -71,7 +72,7 @@ const MissionListPage = () => {
           return {
             id: m.id,
             title: m.title,
-            assignedTo: m.id,
+            assignedTo: m.members.length > 0 ? m.members[0].displayName : "No one",
             state: states[m.state],
             comments: randomIndex,
             activityDate: m.createDate.toLocaleString("en-US", {
@@ -85,7 +86,7 @@ const MissionListPage = () => {
           };
         })
       );
-    });
+    }));
   }, [params.projectName]);
 
   return (
@@ -112,7 +113,7 @@ const MissionListPage = () => {
             color: "#443e3e",
           }}
         >
-          Project: {projectStore.selectedProject!.title}
+          Project: {projectStore.selectedProject && projectStore.selectedProject.title}
         </Typography>
       </div>
 
@@ -122,14 +123,11 @@ const MissionListPage = () => {
         spacing={2}
         style={{ padding: "10px 0" }}
       >
-        <Link
+        <LinkButton
           to={`/${params.groupName}/${params.projectName}/missions/create`}
-          style={{ textDecoration: "none" }}
-        >
-          <Button variant="contained" startIcon={<AddCircleIcon />}>
-            New Mission
-          </Button>
-        </Link>
+          label="New Mission"
+          icon={<AddCircleIcon />}
+        />
         <Link
           to={`/${params.groupName}/${params.projectName}/missions/${selectedMissionId}`}
           style={{ textDecoration: "none" }}

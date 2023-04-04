@@ -71,6 +71,7 @@ const ChangePasswordForm = () => {
                 userStore.changePassword(changePasswordFormValues).then((isSuccess) => {
                     if (isSuccess) {
                         setIsSuccess(true);
+                        actions.resetForm()
                     }
                     else {
                         setIsSuccess(false);

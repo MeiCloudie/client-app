@@ -40,7 +40,8 @@ const Missions = {
     details: (id: string) => requests.get<Mission>(`/Missions/${id}`),
     create: (mission: MissionFormValues) => requests.post('/Missions', mission),
     update: (id: string, mission: MissionFormValues) => requests.put(`/Missions/${id}`, mission),
-    delete: (id: string) => requests.delete(`/Missions/${id}`)
+    delete: (id: string) => requests.delete(`/Missions/${id}`),
+    memberList: (id: string) => requests.get<Member[]>(`/Missions/${id}/Members`)
 }
 
 const Projects = {
