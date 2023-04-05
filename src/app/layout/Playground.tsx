@@ -256,7 +256,7 @@ export const Playground: React.FC = () => {
                   letterSpacing: "0.5px",
                 }}
               >
-                Group
+                Groups
               </Typography>
             </div>
             {groups.map((g, i) => (

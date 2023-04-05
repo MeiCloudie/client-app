@@ -35,6 +35,7 @@ const GroupDetailsPage = () => {
   const navigate = useNavigate();
   const [group, setGroup] = React.useState<Group>(new Group());
   const { groupStore } = useStore();
+
   React.useEffect(() => {
     if (params.groupName)
       groupStore.loadGroup(params.groupName).then(() => {
@@ -49,7 +50,9 @@ const GroupDetailsPage = () => {
         }
       });
   }, [params.groupName]);
+
   if (groupStore.isLoading) return <LoadingComponent />;
+  
   return (
     <div>
       <div style={{ textAlign: "center" }}>

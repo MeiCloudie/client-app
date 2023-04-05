@@ -64,7 +64,9 @@ const Groups = {
     update: (id: string, group: GroupFormValues) => requests.put(`/Groups/${id}`, group),
     delete: (id: string) => requests.delete(`/Groups/${id}`),
     projectList: (name: string) => requests.get<Project[]>(`/Groups/${name}/Projects`),
-    memberList: (name: string) => requests.get<Member[]>(`/Groups/${name}/Members`)
+    memberList: (name: string) => requests.get<Member[]>(`/Groups/${name}/Members`),
+    addMember: (name: string, userName: string) => requests.patch<Member[]>(`/Groups/${name}/add-member/${userName}`),
+    removeMember: (name: string, userName: string) => requests.patch<Member[]>(`/Groups/${name}/remove-member/${userName}`)
 }
 
 const Comments = {

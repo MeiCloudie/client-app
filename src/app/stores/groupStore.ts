@@ -157,4 +157,24 @@ export default class GroupStore {
       console.log(error);
     }
   };
+
+  addMember = async (name: string, userName: string) => {
+    try {
+      await agent.Groups.addMember(name, userName);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  removeMember = async (name: string, userName: string) => {
+    try {
+      await agent.Groups.removeMember(name, userName);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 }

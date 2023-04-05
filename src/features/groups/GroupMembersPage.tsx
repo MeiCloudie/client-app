@@ -25,6 +25,14 @@ import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import CachedIcon from "@mui/icons-material/Cached";
 
 import { User } from "../../app/models/User";
+import { useNavigate, useParams } from "react-router-dom";
+import { useStore } from "../../app/stores/store";
+import { Group } from "../../app/models/Group";
+import { observer } from "mobx-react-lite";
+import { Formik } from "formik";
+import Member from "../../app/models/Member";
+import MyTextForm from "../../app/common/form/MyTextForm";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -60,17 +68,41 @@ const users: User[] = [
   },
 ];
 
-const GroupMembersPage = () => {
+const GroupMembersPage = observer(() => {
   const [open, setOpen] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const params = useParams();
+  const navigate = useNavigate();
+  const [group, setGroup] = React.useState<Group>(new Group());
+  const { groupStore } = useStore();
+  const [members, setMembers] = React.useState<Member[]>([]);
 
-  const handleClick = () => {
-    if (isSuccess) {
-      setIsSuccess(false);
-    } else {
-      setIsSuccess(true);
-    }
-    setOpen(true);
+  React.useEffect(() => {
+    if (params.groupName)
+      groupStore.loadGroup(params.groupName).then(() => {
+        if (groupStore.selectedGroup === undefined) navigate("/error");
+        else {
+          Promise.all([
+            groupStore.loadProjects(groupStore.selectedGroup.name, true),
+            groupStore.loadMembers(groupStore.selectedGroup.name, true),
+          ]).then(() => {
+            if (groupStore.selectedGroup) setGroup(groupStore.selectedGroup);
+            updateMembers();
+          });
+        }
+      });
+  }, [params.groupName]);
+
+  const handleClick = (userName: string) => {
+    groupStore.removeMember(params.groupName!, userName).then((isSuccess) => {
+      if (isSuccess) {
+        setIsSuccess(true);
+        updateMembers();
+      } else {
+        setIsSuccess(false);
+      }
+      setOpen(true);
+    });
   };
 
   const handleClose = (
@@ -83,6 +115,11 @@ const GroupMembersPage = () => {
 
     setOpen(false);
   };
+
+  const updateMembers = () =>
+    groupStore.loadMembers(params.groupName!, true).then(() => {
+      setMembers(groupStore.selectedGroup!.members);
+    });
 
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
@@ -99,83 +136,130 @@ const GroupMembersPage = () => {
         Group Members
       </Typography>
 
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
+      <Formik
+        initialValues={{ userName: "" }}
+        onSubmit={({ userName }, actions) => {
+          // groupStore.addMember(params.groupName!, userName);
+          if (params.groupName)
+            groupStore
+              .addMember(params.groupName, userName)
+              .then((isSuccess) => {
+                if (isSuccess) {
+                  setIsSuccess(true);
+                  updateMembers();
+                  actions.resetForm();
+                } else {
+                  setIsSuccess(false);
+                }
+                setOpen(true);
+                actions.setSubmitting(false);
+              });
         }}
-        noValidate
-        autoComplete="off"
       >
-        <TextField
-          id="title-outlined-basic"
-          label="Email / Username"
-          variant="outlined"
-          placeholder="Enter email or username here!"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PeopleAltIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        {({ handleSubmit, isSubmitting }) => (
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { mt: 1, mb: 1, width: "100ch" },
+            }}
+            onSubmit={handleSubmit}
+          >
+            <MyTextForm
+              label="Username"
+              name="userName"
+              placeholder="Enter username here!"
+              icon={<PeopleAltIcon />}
+            />
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" startIcon={<GroupAddIcon />}>
-              Add Members
-            </Button>
-          </Stack>
-        </div>
-
-        <List
-          sx={{
-            width: "100%",
-            bgcolor: "#ffeddf",
-            borderRadius: "5px",
-            position: "relative",
-            overflow: "auto",
-            maxHeight: 300,
-            borderStyle: "solid",
-          }}
-          disablePadding
-        >
-          {users.map((u) => (
-            <ListItem
-              secondaryAction={
-                <div>
-                  <IconButton edge="end">
-                    <CachedIcon />
-                  </IconButton>
-                  <IconButton edge="end">
-                    <GroupRemoveIcon />
-                  </IconButton>
-                </div>
-              }
-              disablePadding
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
             >
-              <ListItemButton>
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: "#443e3e" }}>
-                    <PersonIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={`${u.displayName} [${u.roles}]`}
-                  secondary={u.email}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+              <Stack spacing={2} direction="row">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  startIcon={<GroupAddIcon />}
+                  disabled={isSubmitting}
+                >
+                  Add Members
+                </Button>
+              </Stack>
+              {!isSuccess && (
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="warning">
+                    <AlertTitle>Warning</AlertTitle>
+                    Something went wrong!
+                  </Alert>
+                </Snackbar>
+              )}
+              {isSuccess && (
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    <AlertTitle>Success</AlertTitle>
+                    Action successfully!
+                  </Alert>
+                </Snackbar>
+              )}
+            </div>
+          </Box>
+        )}
+      </Formik>
+
+      <List
+        sx={{
+          width: "100%",
+          bgcolor: "#ffeddf",
+          borderRadius: "5px",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          borderStyle: "solid",
+        }}
+        disablePadding
+      >
+        {members.map((u, i) => (
+          <ListItem
+            key={i}
+            secondaryAction={
+              <div>
+                <IconButton edge="end">
+                  <CachedIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  onClick={() => {
+                    handleClick(u.userName);
+                  }}
+                >
+                  <GroupRemoveIcon />
+                </IconButton>
+              </div>
+            }
+            disablePadding
+          >
+            <ListItemButton>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: "#9196de" }}>
+                  <PersonIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={u.displayName} secondary={u.role} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
 
       <div
         style={{
@@ -185,11 +269,16 @@ const GroupMembersPage = () => {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button variant="contained" onClick={handleClick}>Cancel</Button>
-          <Button variant="contained" onClick={handleClick}>Save</Button>
+          <LinkButton label="Leave" to={`/${params.groupName}`} />
+          {/* <Button variant="contained" onClick={handleClick}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={handleClick}>
+            Save
+          </Button> */}
         </Stack>
 
-        {!isSuccess && (
+        {/* {!isSuccess && (
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="warning">
               <AlertTitle>Warning</AlertTitle>
@@ -206,10 +295,10 @@ const GroupMembersPage = () => {
               Password change successfully!
             </Alert>
           </Snackbar>
-        )}
+        )} */}
       </div>
     </Box>
   );
-};
+});
 
 export default GroupMembersPage;

@@ -11,7 +11,7 @@ import {
 import { Formik, FormikHelpers } from "formik";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MyTextForm from "../../../app/common/form/MyTextForm";
 import { CommentFormValues } from "../../../app/models/Comment";
 import { useStore } from "../../../app/stores/store";
@@ -20,7 +20,6 @@ import { Comment } from "../../../app/models/Comment";
 
 const CommentForm = observer(() => {
   const params = useParams();
-  const navigate = useNavigate();
   const [comments, setComments] = React.useState<Comment[]>([]);
   const { commentStore, missionStore, userStore } = useStore();
   const [comment, setComment] = React.useState<CommentFormValues>(
@@ -53,7 +52,7 @@ const CommentForm = observer(() => {
 
   return (
     <Formik initialValues={comment} onSubmit={handleForSubmit}>
-      {({ values, handleSubmit, handleChange, isSubmitting }) => (
+      {({ handleSubmit, isSubmitting }) => (
         <Box
           component="form"
           sx={{
