@@ -5,8 +5,10 @@ import { UserFormValues } from "../../../app/models/User";
 import React from "react";
 import Box from "@mui/material/Box";
 import {
+  AlertTitle,
   Button,
   InputAdornment,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -14,12 +16,36 @@ import {
 import EmailIcon from "@mui/icons-material/Email";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import MyPasswordForm from "../../../app/common/form/MyPasswordForm";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const RegisterForm = observer(() => {
+  const navigate = useNavigate();
   const { userStore } = useStore();
+
+  const [open, setOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "click away") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const [user, setUser] = React.useState<{
     password: string;
     userName?: string;
@@ -27,8 +53,6 @@ const RegisterForm = observer(() => {
     email: string;
     confirmPassword: string;
   }>({ password: "", confirmPassword: "", email: "" });
-
-  const handleForSubmit = (user: UserFormValues) => userStore.register(user);
 
   const validationSchema = Yup.object({
     email: Yup.string().email().required(),
@@ -43,7 +67,17 @@ const RegisterForm = observer(() => {
   return (
     <Formik
       initialValues={user}
-      onSubmit={handleForSubmit}
+      onSubmit={(user: UserFormValues, actions) => {
+        userStore.register(user).then((isSuccess) => {
+          if (isSuccess) {
+            navigate("/");
+          } else {
+            setIsSuccess(false);
+          }
+          setOpen(true);
+          actions.setSubmitting(false);
+        });
+      }}
       validationSchema={validationSchema}
     >
       {({ errors, handleSubmit, handleChange, isSubmitting }) => (
@@ -127,6 +161,24 @@ const RegisterForm = observer(() => {
             >
               Create Account
             </Button>
+
+            {!isSuccess && (
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="warning"
+                  sx={{ textAlign: "left" }}
+                >
+                  <AlertTitle>Warning</AlertTitle>
+                  The data is malformed <strong>Please re-enter!</strong>
+                </Alert>
+              </Snackbar>
+            )}
+
             <Typography variant="h6" gutterBottom>
               Already have an account? {""}
               <Link to="/login" style={{ textDecoration: "hover" }}>

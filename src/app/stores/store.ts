@@ -5,6 +5,7 @@ import ProjectStore from "./projectStore";
 import GroupStore from "./groupStore";
 import CommonStore from "./commonStore";
 import ProcessStore from "./processStore";
+import CommentStore from "./commentStore";
 
 interface Store {
     missionStore: MissionStore,
@@ -12,7 +13,8 @@ interface Store {
     groupStore: GroupStore,
     processStore: ProcessStore,
     userStore: UserStore,
-    commonStore: CommonStore
+    commonStore: CommonStore,
+    commentStore: CommentStore
 }
 
 export const store: Store = {
@@ -21,7 +23,8 @@ export const store: Store = {
     groupStore: new GroupStore(),
     processStore: new ProcessStore(),
     userStore: new UserStore(),
-    commonStore: new CommonStore()
+    commonStore: new CommonStore(),
+    commentStore: new CommentStore()
 }
 
 export const StoreContext = createContext(store)

@@ -161,6 +161,7 @@ const MissionForm = observer(() => {
       groupStore.loadGroup(params.groupName),
     ]).then(([m]) => {
       if (!params.groupName) return;
+      console.log(groupStore.selectedGroup)
       groupStore.loadMembers(params.groupName, true).then(() => {
         missionStore.loadMembers().then(() => {
           if (groupStore.selectedGroup)
@@ -171,33 +172,33 @@ const MissionForm = observer(() => {
             );
           setMission(
             new MissionFormValues(
-              m,
+              missionStore.selectedMission,
               missionStore.selectedMission?.members[0].userName
             )
           );
         });
       });
     });
-    if (missionId)
-      loadMission(missionId).then((m) => {
-        if (
-          params.groupName &&
-          (!groupStore.selectedGroup ||
-            params.groupName !== groupStore.selectedGroup.name)
-        ) {
-          groupStore
-            .loadGroup(params.groupName)
-            .then(() => setMission(new MissionFormValues(m)));
-        }
-        groupStore.loadMembers(params.groupName!, true).then(() => {
-          if (groupStore.selectedGroup)
-            setUserSelection(
-              groupStore.selectedGroup!.members.map((m) => {
-                return { value: m.userName, label: m.displayName };
-              })
-            );
-        });
-      });
+    // if (missionId)
+    //   loadMission(missionId).then((m) => {
+    //     if (
+    //       params.groupName &&
+    //       (!groupStore.selectedGroup ||
+    //         params.groupName !== groupStore.selectedGroup.name)
+    //     ) {
+    //       groupStore
+    //         .loadGroup(params.groupName)
+    //         .then(() => setMission(new MissionFormValues(m)));
+    //     }
+    //     groupStore.loadMembers(params.groupName!, true).then(() => {
+    //       if (groupStore.selectedGroup)
+    //         setUserSelection(
+    //           groupStore.selectedGroup!.members.map((m) => {
+    //             return { value: m.userName, label: m.displayName };
+    //           })
+    //         );
+    //     });
+    //   });
   }, []);
 
   return (

@@ -6,6 +6,7 @@ export interface Comment extends Entity {
     postDate: Date,
     updateDate: Date,
     owner: Member,
+    missionId?: string
 }
 
 export class Comment implements Comment {
@@ -22,6 +23,7 @@ export class CommentFormValues {
     content?: string = ''
     postDate: Date = new Date()
     updateDate: Date = new Date()
+    missionId?: string = ''
     constructor(comment?: Comment) {
         if (comment) {
             this.id = comment.id

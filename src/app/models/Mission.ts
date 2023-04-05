@@ -12,7 +12,7 @@ export interface Mission extends Entity {
     endDate: Date,
     completedDate: Date,
     createDate: Date,
-    projectName?: string
+    projectName?: string,
     members: Member[]
 }
 

@@ -3,7 +3,7 @@ import { Mission, MissionFormValues } from '../models/Mission'
 import { Project, ProjectFormValues } from '../models/Project'
 import { Group, GroupFormValues } from '../models/Group'
 import { ChangePasswordFormValues, User, UserFormValues } from '../models/User'
-import { CommentFormValues } from '../models/Comment'
+import { Comment, CommentFormValues } from '../models/Comment'
 import { Process, ProcessFormValues } from '../models/Process'
 import { store } from '../stores/store'
 import Profile from '../models/Profile'
@@ -44,6 +44,7 @@ const Missions = {
     memberList: (id: string) => requests.get<Member[]>(`/Missions/${id}/Members`),
     addMember: (id: string, userName: string) => requests.patch(`/Missions/${id}/add-member/${userName}`),
     removeMember: (id: string, userName: string) => requests.patch(`/Missions/${id}/remove-member/${userName}`),
+    commentList: (id: string) => requests.get<Comment[]>(`/Missions/${id}/Comments`),
 }
 
 const Projects = {
