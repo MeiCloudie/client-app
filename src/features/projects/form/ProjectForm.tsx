@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import LinkButton from "../../../app/common/button/LinkButton";
 
 const ProjectForm = observer(() => {
   const params = useParams();
@@ -131,12 +132,7 @@ const ProjectForm = observer(() => {
             }}
           >
             <Stack spacing={2} direction="row">
-              <Button
-                variant="contained"
-                href={`/${params.groupName}/${params.projectName}`}
-              >
-                Leave
-              </Button>
+              <LinkButton label="Leave" to={`/${params.groupName}/${params.projectName}`} />
               <Button
                 variant="contained"
                 onClick={() => window.location.reload()}
