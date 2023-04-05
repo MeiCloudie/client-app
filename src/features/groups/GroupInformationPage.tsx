@@ -14,38 +14,53 @@ import React from "react";
 import { useStore } from "../../app/stores/store";
 import { Formik } from "formik";
 import LoadingComponent from "../../app/layout/LoadingComponent";
-import * as Yup from 'yup';
+import * as Yup from "yup";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const GroupInformationPage = () => {
-  const params = useParams()
-  const navigate = useNavigate()
-  const { groupStore, userStore } = useStore()
-  const [groupValues, setGroupValues] = React.useState<GroupFormValues>(new GroupFormValues())
+  const params = useParams();
+  const navigate = useNavigate();
+  const { groupStore, userStore } = useStore();
+  const [groupValues, setGroupValues] = React.useState<GroupFormValues>(
+    new GroupFormValues()
+  );
+
   const handleForSubmit = (group: GroupFormValues) => {
-    group.userName = userStore.currentUser?.userName
+    group.userName = userStore.currentUser?.userName;
     group.id
-      ? groupStore.updateGroup(group.id, group)
-        .then(() => {
+      ? groupStore.updateGroup(group.id, group).then(() => {
           group.name === params.groupName
             ? window.location.reload()
-            : navigate(`/${group.name}/info`)
+            : navigate(`/${group.name}/info`);
         })
-      : groupStore.createGroup(group).then(() => navigate(`/${group.name}/info`))
-  }
+      : groupStore
+          .createGroup(group)
+          .then(() => navigate(`/${group.name}/info`));
+  };
+
+  const handleForDelete = () => {
+    groupStore
+      .deleteGroup(groupValues.id!)
+      .then(() => navigate("/"));
+  };
+
   const validationSchema = Yup.object({
     title: Yup.string().required("The title is required"),
     name: Yup.string()
       .matches(/^[a-z0-9-]+$/, "The name is invalid!")
       .required("The name is required"),
-    description: Yup.string().required()
-  })
+    description: Yup.string().required(),
+  });
+
   React.useEffect(() => {
     if (params.groupName)
       groupStore.loadGroup(params.groupName).then((group) => {
-        setGroupValues(new GroupFormValues(group))
-      })
-  }, [])
-  if (groupStore.isLoading) return <LoadingComponent />
+        setGroupValues(new GroupFormValues(group));
+      });
+  }, []);
+
+  //if (groupStore.isLoading) return <LoadingComponent />;
+
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>
       <Typography
@@ -130,14 +145,30 @@ const GroupInformationPage = () => {
               }}
             >
               <Stack spacing={2} direction="row">
-                <Button variant="contained">Cancel</Button>
-                <Button type="submit" disabled={isSubmitting} variant="contained">Save</Button>
+                <LinkButton label="Leave" to={`/${params.groupName}`} />
+                <Button
+                  variant="contained"
+                  onClick={() => window.location.reload()}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  variant="contained"
+                >
+                  Save
+                </Button>
+                {params.groupName && (
+                  <Button variant="contained" onClick={handleForDelete}>
+                    Delete
+                  </Button>
+                )}
               </Stack>
             </div>
           </Box>
         )}
       </Formik>
-
     </Box>
   );
 };

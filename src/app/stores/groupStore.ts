@@ -5,7 +5,7 @@ import agent from "../api/agent";
 export default class GroupStore {
   groups: Group[] = new Array<Group>();
   selectedGroup: Group | undefined = undefined;
-  isLoading = false
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,11 +28,11 @@ export default class GroupStore {
   }
 
   get currentGroup() {
-    return this.selectedGroup
+    return this.selectedGroup;
   }
 
   loadGroups = async () => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const groups = await agent.Groups.list();
       runInAction(() => {
@@ -40,14 +40,13 @@ export default class GroupStore {
       });
     } catch (error) {
       console.log(error);
-    }
-    finally {
-      this.isLoading = false
+    } finally {
+      this.isLoading = false;
     }
   };
 
   loadGroup = async (id: string) => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const group = await agent.Groups.details(id);
       runInAction(() => {
@@ -56,87 +55,72 @@ export default class GroupStore {
       return group;
     } catch (error) {
       console.log(error);
-    }
-    finally {
-      this.isLoading = false
+    } finally {
+      this.isLoading = false;
     }
   };
 
   loadProjects = async (name: string, forSelectedGroup: boolean = false) => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const projects = await agent.Groups.projectList(name);
       runInAction(() => {
         if (!forSelectedGroup) {
-
-          const group = this.groups.find(x => x.name === name)
-          if (group?.projects === undefined)
-            group!.projects = [...projects]
+          const group = this.groups.find((x) => x.name === name);
+          if (group?.projects === undefined) group!.projects = [...projects];
+        } else {
+          this.selectedGroup!.projects = [...projects];
         }
-        else {
-          this.selectedGroup!.projects = [...projects]
-        }
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      this.isLoading = false;
     }
-    finally {
-      this.isLoading = false
-    }
-  }
+  };
 
   loadProjectsForGroups = async () => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const promises = this.groupList.map((g) => this.loadProjects(g.name));
       await Promise.all(promises);
-
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.isLoading = false;
     }
-    catch (error) {
-      console.log(error)
-    }
-    finally {
-      this.isLoading = false
-    }
-  }
+  };
 
   loadMembers = async (name: string, forSelectedGroup: boolean = false) => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const members = await agent.Groups.memberList(name);
       runInAction(() => {
         if (!forSelectedGroup) {
-
-          const group = this.groups.find(x => x.name === name)
-          if (group?.members === undefined)
-            group!.members = [...members]
+          const group = this.groups.find((x) => x.name === name);
+          if (group?.members === undefined) group!.members = [...members];
+        } else {
+          this.selectedGroup!.members = [...members];
         }
-        else {
-          this.selectedGroup!.members = [...members]
-        }
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      this.isLoading = false;
     }
-    finally {
-      this.isLoading = false
-    }
-  }
+  };
 
   loadMembersForGroups = async () => {
-    this.isLoading = true
+    this.isLoading = true;
     try {
       const promises = this.groupList.map((g) => this.loadMembers(g.name));
       await Promise.all(promises);
-
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.isLoading = false;
     }
-    catch (error) {
-      console.log(error)
-    }
-    finally {
-      this.isLoading = false
-    }
-  }
+  };
 
   createGroup = async (groupFormValues: GroupFormValues) => {
     try {
@@ -144,6 +128,7 @@ export default class GroupStore {
       const newGroup = new Group(groupFormValues);
       runInAction(() => {
         this.selectedGroup = newGroup;
+        this.groups.push(newGroup);
       });
     } catch (error) {
       console.log(error);
