@@ -17,6 +17,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
 import MyPasswordForm from "../../../app/common/form/MyPasswordForm";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import * as Yup from "yup";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -46,24 +47,31 @@ const LoginForm = () => {
   };
 
   const handleForSubmit = (user: UserFormValues) => userStore.login(user);
+
+  const validationSchema = Yup.object({
+    userName: Yup.string().required("The username is required"),
+    password: Yup.string().required("The password is required"),
+  });
+
   return (
     <Formik
       initialValues={user}
       onSubmit={handleForSubmit}
-    //   onSubmit={(user: UserFormValues, actions) => {
-    //     userStore.login(user).then((isSuccess) => {
-    //       if (isSuccess) {
-    //         setIsSuccess(true);
-    //         actions.resetForm();
-    //       } else {
-    //         setIsSuccess(false);
-    //       }
-    //       setOpen(true);
-    //       actions.setSubmitting(false);
-    //     });
-    //   }}
+      //   onSubmit={(user: UserFormValues, actions) => {
+      //     userStore.login(user).then((isSuccess) => {
+      //       if (isSuccess) {
+      //         setIsSuccess(true);
+      //         actions.resetForm();
+      //       } else {
+      //         setIsSuccess(false);
+      //       }
+      //       setOpen(true);
+      //       actions.setSubmitting(false);
+      //     });
+      //   }}
+      validationSchema={validationSchema}
     >
-      {({ handleSubmit, handleChange, isSubmitting }) => (
+      {({ handleSubmit, handleChange, isSubmitting, errors }) => (
         <Box sx={{ margin: "217px 100px", textAlign: "center" }}>
           <Typography
             variant="h4"
@@ -83,6 +91,7 @@ const LoginForm = () => {
             onSubmit={handleSubmit}
           >
             <TextField
+              helperText={errors.userName}
               id="email-username-outlined-basic"
               name="userName"
               label="Email/Username"
@@ -98,7 +107,11 @@ const LoginForm = () => {
               }}
             />
 
-            <MyPasswordForm label="Password" name="password" />
+            <MyPasswordForm
+              label="Password"
+              name="password"
+              helperText={errors.password}
+            />
             <Grid container sx={{ alignItems: "center" }}>
               <Grid item xs={6}>
                 {/* <FormGroup>
