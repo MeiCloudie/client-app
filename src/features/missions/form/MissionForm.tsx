@@ -161,21 +161,24 @@ const MissionForm = observer(() => {
       groupStore.loadGroup(params.groupName),
     ]).then(([m]) => {
       if (!params.groupName) return;
-      console.log(groupStore.selectedGroup)
       groupStore.loadMembers(params.groupName, true).then(() => {
         missionStore.loadMembers().then(() => {
+          console.log(groupStore.selectedGroup)
+          console.log(missionStore.selectedMission)
           if (groupStore.selectedGroup)
             setUserSelection(
               groupStore.selectedGroup!.members.map((m) => {
                 return { value: m.userName, label: m.displayName };
               })
             );
-          setMission(
-            new MissionFormValues(
-              missionStore.selectedMission,
-              missionStore.selectedMission?.members[0].userName
-            )
-          );
+            setMission(
+              new MissionFormValues(
+                missionStore.selectedMission,
+                (missionStore.selectedMission && missionStore.selectedMission.members && missionStore.selectedMission.members.length > 0)
+                  ? missionStore.selectedMission?.members[0].userName
+                  : undefined
+              )
+            );
         });
       });
     });
