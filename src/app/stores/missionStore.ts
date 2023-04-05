@@ -109,6 +109,21 @@ export default class MissionStore {
     }
   }
 
+  loadComments = async () => {
+    this.isLoading = true
+    try {
+      const comments = await agent.Missions.commentList(this.selectedMission!.id);
+      runInAction(() => {
+          this.selectedMission!.comments = [...comments]
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      this.isLoading = false
+    }
+  }
+
   createMission = async (missionFormValues: MissionFormValues) => {
     try {
       await agent.Missions.create(missionFormValues);

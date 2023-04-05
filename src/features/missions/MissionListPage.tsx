@@ -43,11 +43,11 @@ const columns: GridColDef[] = [
     headerName: "State",
     width: 200,
   },
-  {
-    field: "comments",
-    headerName: "Comments",
-    width: 200,
-  },
+  // {
+  //   field: "comments",
+  //   headerName: "Comments",
+  //   width: 200,
+  // },
   {
     field: "activityDate",
     headerName: "Activity Date",
@@ -67,14 +67,14 @@ const MissionListPage = () => {
       if (!projectStore.selectedProject) projectStore.loadProject(params.projectName!).then()
       setRows(
         missionStore.missionList.map((m) => {
-          const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+          // const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
           const states = ["New", "Active", "Resolved", "Closed"];
           return {
             id: m.id,
             title: m.title,
             assignedTo: m.members.length > 0 ? m.members[0].displayName : "No one",
             state: states[m.state],
-            comments: randomIndex,
+            // comments: randomIndex,
             activityDate: m.createDate.toLocaleString("en-US", {
               day: "2-digit",
               month: "2-digit",

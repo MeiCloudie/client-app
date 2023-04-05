@@ -73,46 +73,27 @@ export default class CommentStore {
     }
   }
 
-//   createMission = async (missionFormValues: MissionFormValues) => {
-//     try {
-//       await agent.Missions.create(missionFormValues);
-//       const newMission = new Mission(missionFormValues);
-//       runInAction(() => {
-//         this.selectedMission = newMission;
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  createComment = async (commentFormValues: CommentFormValues) => {
+    try {
+      await agent.Comments.create(commentFormValues);
+      const newComment = new Comment(commentFormValues);
+      runInAction(() => {
+        this.selectedComment = newComment;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-//   updateMission = async (id: string, missionFormValues: MissionFormValues) => {
-//     try {
-//       await agent.Missions.update(id, missionFormValues);
-//       const updateMission = new Mission(missionFormValues);
-//       runInAction(() => {
-//         this.selectedMission = updateMission;
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   deleteMission = async (id: string) => {
-//     try {
-//       await agent.Missions.delete(id);
-//       runInAction(() => {
-//         this.selectedMission = undefined;
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   addMember = async (id: string, userName: string) => {
-//     try {
-//       await agent.Missions.addMember(id, userName);;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  // updateComment = async (id: string, commentFormValues: CommentFormValues) => {
+  //   try {
+  //     await agent.Comments.update(id, commentFormValues);
+  //     const updateComment = new Comment(commentFormValues);
+  //     runInAction(() => {
+  //       this.selectedComment = updateComment;
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 }

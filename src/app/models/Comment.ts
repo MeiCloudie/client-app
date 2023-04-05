@@ -24,6 +24,7 @@ export class CommentFormValues {
     postDate: Date = new Date()
     updateDate: Date = new Date()
     missionId?: string = ''
+    userName: string = ''
     constructor(comment?: Comment) {
         if (comment) {
             this.id = comment.id

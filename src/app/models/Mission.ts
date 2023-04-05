@@ -2,6 +2,7 @@ import { MissionPriorities } from "../enums/MissionPriorities";
 import { MissionStates } from "../enums/MissionStates";
 import Entity from "./Entity";
 import Member from "./Member";
+import { Comment } from "./Comment";
 
 export interface Mission extends Entity {
     title: string,
@@ -13,7 +14,8 @@ export interface Mission extends Entity {
     completedDate: Date,
     createDate: Date,
     projectName?: string,
-    members: Member[]
+    members: Member[],
+    comments: Comment[]
 }
 
 export class Mission implements Mission {
@@ -27,6 +29,7 @@ export class Mission implements Mission {
     completedDate = new Date()
     createDate = new Date()
     members: Member[] = []
+    comments: Comment[] = []
     constructor(init?: MissionFormValues) {
         Object.assign(this, init)
     }
