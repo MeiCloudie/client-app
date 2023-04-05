@@ -28,6 +28,7 @@ const HomePage = () => {
       setGroups(groupStore.groupList)
     }))
   }, [])
+
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px" }}>

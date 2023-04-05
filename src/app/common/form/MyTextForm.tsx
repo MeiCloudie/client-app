@@ -1,4 +1,4 @@
-import { InputAdornment, Skeleton, TextField } from "@mui/material"
+import { InputAdornment, TextField } from "@mui/material"
 import { useField } from "formik"
 
 const MyTextForm = ({ label, icon, ...props }: any) => {

@@ -6,7 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import {
   Box,
   Button,
-  CircularProgress,
   Divider,
   IconButton,
   ListItem,
@@ -26,30 +25,31 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CachedIcon from "@mui/icons-material/Cached";
 
 import { Group } from "../../app/models/Group";
-import { User } from "../../app/models/User";
-import { Project } from "../../app/models/Project";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import LinkButton from "../../app/common/button/LinkButton";
 
 const GroupDetailsPage = () => {
   const params = useParams();
-  const navigate = useNavigate()
-  const [group, setGroup] = React.useState<Group>(new Group())
-  const { groupStore } = useStore()
+  const navigate = useNavigate();
+  const [group, setGroup] = React.useState<Group>(new Group());
+  const { groupStore } = useStore();
   React.useEffect(() => {
     if (params.groupName)
       groupStore.loadGroup(params.groupName).then(() => {
-        if (groupStore.selectedGroup === undefined) navigate('/error')
+        if (groupStore.selectedGroup === undefined) navigate("/error");
         else {
-          Promise.all([groupStore.loadProjects(groupStore.selectedGroup.name, true), groupStore.loadMembers(groupStore.selectedGroup.name, true)])
-          .then(() => {
-            if (groupStore.selectedGroup) setGroup(groupStore.selectedGroup)
-          })
+          Promise.all([
+            groupStore.loadProjects(groupStore.selectedGroup.name, true),
+            groupStore.loadMembers(groupStore.selectedGroup.name, true),
+          ]).then(() => {
+            if (groupStore.selectedGroup) setGroup(groupStore.selectedGroup);
+          });
         }
-      })
-  }, [params.groupName])
-  if (groupStore.isLoading) return <LoadingComponent />
+      });
+  }, [params.groupName]);
+  if (groupStore.isLoading) return <LoadingComponent />;
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -93,27 +93,21 @@ const GroupDetailsPage = () => {
           spacing={2}
           style={{ padding: "10px 0", justifyContent: "left" }}
         >
-          <Button
-            variant="contained"
-            startIcon={<GroupAddIcon />}
-            href={`/${params.groupName}/members`}
-          >
-            Add Members
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddBoxRoundedIcon />}
-            href={`/${params.groupName}/projects/create`}
-          >
-            New Project
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<EditIcon />}
-            href={`/${params.groupName}/info`}
-          >
-            Edit Group
-          </Button>
+          <LinkButton
+            label="Add Members"
+            to={`/${params.groupName}/members`}
+            icon={<GroupAddIcon />}
+          />
+          <LinkButton
+            label="New Project"
+            to={`/${params.groupName}/projects/create`}
+            icon={<AddBoxRoundedIcon />}
+          />
+          <LinkButton
+            label="Edit Group"
+            to={`/${params.groupName}/info`}
+            icon={<EditIcon />}
+          />
         </Stack>
 
         <Typography
@@ -195,31 +189,32 @@ const GroupDetailsPage = () => {
           }}
           disablePadding
         >
-          {group.projects && group.projects.map((p, i) => (
-            <ListItem
-              key={i}
-              secondaryAction={
-                <div>
-                  <IconButton edge="end">
-                    <MoreHorizIcon />
-                  </IconButton>
-                  <IconButton edge="end">
-                    <RemoveCircleIcon />
-                  </IconButton>
-                </div>
-              }
-              disablePadding
-            >
-              <ListItemButton>
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: "#9196de" }} variant="rounded">
-                    <BusinessCenterRoundedIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={p.title} secondary={p.description} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {group.projects &&
+            group.projects.map((p, i) => (
+              <ListItem
+                key={i}
+                secondaryAction={
+                  <div>
+                    <IconButton edge="end">
+                      <MoreHorizIcon />
+                    </IconButton>
+                    <IconButton edge="end">
+                      <RemoveCircleIcon />
+                    </IconButton>
+                  </div>
+                }
+                disablePadding
+              >
+                <ListItemButton>
+                  <ListItemAvatar>
+                    <Avatar sx={{ bgcolor: "#9196de" }} variant="rounded">
+                      <BusinessCenterRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={p.title} secondary={p.description} />
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
       </Box>
     </div>

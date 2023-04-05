@@ -13,7 +13,6 @@ import { GroupFormValues } from "../../app/models/Group";
 import React from "react";
 import { useStore } from "../../app/stores/store";
 import { Formik } from "formik";
-import LoadingComponent from "../../app/layout/LoadingComponent";
 import * as Yup from "yup";
 import LinkButton from "../../app/common/button/LinkButton";
 
@@ -58,8 +57,6 @@ const GroupInformationPage = () => {
         setGroupValues(new GroupFormValues(group));
       });
   }, []);
-
-  //if (groupStore.isLoading) return <LoadingComponent />;
 
   return (
     <Box sx={{ pl: 40, "& > :not(style)": { m: 1, width: "100ch" } }}>

@@ -35,6 +35,7 @@ import { User } from "../../../app/models/User";
 import { Label } from "@mui/icons-material";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import MyTextForm from "../../../app/common/form/MyTextForm";
+import LinkButton from "../../../app/common/button/LinkButton";
 
 const users: User[] = [
   {
@@ -110,20 +111,28 @@ const MissionForm = observer(() => {
   const [mission, setMission] = React.useState<MissionFormValues>(
     new MissionFormValues()
   );
-  const [userSelection, setUserSelection] = React.useState<{ value: string, label: string }[]>([])
+  const [userSelection, setUserSelection] = React.useState<
+    { value: string; label: string }[]
+  >([]);
   const { missionId } = useParams<{ missionId: string }>();
   const { groupStore, missionStore } = useStore();
   const { loadMission } = missionStore;
-  const handleForSubmit = (mission: MissionFormValues, actions: FormikHelpers<MissionFormValues>) => {
-    mission.projectName = params.projectName
+
+  const handleForSubmit = (
+    mission: MissionFormValues,
+    actions: FormikHelpers<MissionFormValues>
+  ) => {
+    mission.projectName = params.projectName;
     if (missionId) {
-      const promises = [missionStore.updateMission(missionId, mission)]
-      if (mission.assignUserName) promises.push(missionStore.addMember(missionId, mission.assignUserName))
+      const promises = [missionStore.updateMission(missionId, mission)];
+      if (mission.assignUserName)
+        promises.push(
+          missionStore.addMember(missionId, mission.assignUserName)
+        );
       Promise.all(promises).then(() => {
-        window.location.reload()
-      })
-    }
-    else
+        window.location.reload();
+      });
+    } else
       missionStore
         .createMission(mission)
         .then(() =>
@@ -146,27 +155,48 @@ const MissionForm = observer(() => {
   });
 
   React.useEffect(() => {
-    if (!missionId || !params.groupName) return
-    Promise.all([loadMission(missionId), groupStore.loadGroup(params.groupName)]).then(([m]) => {
-
-      if (!params.groupName) return
+    if (!missionId || !params.groupName) return;
+    Promise.all([
+      loadMission(missionId),
+      groupStore.loadGroup(params.groupName),
+    ]).then(([m]) => {
+      if (!params.groupName) return;
       groupStore.loadMembers(params.groupName, true).then(() => {
         missionStore.loadMembers().then(() => {
-          if (groupStore.selectedGroup) setUserSelection(groupStore.selectedGroup!.members.map(m => { return { value: m.userName, label: m.displayName } }))
-          setMission(new MissionFormValues(m, missionStore.selectedMission?.members[0].userName))
-        })
-
-      })
-
-    })
+          if (groupStore.selectedGroup)
+            setUserSelection(
+              groupStore.selectedGroup!.members.map((m) => {
+                return { value: m.userName, label: m.displayName };
+              })
+            );
+          setMission(
+            new MissionFormValues(
+              m,
+              missionStore.selectedMission?.members[0].userName
+            )
+          );
+        });
+      });
+    });
     if (missionId)
       loadMission(missionId).then((m) => {
-        if (params.groupName && (!groupStore.selectedGroup || params.groupName !== groupStore.selectedGroup.name)) {
-          groupStore.loadGroup(params.groupName).then(() => setMission(new MissionFormValues(m)))
+        if (
+          params.groupName &&
+          (!groupStore.selectedGroup ||
+            params.groupName !== groupStore.selectedGroup.name)
+        ) {
+          groupStore
+            .loadGroup(params.groupName)
+            .then(() => setMission(new MissionFormValues(m)));
         }
         groupStore.loadMembers(params.groupName!, true).then(() => {
-          if (groupStore.selectedGroup) setUserSelection(groupStore.selectedGroup!.members.map(m => { return { value: m.userName, label: m.displayName } }))
-        })
+          if (groupStore.selectedGroup)
+            setUserSelection(
+              groupStore.selectedGroup!.members.map((m) => {
+                return { value: m.userName, label: m.displayName };
+              })
+            );
+        });
       });
   }, []);
 
@@ -211,7 +241,13 @@ const MissionForm = observer(() => {
             }}
           /> */}
           {/* {errors.projectName} */}
-          <MyTextForm label="Title" name="title" icon={<AssignmentIcon />} placeholder="Enter title here!" />
+          <MyTextForm
+            helperText={errors.title}
+            label="Title"
+            name="title"
+            icon={<AssignmentIcon />}
+            placeholder="Enter title here!"
+          />
           {/* <TextField
             helperText={errors.title}
             key={values!.id}
@@ -255,15 +291,17 @@ const MissionForm = observer(() => {
             </Select>
           </FormControl> */}
 
-          {mission.id && <MySelectionForm
-            id="assigned-to-select"
-            defaultValue={values.assignUserName}
-            label="Assigned To"
-            name="assignUserName"
-            onChange={handleChange}
-            icon={<BookmarkIcon />}
-            options={userSelection}
-          />}
+          {mission.id && (
+            <MySelectionForm
+              id="assigned-to-select"
+              defaultValue={values.assignUserName}
+              label="Assigned To"
+              name="assignUserName"
+              onChange={handleChange}
+              icon={<BookmarkIcon />}
+              options={userSelection}
+            />
+          )}
 
           <MySelectionForm
             id="priority-select"
@@ -284,7 +322,13 @@ const MissionForm = observer(() => {
             icon={<CheckBoxIcon />}
             options={stateSelection}
           />
-          <MyTextForm label="Description" name="description" multiline rows={4} placeholder="Write some description here..." />
+          <MyTextForm
+            label="Description"
+            name="description"
+            multiline
+            rows={4}
+            placeholder="Write some description here..."
+          />
           {/* <MyDateForm
             id="start-date-outlined-basic"
             label="Start Date"
@@ -394,12 +438,10 @@ const MissionForm = observer(() => {
             }}
           >
             <Stack spacing={2} direction="row">
-              <Button
-                variant="contained"
-                href={`/${params.groupName}/${params.projectName}/missions`}
-              >
-                Leave
-              </Button>
+              <LinkButton
+                label="Leave"
+                to={`/${params.groupName}/${params.projectName}/missions`}
+              />
               <Button
                 variant="contained"
                 onClick={() => window.location.reload()}

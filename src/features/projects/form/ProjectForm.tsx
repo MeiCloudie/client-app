@@ -5,13 +5,7 @@ import { ProjectFormValues } from "../../../app/models/Project";
 import React from "react";
 import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
-import {
-  Box,
-  InputAdornment,
-  Button,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, InputAdornment, Button, Stack, TextField } from "@mui/material";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LinkButton from "../../../app/common/button/LinkButton";
@@ -27,7 +21,7 @@ const ProjectForm = observer(() => {
   const { loadProject } = projectStore;
 
   const handleForSubmit = (project: ProjectFormValues) => {
-    project.groupName = params.groupName
+    project.groupName = params.groupName;
     project.id
       ? projectStore
           .updateProject(project.id, project)
@@ -52,7 +46,7 @@ const ProjectForm = observer(() => {
     name: Yup.string()
       .matches(/^[a-z0-9-]+$/, "The name is invalid!")
       .required("The project name is required"),
-    description: Yup.string().required()
+    description: Yup.string().required(),
   });
 
   React.useEffect(() => {
@@ -80,6 +74,7 @@ const ProjectForm = observer(() => {
           onSubmit={handleSubmit}
         >
           <TextField
+            helperText={errors.name}
             id="project-name-outlined-basic"
             label="Project Name"
             variant="outlined"
@@ -97,6 +92,7 @@ const ProjectForm = observer(() => {
           />
 
           <TextField
+            helperText={errors.title}
             id="project-title-outlined-basic"
             label="Project Title"
             variant="outlined"
@@ -114,6 +110,7 @@ const ProjectForm = observer(() => {
           />
 
           <TextField
+            helperText={errors.description}
             id="description-outlined-multiline-static"
             label="Description"
             name="description"
@@ -132,7 +129,10 @@ const ProjectForm = observer(() => {
             }}
           >
             <Stack spacing={2} direction="row">
-              <LinkButton label="Leave" to={`/${params.groupName}/${params.projectName}`} />
+              <LinkButton
+                label="Leave"
+                to={`/${params.groupName}/${params.projectName}`}
+              />
               <Button
                 variant="contained"
                 onClick={() => window.location.reload()}
