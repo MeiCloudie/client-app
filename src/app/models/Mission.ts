@@ -43,8 +43,9 @@ export class MissionFormValues {
     completedDate: Date = new Date()
     createDate: Date = new Date()
     projectName?: string = ''
+    assignUserName: string = ''
     
-    constructor(mission?: Mission) {
+    constructor(mission?: Mission, assignUserName?: string) {
         if (mission) {
             this.id = mission.id
             this.title = mission.title
@@ -56,6 +57,7 @@ export class MissionFormValues {
             this.completedDate = mission.completedDate
             this.createDate = mission.createDate
             this.projectName = mission.projectName
+            if (assignUserName) this.assignUserName = assignUserName
         }
     }
 }

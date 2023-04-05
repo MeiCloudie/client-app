@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import { MissionFormValues } from "../../../app/models/Mission";
 import {
   Box,
@@ -33,6 +33,8 @@ import MySelectionForm from "../../../app/common/form/MySelectionForm";
 import MyDateForm from "../../../app/common/form/MyDateForm";
 import { User } from "../../../app/models/User";
 import { Label } from "@mui/icons-material";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import MyTextForm from "../../../app/common/form/MyTextForm";
 
 const users: User[] = [
   {
@@ -108,20 +110,25 @@ const MissionForm = observer(() => {
   const [mission, setMission] = React.useState<MissionFormValues>(
     new MissionFormValues()
   );
+  const [userSelection, setUserSelection] = React.useState<{ value: string, label: string }[]>([])
   const { missionId } = useParams<{ missionId: string }>();
-  const { missionStore } = useStore();
+  const { groupStore, missionStore } = useStore();
   const { loadMission } = missionStore;
-  const handleForSubmit = (mission: MissionFormValues) => {
+  const handleForSubmit = (mission: MissionFormValues, actions: FormikHelpers<MissionFormValues>) => {
     mission.projectName = params.projectName
-    missionId
-      ? missionStore
-          .updateMission(missionId, mission)
-          .then(() => window.location.reload())
-      : missionStore
-          .createMission(mission)
-          .then(() =>
-            navigate(`/${params.groupName}/${params.projectName}/missions`)
-          );
+    if (missionId) {
+      const promises = [missionStore.updateMission(missionId, mission)]
+      if (mission.assignUserName) promises.push(missionStore.addMember(missionId, mission.assignUserName))
+      Promise.all(promises).then(() => {
+        window.location.reload()
+      })
+    }
+    else
+      missionStore
+        .createMission(mission)
+        .then(() =>
+          navigate(`/${params.groupName}/${params.projectName}/missions`)
+        );
   };
 
   const handleForDelete = () => {
@@ -139,16 +146,29 @@ const MissionForm = observer(() => {
   });
 
   React.useEffect(() => {
+    if (!missionId || !params.groupName) return
+    Promise.all([loadMission(missionId), groupStore.loadGroup(params.groupName)]).then(([m]) => {
+
+      if (!params.groupName) return
+      groupStore.loadMembers(params.groupName, true).then(() => {
+        missionStore.loadMembers().then(() => {
+          if (groupStore.selectedGroup) setUserSelection(groupStore.selectedGroup!.members.map(m => { return { value: m.userName, label: m.displayName } }))
+          setMission(new MissionFormValues(m, missionStore.selectedMission?.members[0].userName))
+        })
+
+      })
+
+    })
     if (missionId)
       loadMission(missionId).then((m) => {
-        setMission(new MissionFormValues(m));
+        if (params.groupName && (!groupStore.selectedGroup || params.groupName !== groupStore.selectedGroup.name)) {
+          groupStore.loadGroup(params.groupName).then(() => setMission(new MissionFormValues(m)))
+        }
+        groupStore.loadMembers(params.groupName!, true).then(() => {
+          if (groupStore.selectedGroup) setUserSelection(groupStore.selectedGroup!.members.map(m => { return { value: m.userName, label: m.displayName } }))
+        })
       });
   }, []);
-
-  // console.log(new Date("2023-12-02T00:00:00").toString())
-  // console.log(dayjs(new Date("2023-12-02T00:00:00").toString()).format(
-  //   "YYYY-MM-DDTHH:mm"
-  // ))
 
   return (
     <Formik
@@ -191,7 +211,8 @@ const MissionForm = observer(() => {
             }}
           /> */}
           {/* {errors.projectName} */}
-          <TextField
+          <MyTextForm label="Title" name="title" icon={<AssignmentIcon />} placeholder="Enter title here!" />
+          {/* <TextField
             helperText={errors.title}
             key={values!.id}
             name="title"
@@ -208,7 +229,7 @@ const MissionForm = observer(() => {
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
           {/* {errors.title} */}
 
           {/* <FormControl fullWidth>
@@ -234,15 +255,15 @@ const MissionForm = observer(() => {
             </Select>
           </FormControl> */}
 
-          <MySelectionForm
+          {mission.id && <MySelectionForm
             id="assigned-to-select"
-            defaultValue={userSelection[0]}
+            defaultValue={values.assignUserName}
             label="Assigned To"
-            name="assignedTo"
+            name="assignUserName"
             onChange={handleChange}
             icon={<BookmarkIcon />}
             options={userSelection}
-          />
+          />}
 
           <MySelectionForm
             id="priority-select"
@@ -263,19 +284,7 @@ const MissionForm = observer(() => {
             icon={<CheckBoxIcon />}
             options={stateSelection}
           />
-
-          <TextField
-            helperText={errors.description}
-            id="description-outlined-multiline-static"
-            label="Description"
-            multiline
-            placeholder="Write some description here..."
-            defaultValue={values.description}
-            onChange={handleChange}
-            name="description"
-            rows={4}
-          />
-
+          <MyTextForm label="Description" name="description" multiline rows={4} placeholder="Write some description here..." />
           {/* <MyDateForm
             id="start-date-outlined-basic"
             label="Start Date"

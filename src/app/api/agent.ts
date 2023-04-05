@@ -24,7 +24,7 @@ const requests = {
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
     delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
-    patch: <T>(url: string, body: {}) => axios.patch<T>(url, body).then(responseBody),
+    patch: <T>(url: string, body?: {}) => axios.patch<T>(url, body).then(responseBody),
 }
 
 const Account : any = {
@@ -41,7 +41,9 @@ const Missions = {
     create: (mission: MissionFormValues) => requests.post('/Missions', mission),
     update: (id: string, mission: MissionFormValues) => requests.put(`/Missions/${id}`, mission),
     delete: (id: string) => requests.delete(`/Missions/${id}`),
-    memberList: (id: string) => requests.get<Member[]>(`/Missions/${id}/Members`)
+    memberList: (id: string) => requests.get<Member[]>(`/Missions/${id}/Members`),
+    addMember: (id: string, userName: string) => requests.patch(`/Missions/${id}/add-member/${userName}`),
+    removeMember: (id: string, userName: string) => requests.patch(`/Missions/${id}/remove-member/${userName}`),
 }
 
 const Projects = {

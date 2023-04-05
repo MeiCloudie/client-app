@@ -5,6 +5,7 @@ import agent from "../api/agent";
 export default class MissionStore {
   missions: Mission[] = new Array<Mission>();
   selectedMission: Mission | undefined = undefined;
+  isLoading: boolean = false
 
   constructor() {
     makeAutoObservable(this);
@@ -27,6 +28,7 @@ export default class MissionStore {
   }
 
   loadMissions = async () => {
+    this.isLoading = true
     try {
       const missions = await agent.Missions.list();
       runInAction(() => {
@@ -35,9 +37,13 @@ export default class MissionStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
 
   loadMission = async (id: string) => {
+    this.isLoading = true
     try {
       const mission = await agent.Missions.details(id);
       runInAction(() => {
@@ -47,9 +53,13 @@ export default class MissionStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   };
 
   loadMissionByProjectName = async (projectName: string) => {
+    this.isLoading = true
     try {
       const missions = await agent.Projects.missionList(projectName);
       runInAction(() => {
@@ -58,9 +68,13 @@ export default class MissionStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   }
 
   loadMembers = async (id?: string) => {
+    this.isLoading = true
     try {
       const missionId = id ?? (this.selectedMission ? this.selectedMission.id : undefined)
       if (!missionId) throw new Error("Mission id is undefined")
@@ -75,9 +89,13 @@ export default class MissionStore {
     } catch (error) {
       console.log(error);
     }
+    finally {
+      this.isLoading = false
+    }
   }
 
   loadMembersForMissions = async () => {
+    this.isLoading = true
     try {
       const membersList = await Promise.all(this.missionList.map((m) => agent.Missions.memberList(m.id)));
       this.missionList.forEach((m, i) => {
@@ -85,6 +103,9 @@ export default class MissionStore {
       })
     } catch (error) {
       console.log(error);
+    }
+    finally {
+      this.isLoading = false
     }
   }
 
@@ -118,6 +139,14 @@ export default class MissionStore {
       runInAction(() => {
         this.selectedMission = undefined;
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  addMember = async (id: string, userName: string) => {
+    try {
+      await agent.Missions.addMember(id, userName);;
     } catch (error) {
       console.log(error);
     }
