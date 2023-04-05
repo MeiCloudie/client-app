@@ -19,7 +19,7 @@ const user: User = {
 };
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100 },
+  { field: "id", headerName: "ID", width: 200 },
   {
     field: "title",
     headerName: "Title",
@@ -35,11 +35,11 @@ const columns: GridColDef[] = [
     headerName: "State",
     width: 200,
   },
-  {
-    field: "comments",
-    headerName: "Comments",
-    width: 200,
-  },
+  // {
+  //   field: "comments",
+  //   headerName: "Comments",
+  //   width: 200,
+  // },
   {
     field: "activityDate",
     headerName: "Activity Date",
@@ -58,14 +58,14 @@ const MissionListPersonalPage = () => {
     loadMissions().then(() => {
       setRows(
         missionStore.missionList.map((m) => {
-          const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
+          // const randomIndex = Math.floor(Math.random() * (3 - 0)) + 0;
           const states = ["New", "Active", "Resolved", "Closed"];
           return {
             id: m.id,
             title: m.title,
             assignedTo: m.id,
             state: states[m.state],
-            comments: randomIndex,
+            // comments: randomIndex,
             activityDate: m.createDate.toLocaleString("en-US", {
               day: "2-digit",
               month: "2-digit",

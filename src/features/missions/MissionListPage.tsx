@@ -21,7 +21,7 @@ import { Link, useParams } from "react-router-dom";
 import LinkButton from "../../app/common/button/LinkButton";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100 },
+  { field: "id", headerName: "ID", width: 200 },
   {
     field: "title",
     headerName: "Title",

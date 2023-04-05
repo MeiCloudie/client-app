@@ -41,33 +41,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const users: User[] = [
-  {
-    displayName: "Mei",
-    email: "mei@gmail.com",
-    token: "meiToken",
-    roles: ["Leader"],
-  },
-  {
-    displayName: "Slime",
-    email: "slime@gmail.com",
-    token: "slimeToken",
-    roles: ["Member"],
-  },
-  {
-    displayName: "John",
-    email: "john@example.com",
-    token: "token123",
-    roles: ["Member"],
-  },
-  {
-    displayName: "Jane",
-    email: "jane@example.com",
-    token: "token456",
-    roles: ["Member"],
-  },
-];
-
 const GroupMembersPage = observer(() => {
   const [open, setOpen] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);

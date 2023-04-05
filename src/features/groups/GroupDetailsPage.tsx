@@ -5,7 +5,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import {
   Box,
-  Button,
   Divider,
   IconButton,
   ListItem,
@@ -25,7 +24,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CachedIcon from "@mui/icons-material/Cached";
 
 import { Group } from "../../app/models/Group";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import LinkButton from "../../app/common/button/LinkButton";
@@ -52,7 +51,7 @@ const GroupDetailsPage = () => {
   }, [params.groupName]);
 
   if (groupStore.isLoading) return <LoadingComponent />;
-  
+
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -140,20 +139,7 @@ const GroupDetailsPage = () => {
           disablePadding
         >
           {group.members.map((u, i) => (
-            <ListItem
-              key={i}
-              secondaryAction={
-                <div>
-                  <IconButton edge="end">
-                    <CachedIcon />
-                  </IconButton>
-                  <IconButton edge="end">
-                    <GroupRemoveIcon />
-                  </IconButton>
-                </div>
-              }
-              disablePadding
-            >
+            <ListItem key={i} disablePadding>
               <ListItemButton>
                 <ListItemAvatar>
                   <Avatar sx={{ bgcolor: "#9196de" }}>
@@ -198,12 +184,11 @@ const GroupDetailsPage = () => {
                 key={i}
                 secondaryAction={
                   <div>
-                    <IconButton edge="end">
-                      <MoreHorizIcon />
-                    </IconButton>
-                    <IconButton edge="end">
-                      <RemoveCircleIcon />
-                    </IconButton>
+                    <Link to={`/${group.name}/${p.name}`}>
+                      <IconButton edge="end">
+                        <MoreHorizIcon />
+                      </IconButton>
+                    </Link>
                   </div>
                 }
                 disablePadding
